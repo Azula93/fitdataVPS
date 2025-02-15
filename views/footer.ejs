@@ -1,0 +1,110 @@
+<footer class="bg-light text-center text-lg-start mt-auto">
+    <div class="container p-4">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                <h5 class="">Fit Data</h5>
+                <p>Te proporcionamos datos valiosos para mejorar tu salud y bienestar. Nuestro objetivo es
+                    ayudarte a entender tu cuerpo y tomar decisiones informadas sobre tu dieta y estilo de vida.</p>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Navegación</h5>
+                <nav>
+                    <ul class="list-unstyled mb-0 footer-links">
+                        <% if (user) { %>
+                            <li><a href="/misdatos" class="text-dark text-decoration-none" title="Accede a tu cuenta">Tu
+                                    Cuenta</a></li>
+                            <li><a href="/panelcontrol" class="text-dark text-decoration-none"
+                                    title="Ir al panel de control">Inicio</a></li>
+                            <li><a href="/valoracion" class="text-dark text-decoration-none"
+                                    title="Realiza una valoración nutricional">Valoración Nutricional</a>
+                            </li>
+                            <li><a href="/pruebaEsfuerzo" class="text-dark text-decoration-none"
+                                    title="Realiza una prueba de esfuerzo">Prueba de Esfuerzo</a>
+                            </li>
+                            <li><a href="/blog" class="text-dark text-decoration-none"
+                                    title="Lee nuestros artículos en el blog">Blog</a></li>
+
+                            <% } else { %>
+                                <li><a href="/" class="text-dark text-decoration-none"
+                                        title="Ir a la página de inicio">Inicio</a></li>
+                                <li><a href="/valoracion" class="text-dark text-decoration-none"
+                                        title="Realiza una valoración nutricional">Valoración
+                                        Nutricional</a></li>
+                                <li><a href="/pruebaEsfuerzo" class="text-dark text-decoration-none"
+                                        title="Realiza una prueba de esfuerzo">Prueba de
+                                        Esfuerzo</a></li>
+                                <li><a href="/blog" class="text-dark text-decoration-none"
+                                        title="Lee nuestros artículos en el blog">Blog</a></li>
+                                <% } %>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Acerca de Nosotros</h5>
+                <nav>
+                    <ul class="list-unstyled mb-0 footer-links">
+                        <li><a href="/aboutUs" class="text-dark text-decoration-none"
+                                title="Conoce más sobre nosotros">¿Quienes somos?</a></li>
+                        <li><a href="/privacyPolicy" class="text-dark text-decoration-none"
+                                title="Lee nuestra política de privacidad">Politica de Privacidad</a></li>
+                        <li><a href="/politica-de-cookies" class="text-dark text-decoration-none"
+                                title="Lee nuestra política de cookies">Politica de cookies</a>
+                        </li>
+                        <li><a href="/avisoLegal" class="text-dark text-decoration-none"
+                                title="Aviso legal de la página">Aviso Legal</a></li>
+                        <!-- <li><a href="#!" class="text-dark text-decoration-none">Ayuda</a></li> -->
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Contáctanos</h5>
+                <address>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="/contact" class="text-dark text-decoration-none"
+                                title="Contáctanos para más información">Contáctanos</a></li>
+                        <li><a href="mailto:info@fitdata.online" class="text-dark text-decoration-none"
+                                title="Envía un correo a info@fitdata.online">Envíanos un correo
+                            </a>
+                        </li>
+                        <li><a href="tel:3183348608" class="text-dark text-decoration-none"
+                                title="Llama al número de teléfono">Teléfono</a></li>
+                    </ul>
+                </address>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center p-3 bg-dark text-white d-flex align-items-center justify-content-center">
+        <ul class="list-unstyled list-inline footer-links">
+            <li class="list-inline-item">
+                <a href="#" class="text-light enlace text-decoration-none">
+                    © FitData 2024.
+                </a>
+            </li>
+
+            <li class="list-inline-item">
+                <a href="#" class="text-light enlace" title="Síguenos en Facebook">
+                    <i class="fab fa-facebook icono"></i>
+                </a>
+            </li>
+
+            <li class="list-inline-item">
+                <a href="#" class="text-light enlace" title="Síguenos en Instagram">
+                    <i class="fab fa-instagram icono"></i>
+                </a>
+            </li>
+
+            <li class="list-inline-item">
+                <a href="#" class="text-light enlace" title="Síguenos en YouTube">
+                    <i class="fab fa-youtube icono"></i>
+                </a>
+            </li>
+
+            <li class="list-inline-item">
+                <a href="#" class="text-light enlace" title="Síguenos en Twitter">
+                    <i class="fab fa-twitter icono"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</footer>

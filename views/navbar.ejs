@@ -1,0 +1,144 @@
+<% if (!user) { %>
+    <nav class="fixed-top navbar navbar-expand-lg navbar-light bg-light fs-5">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Fit Data</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Fit Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0 ">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/valoracion">Valoración Nutricional</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/pruebaEsfuerzo">Prueba de Esfuerzo</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link " href="/blog" id="navbarDropdown" role="button" aria-expanded="false">
+                                Blog
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/etiquetasNutricionales">Etiquetas Nutricionales</a></li>
+                                <!-- <li><a class="dropdown-item" href="#">Plato Saludable</a></li>  -->
+                                <!-- <li><hr class="dropdown-divider"></li> -->
+                                <li><a class="dropdown-item" href="/evolMarcas">Evolución de las marcas en atletismo</a></li>
+                                <li><a class="dropdown-item" href="/clasAlimentos">Clasificación de los alimentos</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link " href="/productos" id="navbarDropdown" role="button" aria-expanded="false">
+                                Productos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Proximamente</a></li>
+                                <li><a class="dropdown-item" href="#">Proximamente</a></li>
+                                <!-- <li><hr class="dropdown-divider"></li> -->
+                                <li><a class="dropdown-item" href="#">Proximamente</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="d-flex">
+                        <a class="btn btn-outline-primary me-2 fs-5" type="button" href="/login">Inicia Sesión</a>
+                        <a class="btn btn-primary fs-5" type="button" href="/register">Registrate</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <% } else { %>
+
+        <nav class="fixed-top navbar navbar-expand-lg navbar-light bg-light fs-5">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/panelcontrol">Fit Data</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                    aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Fit Data</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="mx-auto navbar-nav mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/panelcontrol">Inicio</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/indicesantr">Indices Antropometricos</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/valoracion">Valoración Nutricional</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/pruebaEsfuerzo">Prueba de Esfuerzo</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link " href="/blog" id="navbarDropdown" role="button" aria-expanded="false">
+                                    Blog
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="/etiquetasNutricionales">Etiquetas Nutricionales</a></li>
+                                   <!--  <li><a class="dropdown-item" href="#">Plato Saludable</a></li>  -->
+                                    <!-- <li><hr class="dropdown-divider"></li> -->
+                                    <li><a class="dropdown-item" href="/evolMarcas">Evolución de las marcas en atletismo</a></li>
+                                    <li><a class="dropdown-item" href="/clasAlimentos">Clasificación de los alimentos</a></li>
+                                </ul>
+                            </li>
+				 <li class="nav-item dropdown">
+                            <a class="nav-link " href="/productos" id="navbarDropdown" role="button" aria-expanded="false">
+                                Productos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Proximamente</a></li>
+                                <li><a class="dropdown-item" href="#">Proximamente</a></li>
+                                <!-- <li><hr class="dropdown-divider"></li> -->
+                                <li><a class="dropdown-item" href="#">Proximamente</a></li>
+                            </ul>
+                        </li>
+
+
+                        </ul>
+
+                        <div class="dropdown mt-3 pe-auto">
+                            <img src="/public/assets/profile.png" alt="profileImg" class="profile-img w-75 img-fluid dropdown-toggle"
+                                id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="/misdatos">
+                                        Mis Datos
+                                        <i class="fa-solid fa-heart-pulse float-end"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/logout">
+                                        Cerrar Sesión
+                                        <i class="fa-solid fa-arrow-right-from-bracket float-end"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- DATOS USUARIO-->
+        <% } %>

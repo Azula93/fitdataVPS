@@ -1,0 +1,32 @@
+{
+  "name": "fitdatalogin",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.11.5",
+    "nodemon": "^3.1.4",
+    "pdfkit": "^0.15.0",
+    "pdfkit-table": "^0.1.99",
+    "sweetalert2": "^11.12.4"
+  },
+  "engines": {
+    "node": "20.14.0",
+    "npm": "10.8.2"
+  }
+}

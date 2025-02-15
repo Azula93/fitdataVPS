@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+<meta name="google-adsense-account" content="ca-pub-9371741460887435">   
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/public/css/signin.css" rel="stylesheet">
+    <link href="/public/css/styles.css" rel="stylesheet">
+    <link href="/public/css/dashboard.css" rel="stylesheet">
+<link rel="icon" href="/public/assets/favicons/favicon-removebg.png" type="image/x-icon">
+    <meta name="generator" content="Hugo 0.87.0">
+    <title>Mis Datos</title>
+</head>
+
+<body>
+    <div class="container-fluid d-flex flex-column min-vh-100">
+        <%- include('navbar', { user: user }) %>
+            <main class="flex-grow-1 mt-5">
+                <div class="container mt-3">
+                    <section class="p-5">
+                        <div
+                            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3 border-bottom">
+                            <!-- <h2>Mis Datos</h2> -->
+                            <h2> Resultados
+                                <% if (user) { %>
+                                    <span class="badge bg-success">
+                                        <%= user.nombreUsuario %>
+                                    </span>
+                                    <% } %>
+                            </h2>
+                        </div>
+                    </section>
+
+                    <div class="container table-responsive fs-6">
+                        <table class="table table-striped  table-hover table-bordered align-middle" id="misdatos_table">
+                            <thead>
+                                <tr class="text-center">
+                                    <th class="p-3">IMC</th>
+                                    <th class="p-3">ICC</th>
+                                    <th class="p-3">GET</th>
+                                    <th class="p-3">Macronutrientes</th>
+                                    <th class="p-3">VO2</th>
+                                    <th class="p-3">METS</th>
+                                    <th class="p-3">Expect Vida</th>
+                                    <th class="p-3">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                <% if (Object.keys(datos).length> 0) { %>
+                                    <tr class="text-center" id="data-row-<%= datos.user_id %>">
+                                        <td class="p-3">
+                                            <%= datos.imc %>
+                                        </td>
+                                        <td class="p-3">
+                                            <%= datos.icc %>
+                                        </td>
+                                        <td class="p-3 text-start">
+                                            <%= datos.gasto_energetico %>
+                                        </td>
+                                        <td class="p-3 text-center ">
+                                            <%= datos.macro %>
+                                        </td>
+                                        <td class="p-3">
+                                            <%= datos.vo2 %>
+                                        </td>
+                                        <td class="p-3">
+                                            <%= datos.mets %>
+                                        </td>
+                                        <td class="p-3">
+                                            <%= datos.expect_vida %>
+                                        </td>
+                                        <td class="p-3">
+                                            <button class="btn btn-danger btn-eliminar btn-sm" data-id="<%= datos.user_id %>">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="8">No hay datos disponibles</td>
+                                        </tr>
+                                        <% } %>
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <div class="p-3 text-center">
+                        <a class="btn btn-primary btn-lg" href="/generar-pdf" target="_blank">Generar PDF</a>
+                    </div>
+
+                    <%- include('footer', { user: user }) %>
+                </div>
+            </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/52b9ec387c.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/public/js/delete.js"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9371741460887435"
+     crossorigin="anonymous"></script>
+</body>
+
+</html>

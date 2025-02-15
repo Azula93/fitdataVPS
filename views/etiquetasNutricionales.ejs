@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords"
+        content="etiquetas alimentos, tabla nutricional de alimentos, etiqueta nutricional, etiqueta nutricional de alimentos">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/public/css/signin.css" rel="stylesheet">
+    <link href="/public/css/styles.css" rel="stylesheet">
+    <link rel="icon" href="/public/assets/favicons/favicon-removebg.png" type="image/x-icon">
+    <title>Etiquetas Nutricionales</title>
+</head>
+
+<body>
+    <main class="container my-5">
+        <%- include('navbar',{ user: user }) %>
+            <header class="bg-light py-3">
+                <div class="container text-center">
+                    <h1 class="fw-bold" style="color: #0db7c4">Cómo Leer Etiquetas Nutricionales</h1>
+                    <p class="text-muted">Fit Data te enseña a interpretar la tabla nutricional de alimentos y mejorar
+                        tu alimentación.</p>
+                </div>
+            </header>
+
+            <main class="container my-5">
+                <section>
+                    <h2 class="" style="color: #0db7c4">¿Por Qué Es Importante Leer Etiquetas Nutricionales?</h2>
+                    <p class="fs-5 mb-4">Leer etiquetas nutricionales es esencial para tomar decisiones informadas sobre los alimentos que
+                        consumes. Estas etiquetas contienen información clave sobre los ingredientes, el valor calórico
+                        y los nutrientes presentes en cada porción. Puedes encontrar más información en <a
+                            href="https://medlineplus.gov/spanish/ency/patientinstructions/000107.htm"
+                            target="_blank">aquí</a>.</p>
+                </section>
+
+                <section class="mb-4 container">
+                    <div class="row">
+                        <div class="col-md-8 p-3">
+                            <h2 class=" mb-3" style="color: #0db7c4">Cómo Interpretar la Tabla Nutricional de
+                                Alimentos</h2>
+                            <p class="fs-4 fw-bold">1. Tamaño de la Porción y Porciones por Envase</p>
+                            <p class="fs-5">Identifica el tamaño de la porción y el número de porciones por envase. Toda la
+                                información de la etiqueta está basada en este tamaño.</p>
+
+                            <p class="fw-bold fs-4">2. Calorías por Porción</p>
+                            <p>Las calorías indican la energía que aporta cada porción del alimento. Es útil para
+                                controlar tu ingesta calórica diaria.</p>
+
+                            <p class="fw-bold fs-4">3. Nutrientes Clave</p>
+                            <ul class="fs-5">
+                                <li><strong>Grasas Totales:</strong> Prefiere alimentos bajos en grasas saturadas y
+                                    trans.</li>
+                                <li><strong>Sodio:</strong> Opta por productos con menos de 140 mg de sodio por porción.
+                                    Puedes ampliar la información haciendo clic <a
+                                        href="https://www.behealthypa.org/como-leer-las-etiquetas-de-los-alimentos/?lang=es"
+                                        target="_blank">aquí</a>.</li>
+                                <li><strong>Carbohidratos y Fibra:</strong> Busca alimentos ricos en fibra y con bajo
+                                    contenido de azúcares añadidos.</li>
+                                <li><strong>Proteínas:</strong> Ideales para la reparación y construcción de tejidos.
+                                </li>
+                            </ul>
+
+                            <p class="fw-bold fs-4">4. Porcentaje de Valores Diarios (%VD)</p>
+                            <p class="fs-5">El %VD te ayuda a entender qué tanto aporta un alimento a tus necesidades diarias de
+                                nutrientes. Más detalles disponibles en <a
+                                    href="https://dtc.ucsf.edu/es/la-vida-con-diabetes/dieta-y-nutricion/comprension-de-los-carbohidratos-2/conteo-de-carbohidratos/aprender-a-leer-etiquetas/"
+                                    target="_blank">UCSF Diabetes Teaching Center</a>.</p>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-start">
+                            <img src="/public/assets/img (37).webp" class="img-fluid h-75"
+                                alt="tabla nutricional de alimentos" loading="lazy">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-4">
+                    <h2 class="" style="color: #0db7c4">Consejos Prácticos</h2>
+                    <ul class="fs-5">
+                        <li>Compara productos para elegir la opción más saludable.</li>
+                        <li>Revisa los ingredientes: están listados en orden descendente según su peso.</li>
+                        <li>Familiarízate con términos como "bajo en grasa" o "fuente de fibra". Consulta la <a
+                                href="https://www.fda.gov/food/nutrition-facts-label/como-entender-y-utilizar-la-etiqueta-de-informacion-nutricional"
+                                target="_blank">guía de la FDA</a> para mayor comprensión.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="p-3" style="color: #0db7c4">Referencias</h2>
+                    <ul class="fs-5">
+                        <li><a href="https://medlineplus.gov/spanish/ency/patientinstructions/000107.htm"
+                                target="_blank">MedlinePlus</a></li>
+                        <li><a href="https://www.behealthypa.org/como-leer-las-etiquetas-de-los-alimentos/?lang=es"
+                                target="_blank">Be Healthy PA</a></li>
+                        <li><a href="https://dtc.ucsf.edu/es/la-vida-con-diabetes/dieta-y-nutricion/comprension-de-los-carbohidratos-2/conteo-de-carbohidratos/aprender-a-leer-etiquetas/"
+                                target="_blank">UCSF Diabetes Teaching Center</a></li>
+                        <li><a href="https://www.fda.gov/food/nutrition-facts-label/como-entender-y-utilizar-la-etiqueta-de-informacion-nutricional"
+                                target="_blank">FDA</a></li>
+                    </ul>
+                </section>
+            </main>
+            <%- include('footer',{ user: user }) %>
+                <!-- Botón "Volver arriba" -->
+                <section class="scroll">
+                    <a id="scroll-to-top" href="#" class="back-to-top" role="button">
+                        <i class="bi bi-arrow-up-circle-fill"></i></a>
+                </section>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="https://kit.fontawesome.com/52b9ec387c.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
