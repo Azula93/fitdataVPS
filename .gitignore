@@ -1,7 +1,18 @@
-node_modules/
+# Archivos de entorno y claves
 .env
-u748307513_fitdata.sql
-/database
-/env
-/vendor
+env/
+database/
+
+# Bases de datos (¡Muy importante!)
+*.sql
+
+# Dependencias
+node_modules/
+vendor/
+
+# Archivos de Sistema
 .DS_Store
+Thumbs.db
+
+
+/u748307513_fitdata.sql
