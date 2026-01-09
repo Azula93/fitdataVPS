@@ -1,0 +1,7 @@
+node_modules/
+.env
+u748307513_fitdata.sql
+/database
+/env
+/vendor
+.DS_Store
