@@ -50,23 +50,23 @@ router.get('/formularios', authController.isAuthenticated, (req, res) => {
     res.render('formularios', { user: req.user })
 })
 
-router.get('/aboutUs', authController.isAuthenticated, (req, res) => {
+router.get('/aboutUs', authController.optionalAuth, (req, res) => {
     res.render('aboutUs', { user: req.user })
 })
 
-router.get('/privacyPolicy', authController.isAuthenticated, (req, res) => {
+router.get('/privacyPolicy', authController.optionalAuth, (req, res) => {
     res.render('privacyPolicy', { user: req.user })
 })
 
-router.get('/politicacookies', authController.isAuthenticated, (req, res) => {
+router.get('/politicacookies', authController.optionalAuth, (req, res) => {
     res.render('politica-de-cookies', { user: req.user })
 })
 
-router.get('/avisoLegal', authController.isAuthenticated, (req, res) => {
+router.get('/avisoLegal', authController.optionalAuth, (req, res) => {
     res.render('avisoLegal', { user: req.user })
 })
 
-router.get('/contact', authController.isAuthenticated, (req, res) => {
+router.get('/contact', authController.optionalAuth, (req, res) => {
     res.render('contact', { user: req.user })
 })
 
