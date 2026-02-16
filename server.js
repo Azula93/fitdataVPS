@@ -55,6 +55,8 @@ app.use(helmet({
             ],
             frameSrc: [
                 "www.youtube.com",           // videos embebidos
+                "youtube.com",
+                "www.youtube-nocookie.com",  // modo privacidad mejorada de YouTube
                 "googleads.g.doubleclick.net",
                 "tpc.googlesyndication.com",
             ],

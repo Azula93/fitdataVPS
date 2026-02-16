@@ -70,7 +70,7 @@ router.get('/contact', authController.optionalAuth, (req, res) => {
     res.render('contact', { user: req.user })
 })
 
-router.get('/etiquetasNutricionales', authController.isAuthenticated, (req, res) => {
+router.get('/etiquetasNutricionales', authController.optionalAuth, (req, res) => {
     res.render('etiquetasNutricionales', { user: req.user })
 })
 
