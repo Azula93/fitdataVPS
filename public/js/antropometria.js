@@ -269,6 +269,8 @@ obtenerValores();
   }
   document.getElementById('resultIcc').innerHTML = resultadoIcc;
   document.getElementById("errorIcc").innerHTML = errorIcc;
+  const hint = document.getElementById('save-icc-hint');
+  if (hint) hint.style.display = 'block';
   const textoLimpioIcc = filtrarYLimpiarTextoIcc(resultadoIcc);
 
   
