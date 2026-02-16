@@ -149,6 +149,11 @@ app.set('view engine', 'ejs');
 // Se usa para mostrar los archivos est�ticos
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
+// ads.txt en la raíz del dominio (requerido por Google AdSense)
+app.get('/ads.txt', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'ads.txt'));
+});
+
 // Procesar datos enviados desde forms
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
