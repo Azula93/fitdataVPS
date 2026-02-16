@@ -44,6 +44,9 @@ app.use(helmet({
                 "'self'",
                 "data:",
                 "m.media-amazon.com",        // imágenes de productos Amazon
+                "pagead2.googlesyndication.com",
+                "googleads.g.doubleclick.net",
+                "*.google.com",
             ],
             fontSrc: [
                 "'self'",
