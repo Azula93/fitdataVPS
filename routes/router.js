@@ -78,15 +78,15 @@ router.get('/productos', authController.optionalAuth, (req, res) => {
     res.render('productos', { user: req.user })
 })
 
-router.get('/implementosDeportivos', authController.isAuthenticated, (req, res) => {
+router.get('/implementosDeportivos', authController.optionalAuth, (req, res) => {
     res.render('implementosDeportivos', { user: req.user })
 })
 
-router.get('/evolMarcas', authController.isAuthenticated, (req, res) => {
+router.get('/evolMarcas', authController.optionalAuth, (req, res) => {
     res.render('evolMarcas', { user: req.user })
 })
 
-router.get('/clasAlimentos', authController.isAuthenticated, (req, res) => {
+router.get('/clasAlimentos', authController.optionalAuth, (req, res) => {
     res.render('clasAlimentos', { user: req.user })
 })
 
