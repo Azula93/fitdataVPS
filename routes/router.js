@@ -34,15 +34,15 @@ router.get('/indicesantr', authController.isAuthenticated, (req, res) => {
     res.render('indicesantr', { user: req.user })
 })
 
-router.get('/valoracion', authController.isAuthenticated, (req, res) => {
+router.get('/valoracion', authController.optionalAuth, (req, res) => {
     res.render('valoracion', { user: req.user })
 })
 
-router.get('/pruebaEsfuerzo', authController.isAuthenticated, (req, res) => {
+router.get('/pruebaEsfuerzo', authController.optionalAuth, (req, res) => {
     res.render('pruebaEsfuerzo', { user: req.user })
 })
 
-router.get('/blog', authController.isAuthenticated, (req, res) => {
+router.get('/blog', authController.optionalAuth, (req, res) => {
     res.render('blog', { user: req.user })
 })
 
@@ -74,7 +74,7 @@ router.get('/etiquetasNutricionales', authController.isAuthenticated, (req, res)
     res.render('etiquetasNutricionales', { user: req.user })
 })
 
-router.get('/productos', authController.isAuthenticated, (req, res) => {
+router.get('/productos', authController.optionalAuth, (req, res) => {
     res.render('productos', { user: req.user })
 })
 
