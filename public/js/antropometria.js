@@ -22,7 +22,9 @@ let Generoseleccionado = null;
 
 // Función para obtener valores de los elementos por sus IDs
 function obtenerValores() {
-  // Obtener los valores de los inputs por sus IDs
+  // Solo ejecutar si todos los elementos existen (IMC e ICC en la misma página)
+  if (!document.getElementById('cintura') || !document.getElementById('cadera')) return;
+
   const peso = parseFloat(document.getElementById('peso').value);
   const talla = parseFloat(document.getElementById('talla').value);
   const cintura = parseFloat(document.getElementById('cintura').value);
@@ -80,19 +82,18 @@ function verificarCondicionYMostrarAlerta() {
 
 // LIMITAR NUMERO
 function limitarNumero(input, maxLength) {
+  const setError = (id, msg) => { const el = document.getElementById(id); if (el) el.textContent = msg; };
   if (input.value.length > maxLength) {
     input.value = input.value.slice(0, maxLength);
-    
-    document.getElementById('errorMensajePeso').textContent = 'Máximo 3 dígitos permitidos.';
-    document.getElementById('errorMensajeAltura').textContent = 'Máximo 3 dígitos permitidos.';
-    document.getElementById('errorMensajePcintura').textContent = 'Máximo 3 dígitos permitidos.';
-    document.getElementById('errorMensajePcadera').textContent = 'Máximo 3 dígitos permitidos.';
+    setError('errorMensajePeso',    'Máximo 3 dígitos permitidos.');
+    setError('errorMensajeAltura',  'Máximo 3 dígitos permitidos.');
+    setError('errorMensajePcintura','Máximo 3 dígitos permitidos.');
+    setError('errorMensajePcadera', 'Máximo 3 dígitos permitidos.');
   } else {
-    document.getElementById('errorMensajePeso').textContent = '';
-    document.getElementById('errorMensajeAltura').textContent = '';
-    document.getElementById('errorMensajePcintura').textContent = '';
-    document.getElementById('errorMensajePcadera').textContent = '';
-
+    setError('errorMensajePeso',    '');
+    setError('errorMensajeAltura',  '');
+    setError('errorMensajePcintura','');
+    setError('errorMensajePcadera', '');
   }
 }
 // FIN LIMITAR NUMERO
@@ -221,7 +222,8 @@ html: `Tu resultado indica obesidad. Sin embargo, el IMC <b>NO</b> muestra dónd
 
 
 // calcula ICC
-document.getElementById('icc-form').addEventListener('submit',async function (e) {
+const iccFormEl = document.getElementById('icc-form');
+if (iccFormEl) iccFormEl.addEventListener('submit',async function (e) {
   e.preventDefault();
 obtenerValores();
   //  Toma los datos ingresados en el genero

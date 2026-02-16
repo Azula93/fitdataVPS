@@ -30,8 +30,12 @@ router.get('/panelcontrol', authController.isAuthenticated, (req, res) => {
     res.render('panelcontrol', { user: req.user })
 })
 
-router.get('/indicesantr', authController.isAuthenticated, (req, res) => {
+router.get('/indicesantr', authController.optionalAuth, (req, res) => {
     res.render('indicesantr', { user: req.user })
+})
+
+router.get('/icc', authController.optionalAuth, (req, res) => {
+    res.render('icc', { user: req.user })
 })
 
 router.get('/valoracion', authController.optionalAuth, (req, res) => {

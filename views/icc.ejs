@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="/public/css/tools.css" rel="stylesheet">
     <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/x-icon">
-    <title>IMC — Índice de Masa Corporal | FitData</title>
+    <title>ICC — Índice Cintura-Cadera | FitData</title>
 </head>
 <body>
 
@@ -39,11 +39,11 @@
     <div class="breadcrumb-nav">
         <a href="/">Inicio</a>
         <span class="breadcrumb-sep">›</span>
-        <span>IMC</span>
+        <span>ICC</span>
     </div>
-    <div class="tool-badge">⚖️ Índice Antropométrico</div>
-    <h1>Índice de Masa Corporal</h1>
-    <p>El IMC es la relación entre el peso y la estatura. Permite clasificar a las personas en categorías como bajo peso, peso normal, sobrepeso y obesidad. Es un indicador de salud general ampliamente utilizado.</p>
+    <div class="tool-badge">📏 Índice Antropométrico</div>
+    <h1>Índice Cintura-Cadera</h1>
+    <p>El ICC evalúa cómo se distribuye la grasa en el cuerpo. Una acumulación excesiva en la zona abdominal está asociada con mayor riesgo cardiovascular y enfermedades metabólicas.</p>
 </div>
 
 <!-- ── MAIN CONTENT ── -->
@@ -51,37 +51,48 @@
 
     <!-- FORMULARIO -->
     <div class="form-panel">
-        <h2>Calcula tu IMC</h2>
-        <form id="imc-form" action="#" method="post" autocomplete="off">
+        <h2>Calcula tu ICC</h2>
+        <form id="icc-form" action="#" method="post" autocomplete="off">
             <div class="form-group">
-                <label for="talla">Altura (en metros)</label>
-                <input type="number" id="talla" name="talla" step="0.01" placeholder="Ej: 1.70" min="1" max="2.5" oninput="limitarNumero(this, 4)" required>
-                <div class="form-error" id="errorMensajeAltura"></div>
+                <label>Sexo</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="genero" value="mujer" id="femenino"> Femenino
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="genero" value="hombre" id="masculino"> Masculino
+                    </label>
+                </div>
             </div>
             <div class="form-group">
-                <label for="peso">Peso (en kilogramos)</label>
-                <input type="number" id="peso" placeholder="Ej: 70" min="2" max="300" oninput="limitarNumero(this, 3)" required>
-                <div class="form-error" id="errorMensajePeso"></div>
+                <label for="cintura">Perímetro de cintura (cm)</label>
+                <input type="number" id="cintura" placeholder="Ej: 80" min="2" max="200" oninput="limitarNumero(this, 3)" aria-describedby="errorMensajePcintura" required>
+                <div class="form-error" id="errorMensajePcintura"></div>
             </div>
-            <button type="submit" class="btn-calc">Calcular mi IMC →</button>
+            <div class="form-group">
+                <label for="cadera">Perímetro de cadera (cm)</label>
+                <input type="number" id="cadera" placeholder="Ej: 95" min="2" max="200" oninput="limitarNumero(this, 3)" aria-describedby="errorMensajePcadera" required>
+                <div class="form-error" id="errorMensajePcadera"></div>
+            </div>
+            <button type="submit" class="btn-calc">Calcular mi ICC →</button>
         </form>
     </div>
 
     <!-- RESULTADO -->
     <div class="result-panel">
-        <div class="result-card-main" id="resultImc">
+        <div class="result-card-main" id="resultIcc" aria-live="polite">
             <div class="result-placeholder">
-                <div class="result-placeholder-icon">⚖️</div>
+                <div class="result-placeholder-icon">📏</div>
                 <p>Completa el formulario para ver tu resultado</p>
             </div>
         </div>
-        <p id="errorImc" class="form-error"></p>
+        <p id="errorIcc" class="form-error"></p>
         <% if (user) { %>
-        <div class="result-info" id="save-imc-hint" style="display:none">
+        <div class="result-info" id="save-icc-hint" style="display:none">
             💾 <a href="/misdatos">Ve a Mis datos</a> para consultar tu historial guardado
         </div>
         <% } else { %>
-        <div class="result-info" id="save-imc-hint" style="display:none">
+        <div class="result-info" id="save-icc-hint" style="display:none">
             💾 <a href="/register">Crea una cuenta gratis</a> para guardar tu resultado y ver tu evolución
         </div>
         <% } %>
@@ -100,26 +111,22 @@
 
 <!-- ── INFO ── -->
 <div class="info-section">
-    <h3>¿Cómo se interpreta el IMC?</h3>
-    <p>El IMC se calcula dividiendo el peso (kg) entre la talla al cuadrado (m²). Los rangos de clasificación de la OMS son:</p>
+    <h3>¿Cómo se interpreta el ICC?</h3>
+    <p>El ICC se obtiene dividiendo la medida de la cintura entre la medida de la cadera. Los valores de riesgo según la OMS son:</p>
     <ul style="padding-left:1.2rem; color:var(--gray); font-size:.9rem; line-height:2.2">
-        <li><strong>Menor de 18.5</strong> — Bajo peso</li>
-        <li><strong>18.5 – 24.9</strong> — Peso normal</li>
-        <li><strong>25 – 29.9</strong> — Sobrepeso</li>
-        <li><strong>30 – 34.9</strong> — Obesidad grado I</li>
-        <li><strong>35 – 39.9</strong> — Obesidad grado II</li>
-        <li><strong>40 o más</strong> — Obesidad grado III</li>
+        <li><strong>Mujeres:</strong> ICC &gt; 0.85 indica riesgo cardiovascular</li>
+        <li><strong>Hombres:</strong> ICC &gt; 0.94 indica riesgo cardiovascular</li>
     </ul>
-    <p style="margin-top:1rem">Recuerda que el IMC <strong>no distingue entre masa muscular y grasa</strong>. Para una evaluación completa, combínalo con el ICC y el VO₂ máximo.</p>
+    <p style="margin-top:1rem">La distribución abdominal de la grasa (forma de manzana) es un factor de riesgo independiente. Complementa este resultado con el IMC para una evaluación más completa.</p>
 </div>
 
 <!-- ── HERRAMIENTAS RELACIONADAS ── -->
 <div class="related-section">
     <h3>Otras herramientas</h3>
     <div class="related-grid">
-        <a href="/icc" class="related-card">
-            <span class="related-icon">📏</span>
-            <div><div class="related-name">Índice Cintura-Cadera</div><div class="related-desc">Riesgo cardiovascular</div></div>
+        <a href="/indicesantr" class="related-card">
+            <span class="related-icon">⚖️</span>
+            <div><div class="related-name">IMC</div><div class="related-desc">Índice de Masa Corporal</div></div>
         </a>
         <a href="/valoracion" class="related-card">
             <span class="related-icon">🔥</span>
@@ -162,9 +169,13 @@
 </footer>
 
 <script>
-document.getElementById('imc-form').addEventListener('submit', function() {
-    document.getElementById('save-imc-hint').style.display = 'block';
-});
+const iccFormEl = document.getElementById('icc-form');
+if (iccFormEl) {
+    iccFormEl.addEventListener('submit', function() {
+        const hint = document.getElementById('save-icc-hint');
+        if (hint) hint.style.display = 'block';
+    });
+}
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/public/js/antropometria.js"></script>

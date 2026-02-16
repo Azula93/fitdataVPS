@@ -1,268 +1,246 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
     <meta name="google-adsense-account" content="ca-pub-9371741460887435">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9371741460887435" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="/public/css/signin.css" rel="stylesheet">
-    <link href="/public/css/styles.css" rel="stylesheet">
-    <link rel="icon" href="/public/assets/favicons/favicon-removebg.png" type="image/x-icon">
-    <title>Prueba de Esfuerzo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="/public/css/tools.css" rel="stylesheet">
+    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/x-icon">
+    <title>VO₂ Máximo y Prueba de Esfuerzo | FitData</title>
 </head>
-
 <body>
 
-    <div class="container-fluid d-flex flex-column min-vh-100" id="pruebaesf">
-        <%- include('navbar',{ user: user }) %>
-            <main class="flex-grow-1 mt-5">
-                <div class="container mt-3">
-                    <section class="" id="vo2">
-                        <section class="">
-                            <h1 class="text-center m-3" style="color: #0db7c4">VO2 Máximo: qué es y cómo calcularlo</h1>
+<!-- ── NAVBAR ── -->
+<nav class="tool-nav">
+    <% if (user) { %>
+        <a href="/panelcontrol" class="nav-logo">Fit<span>Data</span></a>
+        <ul class="nav-links">
+            <li><a href="/indicesantr">Herramientas</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/misdatos">Mis datos</a></li>
+        </ul>
+        <a href="/panelcontrol" class="nav-cta">Mi panel →</a>
+    <% } else { %>
+        <a href="/" class="nav-logo">Fit<span>Data</span></a>
+        <ul class="nav-links">
+            <li><a href="/#herramientas">Herramientas</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/login">Iniciar sesión</a></li>
+        </ul>
+        <a href="/register" class="nav-cta">Empieza gratis →</a>
+    <% } %>
+</nav>
 
-                            <p class="fs-4">El <strong>VO2 máximo</strong> o consumo máximo de oxígeno es la cantidad
-                                máxima de oxígeno que una persona puede utilizar durante un ejercicio intenso y
-                                prolongado. Esta medición es crucial para evaluar la <strong>capacidad
-                                    cardiovascular</strong> y la <strong>resistencia física</strong>, y se considera un
-                                indicador importante de salud general y estado físico. Un VO2 máximo más alto indica una
-                                mejor capacidad aeróbica y cardiovascular, lo cual es esencial para un estilo de vida
-                                saludable.
-                            </p>
-
-                            <h2 class="fs-2 text-center p-3" style="color: #0db7c4">Test de la Banca: evalua tu
-                                capacidad aeróbica</h2>
-
-                            <p class="fs-4">El test de la banca es una prueba de esfuerzo que permite evaluar tu
-                                <strong>capacidad aeróbica</strong>. A través de este test, se puede estimar el VO2
-                                máximo, los METs (equivalentes metabólicos) y otros indicadores clave de la salud.
-                            </p>
-
-                            <section class="">
-                                <h5 class="fs-4">Materiales:</h5>
-                                <ol class="fs-4">
-                                    <li>Banca o escalón, sobre una superficie estable, con altura <b>mínima</b> de 30 cm
-                                        y
-                                        <b>máxima</b> de 50 cm.
-                                    </li>
-                                    <li>Cinta metrica o metro de modisteria.</li>
-                                    <li>Cronómetro.</li>
-                                    <li>Aplicación Metronomo Beats descargada en el celular.</li>
-                                </ol>
-
-                                <section class="d-flex justify-content-center p-3">
-                                    <iframe class="" width="480" height="240"
-                                        src="https://www.youtube.com/embed/vEEVDZyIf9s?si=MUX7_6OzyCHMyULn"
-                                        title="Test de la Banca - Demostración de la prueba de esfuerzo" frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        allowfullscreen>
-                                    </iframe>
-                                </section>
-                            </section>
-
-                            <section class="mt-5 p-3">
-                                <p class=""> <span class="fs-4"> <b>Indicaciones para realizar el Test de la
-                                            Banca:</b></span>
-                                <ul class="fs-4">
-                                    <li>El paciente debe haber comido (desayuno, almuerzo o cena) al menos una hora
-                                        antes de la prueba.</li>
-                                    <li>El paciente debe ser <b>mayor de 16 años</b> y <b>menor de 55 años</b></li>
-                                </ul>
-                                <!-- MODAL -->
-                                <!-- Button trigger modal -->
-                                <button type="button"
-                                    class="btn btn-danger container d-flex justify-content-center align-items-center btn-lg fs-2"
-                                    data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    Ver Contraindicaciones
-                                </button>
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">
-                                                    Contraindicaciones para el Test de la Banca</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <span class="indicaciones-section-p4 text-warning">⚠️ No podrás realizar el test de la banca si presentas cualquiera de las siguientes patologías 
-                                                    ⚠️</span>
-                                                <ul class="indicaciones-section-ul2">
-                                                    <li>problemas cardiácos </li>
-                                                    <li>problemas coronarios</li>
-                                                    <li>soplos del corazon</li>
-                                                    <li>sufre dolores de pecho frecuentes</li>
-                                                    <li>hipoglicemia</li>
-                                                    <li>Anemia</li>
-                                                    <li>Hipertención</li>
-                                                    <li>Hipotención</li>
-                                                    <li>Problemas respiratorios</li>
-                                                    <li>Asma</li>
-                                                    <li>Osteocondritis</li>
-                                                    <li>Falta de aire</li>
-                                                    <li>Tendinopatias miembros inferiores </li>
-                                                    <li>Esguinces de rodilla en fase aguda</li>
-                                                    <li>Fracturas recientes </li>
-                                                    <li>Desmayos</li>
-                                                    <li>Epilepcia</li>
-                                                    <li>Mareos frecuentes</li>
-                                                    <li>Diabetes tipo I y II</li>
-                                                </ul>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger"
-                                                    data-bs-dismiss="modal">Cerrar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- FIN MODAL -->
-                            </section>
-                        </section>
-
-                        <hr class="my-4 border border-primary">
-
-                        <section class="p-3">
-                            <h2 class="fs-1 text-center" style="color: #0db7c4">Calculadora de VO2 Máximo</h2>
-                            <p class="fs-4 mt-3">Ahora que tienes toda la información necesaria, puedes calcular tu VO2 máximo utilizando el test de la banca. Primero, ingresa los valores de <b>BPM</b> que obtuviste en el test para obtener una estimación precisa de tu capacidad aeróbica.
-                            </p>
-
-                            <form id="vo2-form" class="row ms-5 p-3 rounded" action="" method="" autocomplete="off">
-                                <section class="pb-5">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label class="form-label ppm-section-bpm fs-4" for="BPM">■ BPM (Latidos por minuto):</label>
-                                            <p class="fs-4">👇 Introduce tus <b>BPM</b> para convertirlos en PPM y calcular tu VO2.
-                                            </p>
-                                            <input class="form-control form-control-lg" type="number" id="BPM"
-                                                placeholder="Ingresa tus BPM" step="0.01" min="1" maxlength="3"
-                                                pattern="[0-9]+" oninput="limitarNumero(this, 3)" required>
-                                            <p id="errorMensajePPM" style="color: crimson;"></p>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <label class="form-label fs-4 " for="H">■ Altura de la Banca (en cm):</label>
-                                            <p class="fs-4">👇 Especifica la altura del banco utilizado durante el test.🪑</p>
-                                            <input class="form-control form-control-lg" 
-                                            type="number" 
-                                            id="H"
-                                            placeholder="Ej. 45cm" 
-                                            step="0.01" 
-                                            min="1" 
-                                            maxlength="4"
-                                            pattern="[0-9]+" 
-                                            oninput="limitarNumero(this, 2)"
-                                            required>
-                                            <p id="errorMensajeH" style="color: crimson;"></p>
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <div class="col rounded">
-                                    <span>
-                                        <p></p> <!-- en este 👈 parrafo se dibuja el error desde JS -->
-                                        <div class="text-center fs-2 fw-bold" id="resultadoVo2"> </div>
-                                        <!-- aqui 👈 se muestra el numero de mets, es decir el resultado-->
-                                        <p class="" id="numVo2"></p>
-                                        <div class="lh-lg col text-center fs-2" id="resultVo2"></div>
-                                        <p id="errorVo2"></p>
-                                    </span>
-                                </div>
-
-                                <div class="text-center p-3">
-                                    <button type="submit" class="btn btn-primary fs-4">Calcula tu Vo2Máx</button>
-                                </div>
-                            </form>
-
-                            <hr class="my-4 border border-primary">
-
-                            <section class="">
-                                <span class="">
-                                    <h2 class="text-center fs-1" style="color: #0db7c4">¿Qué son los METs?</h2>
-                                    <p class="fs-4 p-3">  Los <b>METs (Metabolic Equivalent of Task)</b> representan la cantidad de energía que utilizas en comparación con estar en reposo. 
-                                        Por ejemplo, 1 MET equivale al gasto energético en reposo, mientras que una actividad física de 3 METs implica usar tres veces más energía.</p>
-                                    <p class="fs-4 text-center"> <b>Según tu Vo2Máx tus METS son:</b></p>
-                                    <p class="text-center fs-1" id="numMets"></p>
-                                    <div class="" id="resultadoMets"> </div>
-                                </span>
-                            </section>
-                        </section>
-
-                        <hr class="my-4 border border-primary">
-
-                        <section class="">
-                            <h2 class="text-center fs-1" style="color: #0e99ac">Calcula tu Expectativa de Vida</h2>
-                            <p class="fs-4 text-start p-3">Basándonos en la frecuencia de tu actividad física semanal, estima tu <b>expectativa de vida</b>. 
-                                Recuerda, este cálculo es una <b>estimación</b> y puede variar según tus hábitos y factores externos.
-                            </p>
-
-                            <form id="expect-form" action="" class="row ms-5 p-3 rounded" method="" autocomplete="off">
-                                <section class="d-flex justify-content-center">
-                                    <div class="form-check d-inline-block me-5">
-                                        <input class="form-check-input" type="radio" name="expectvida"
-                                            value="menos 3 v-s" id="menos3v-s" required>
-                                        <label class="fs-4 form-check-label" for="menos3v-s"> Menos de 3 veces por
-                                            Semana</label>
-                                    </div>
-
-                                    <div class="form-check d-inline-block me-5">
-                                        <input class="form-check-input" type="radio" name="expectvida"
-                                            value="mas 3 v-s" required> 
-                                        <label class="fs-4 form-check-label"> 3 o más veces por Semana</label>
-                                    </div>
-                                </section>
-
-                                <div class="col rounded">
-                                    <span>
-                                        <p></p> <!-- en este 👈 parrafo se dibuja el error desde JS -->
-                                        <p class="" id="numexpectVida"></p>
-                                        <div class="lh-lg col text-center fs-2" id="resultExpect"></div>
-                                        <!-- <p id="errorExpect"></p> -->
-                                    </span>
-                                </div>
-
-                                <div class="text-center p-3">
-                                    <button type="submit" class="btn btn-primary fs-4">Calcula tu Expectativa de
-                                        Vida</button>
-                                </div>
-
-                                <!-- <section class="position-relative">
-                            <button class="btnExpectV position-absolute top-50 start-50 translate-middle fs-4"
-                                type="button" id="mostrarSeleccion" onclick="ExpectativaVida()">
-                                Calcula tu Expectativa de Vida 😲
-                            </button>
-                        </section>
-                    </section>
-
-                    <section class="expectVidaResult container img-fluid">
-                        <p class="expectVidaResult-result" id="numexpectVida"></p>
-                        <div class="expectVidaResult-numeroexpectVida" id="resultadoexpectVida"> </div>
-                    </section> -->
-                            </form>
-                            <section class="">
-                                <blockquote class="fs-5">
-                                    Las fórmulas utilizadas fueron desarrolladas por el <a href="https://www.linkedin.com/in/carlos-alejandro-lopez-alban-a7187956" target="_blank" class="text-primary fs-5"><cite>Dr. Carlos Alejandro López Albán</cite></a>.
-                                  </blockquote>
-                            </section>
-                            <hr class="my-4 border border-primary">
-                </div>
-                <%- include('footer',{ user: user }) %>
-                    <!-- Botón "Volver arriba" -->
-                    <section class="scroll">
-                        <a id="scroll-to-top" href="#" class="back-to-top" role="button">
-                            <i class="bi bi-arrow-up-circle-fill"></i></a>
-                    </section>
-            </main>
+<!-- ── TOOL HEADER ── -->
+<div class="tool-header" id="vo2">
+    <div class="breadcrumb-nav">
+        <a href="/">Inicio</a>
+        <span class="breadcrumb-sep">›</span>
+        <span>Prueba de Esfuerzo</span>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/52b9ec387c.js" crossorigin="anonymous"></script>
-    <script src="/public/js/calculovo2.js"></script>
+    <div class="tool-badge">🫁 Capacidad Aeróbica</div>
+    <h1>VO₂ Máximo<br>y Prueba de Esfuerzo</h1>
+    <p>El VO₂ máximo es la cantidad máxima de oxígeno que puedes utilizar durante ejercicio intenso. Es el indicador más preciso de tu capacidad cardiovascular y condición física general.</p>
+</div>
 
+<!-- ── INSTRUCCIONES ── -->
+<div class="info-section" style="padding-top:48px">
+    <h3>Test de la Banca — ¿Cómo realizarlo?</h3>
+    <p>El test de la banca es una prueba estandarizada que permite estimar tu VO₂ máximo y METs a partir de tu frecuencia cardiaca de recuperación.</p>
+    <div class="video-wrapper">
+        <iframe width="480" height="270"
+            src="https://www.youtube.com/embed/vEEVDZyIf9s?si=MUX7_6OzyCHMyULn"
+            title="Test de la Banca — Demostración" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+    </div>
+    <p><strong>Materiales necesarios:</strong> banca o escalón de 30–50 cm de altura, cinta métrica, cronómetro y app de metrónomo.</p>
+    <p><strong>Requisitos:</strong> Haber comido al menos 1 hora antes. Edad entre 16 y 55 años.</p>
+    <button class="btn-danger-outline" onclick="document.getElementById('modal-contra').classList.add('open')">
+        ⚠️ Ver contraindicaciones
+    </button>
+</div>
+
+<!-- ── VO2 — MAIN CONTENT ── -->
+<div class="tool-main">
+
+    <!-- FORMULARIO VO2 -->
+    <div class="form-panel">
+        <h2>Calculadora VO₂ Máximo</h2>
+        <form id="vo2-form" action="" method="" autocomplete="off">
+            <div class="form-group">
+                <label for="BPM">BPM — Latidos por minuto</label>
+                <input type="number" id="BPM" placeholder="Ej: 120" step="0.01" min="1" max="250" oninput="limitarNumero(this, 3)" required>
+                <div class="form-error" id="errorMensajePPM"></div>
+            </div>
+            <div class="form-group">
+                <label for="H">Altura de la banca (cm)</label>
+                <input type="number" id="H" placeholder="Ej: 40" step="0.01" min="1" max="80" oninput="limitarNumero(this, 2)" required>
+                <div class="form-error" id="errorMensajeH"></div>
+            </div>
+            <button type="submit" class="btn-calc">Calcular VO₂ Máx →</button>
+        </form>
+    </div>
+
+    <!-- RESULTADO VO2 + METS -->
+    <div class="result-panel">
+        <div class="result-card-main">
+            <div id="resultadoVo2" style="font-size:2rem; font-weight:800; color:var(--dark)"></div>
+            <div style="font-size:.78rem; color:var(--gray); margin:.3rem 0 1rem; font-weight:600; text-transform:uppercase; letter-spacing:.05em" id="numVo2"></div>
+            <div id="numMets" style="font-size:2.5rem; font-weight:800; color:var(--green)"></div>
+            <div id="resultadoMets"></div>
+            <div id="resultVo2"></div>
+            <p id="errorVo2" class="form-error"></p>
+            <div class="result-placeholder" id="vo2-placeholder">
+                <div class="result-placeholder-icon">🫁</div>
+                <p>Ingresa tus BPM y altura de la banca</p>
+            </div>
+        </div>
+        <% if (user) { %>
+        <div class="result-info" id="save-vo2-hint" style="display:none">
+            💾 <a href="/misdatos">Ve a Mis datos</a> para ver tu historial guardado
+        </div>
+        <% } else { %>
+        <div class="result-info" id="save-vo2-hint" style="display:none">
+            💾 <a href="/register">Crea una cuenta gratis</a> para guardar tu resultado
+        </div>
+        <% } %>
+    </div>
+</div>
+
+<!-- ── ANUNCIO ── -->
+<div class="ad-section">
+    <div class="ad-label">Publicidad</div>
+    <ins class="adsbygoogle" style="display:block"
+         data-ad-client="ca-pub-9371741460887435"
+         data-ad-slot="auto" data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<!-- ── EXPECTATIVA DE VIDA ── -->
+<div class="tool-main" style="padding-top:0">
+
+    <!-- FORMULARIO EXPECTATIVA -->
+    <div class="form-panel">
+        <h2>Expectativa de Vida</h2>
+        <p style="font-size:.85rem; color:var(--gray); margin-bottom:1.2rem">Basado en tu frecuencia de actividad física semanal y el VO₂ calculado arriba.</p>
+        <form id="expect-form" action="" method="" autocomplete="off">
+            <div class="form-group">
+                <label>¿Cuántas veces haces ejercicio por semana?</label>
+                <div class="radio-group" style="flex-direction:column">
+                    <label class="radio-option">
+                        <input type="radio" name="expectvida" value="menos 3 v-s" id="menos3v-s" required>
+                        Menos de 3 veces por semana
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="expectvida" value="mas 3 v-s">
+                        3 o más veces por semana
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn-calc">Calcular mi expectativa →</button>
+        </form>
+    </div>
+
+    <!-- RESULTADO EXPECTATIVA -->
+    <div class="result-panel">
+        <div class="result-card-main" id="resultExpect">
+            <div class="result-placeholder">
+                <div class="result-placeholder-icon">⏳</div>
+                <p>Calcula tu VO₂ primero, luego selecciona tu frecuencia</p>
+            </div>
+        </div>
+        <p id="numexpectVida" class="form-error"></p>
+        <div class="result-info" style="display:block; font-size:.8rem">
+            ⚠️ Este cálculo es una <strong>estimación</strong>. Fórmulas desarrolladas por el <a href="https://www.linkedin.com/in/carlos-alejandro-lopez-alban-a7187956" target="_blank" rel="noopener">Dr. Carlos Alejandro López Albán</a>.
+        </div>
+    </div>
+</div>
+
+<!-- ── HERRAMIENTAS RELACIONADAS ── -->
+<div class="related-section">
+    <h3>Otras herramientas</h3>
+    <div class="related-grid">
+        <a href="/indicesantr" class="related-card">
+            <span class="related-icon">⚖️</span>
+            <div><div class="related-name">IMC</div><div class="related-desc">Índice de Masa Corporal</div></div>
+        </a>
+        <a href="/icc" class="related-card">
+            <span class="related-icon">📏</span>
+            <div><div class="related-name">ICC</div><div class="related-desc">Riesgo cardiovascular</div></div>
+        </a>
+        <a href="/valoracion" class="related-card">
+            <span class="related-icon">🔥</span>
+            <div><div class="related-name">Gasto Energético</div><div class="related-desc">Calorías diarias</div></div>
+        </a>
+        <a href="/valoracion" class="related-card">
+            <span class="related-icon">🥗</span>
+            <div><div class="related-name">Macronutrientes</div><div class="related-desc">Proteínas, carbs y grasas</div></div>
+        </a>
+    </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="tool-footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="/" class="nav-logo">Fit<span>Data</span></a>
+            <p>Herramientas científicas de evaluación física para todos.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Herramientas</h4>
+            <a href="/indicesantr">IMC</a>
+            <a href="/icc">ICC</a>
+            <a href="/pruebaEsfuerzo">VO₂ Máximo</a>
+            <a href="/valoracion">Gasto Energético</a>
+        </div>
+        <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="/privacyPolicy">Privacidad</a>
+            <a href="/avisoLegal">Aviso legal</a>
+            <a href="/politicacookies">Cookies</a>
+            <a href="/contact">Contacto</a>
+        </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 FitData. Todos los derechos reservados.</div>
+</footer>
+
+<!-- ── MODAL CONTRAINDICACIONES ── -->
+<div class="modal-overlay" id="modal-contra" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="modal-box">
+        <h3>⚠️ Contraindicaciones para el Test de la Banca</h3>
+        <p style="font-size:.85rem; color:var(--gray); margin-bottom:.8rem">No podrás realizar el test si presentas alguna de las siguientes condiciones:</p>
+        <ul>
+            <li>Problemas cardíacos o coronarios</li>
+            <li>Soplos del corazón</li>
+            <li>Dolores de pecho frecuentes</li>
+            <li>Hipoglicemia o Anemia</li>
+            <li>Hipertensión o Hipotensión</li>
+            <li>Problemas respiratorios o Asma</li>
+            <li>Osteocondritis</li>
+            <li>Falta de aire frecuente</li>
+            <li>Tendinopatías en miembros inferiores</li>
+            <li>Esguinces de rodilla en fase aguda</li>
+            <li>Fracturas recientes</li>
+            <li>Desmayos, Epilepsia o Mareos frecuentes</li>
+            <li>Diabetes tipo I y II</li>
+        </ul>
+        <button class="modal-close" onclick="document.getElementById('modal-contra').classList.remove('open')">Cerrar</button>
+    </div>
+</div>
+
+<script>
+document.getElementById('vo2-form').addEventListener('submit', function() {
+    const ph = document.getElementById('vo2-placeholder');
+    if (ph) ph.style.display = 'none';
+    const hint = document.getElementById('save-vo2-hint');
+    if (hint) hint.style.display = 'block';
+});
+</script>
+<script src="/public/js/calculovo2.js"></script>
 </body>
-
 </html>
