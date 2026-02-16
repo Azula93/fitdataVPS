@@ -23,7 +23,8 @@ let Generoseleccionado = null;
 // Función para obtener valores de los elementos por sus IDs
 function obtenerValores() {
   // Solo ejecutar si todos los elementos existen (IMC e ICC en la misma página)
-  if (!document.getElementById('cintura') || !document.getElementById('cadera')) return;
+  if (!document.getElementById('peso') || !document.getElementById('talla') ||
+      !document.getElementById('cintura') || !document.getElementById('cadera')) return;
 
   const peso = parseFloat(document.getElementById('peso').value);
   const talla = parseFloat(document.getElementById('talla').value);
@@ -294,7 +295,13 @@ obtenerValores();
 } catch (error) {
     console.error('Error en la solicitud:', error);
 }
-  
+
+});
+
+// Listeners oninput para campos ICC e IMC (evita inline handlers bloqueados por CSP)
+[['cintura', 3], ['cadera', 3], ['talla', 4], ['peso', 3]].forEach(([id, max]) => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', function() { limitarNumero(this, max); });
 });
 
 

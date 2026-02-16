@@ -55,12 +55,12 @@
         <form id="imc-form" action="#" method="post" autocomplete="off">
             <div class="form-group">
                 <label for="talla">Altura (en metros)</label>
-                <input type="number" id="talla" name="talla" step="0.01" placeholder="Ej: 1.70" min="1" max="2.5" oninput="limitarNumero(this, 4)" required>
+                <input type="number" id="talla" name="talla" step="0.01" placeholder="Ej: 1.70" min="1" max="2.5" required>
                 <div class="form-error" id="errorMensajeAltura"></div>
             </div>
             <div class="form-group">
                 <label for="peso">Peso (en kilogramos)</label>
-                <input type="number" id="peso" placeholder="Ej: 70" min="2" max="300" oninput="limitarNumero(this, 3)" required>
+                <input type="number" id="peso" placeholder="Ej: 70" min="2" max="300" required>
                 <div class="form-error" id="errorMensajePeso"></div>
             </div>
             <button type="submit" class="btn-calc">Calcular mi IMC →</button>
