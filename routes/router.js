@@ -14,7 +14,7 @@ function validateCsrf(req, res, next) {
 
 // router para las vistas
 // se coloca authController.isAuthenticated para asegurar que el usuario si tiene las credenciales para ingresar al sistema, que si esta autenticado 
-router.get('/', authController.isAuthenticated, (req, res) => {
+router.get('/', authController.optionalAuth, (req, res) => {
     res.render('index', { user: req.user })
 })
 

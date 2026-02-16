@@ -174,6 +174,29 @@ exports.isAuthenticated = async (req, res, next) => {
     }
 };
 
+// Middleware para rutas públicas: carga el usuario si hay sesión, pero no bloquea si no hay
+exports.optionalAuth = async (req, res, next) => {
+    req.user = null;
+    if (!req.cookies.jwt) return next();
+
+    try {
+        const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRETO);
+        const client = await pool.connect();
+        try {
+            const result = await client.query(
+                'SELECT id, nombreusuario AS "nombreUsuario", email FROM users WHERE id = $1',
+                [decoded.id]
+            );
+            if (result.rows.length > 0) req.user = result.rows[0];
+        } finally {
+            client.release();
+        }
+    } catch {
+        res.clearCookie('jwt');
+    }
+    next();
+};
+
 // sistema logOut
 exports.logout = (req, res) => {
     res.clearCookie('jwt');
