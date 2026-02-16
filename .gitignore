@@ -1,0 +1,13 @@
+# Variables de entorno (credenciales sensibles)
+env/.env
+.env
+
+# Dependencias
+node_modules/
+
+# Logs
+logs/*.log
+
+# Sistema operativo
+.DS_Store
+Thumbs.db

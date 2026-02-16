@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-adsense-account" content="ca-pub-9371741460887435">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="/public/css/signin.css" rel="stylesheet">
+  <link href="/public/css/styles.css" rel="stylesheet">
+  <link href="/public/css/dashboard.css" rel="stylesheet">
+<link rel="icon" href="/public/assets/favicons/favicon-removebg.png" type="image/x-icon">
+  <meta name="generator" content="Hugo 0.87.0">
+  <title>FitData</title>
+</head>
+
+<body>
+  <div class="container-fluid d-flex flex-column min-vh-100 ">
+    <%- include('navbar',{ user: user }) %>
+      <main class="flex-grow-1 mt-5">
+        <div class="container mt-3">
+          <!-- Contenido principal   -->
+          <section class="p-5">
+            <div
+              class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+              <h2>Dashboard</h2>
+              <h2>Bienvenid@:
+                <% if (user) { %>
+                  <span class="badge bg-success">
+                    <%= user.nombreUsuario %>
+                  </span>
+                  <% } %>
+              </h2>
+            </div>
+          </section>
+
+          <!-- INICIO CARDS -->
+          <section class="container d-flex justify-content-center align-items-center mb-5">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-12 col-md-6 col-lg-3 mb-4 d-flex">
+                  <div class="card w-100">
+                    <img src="/public/assets/img (5).webp" class="card-img-top" alt="...">
+                    <div class="card-body d-flex flex-column">
+                      <h5 class="card-title text-center">Indices Antropometricos</h5>
+                      <p class="card-text">Calcula medidas como el IMC y el ICC para estimar tu salud general, evaluar
+                        el
+                        riesgo cardiovascular y determinar tu peso ideal.</p>
+                      <a href="/" class="btn btn-primary mt-auto">Calcula tu IMC</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-3 mb-4 d-flex">
+                  <div class="card w-100">
+                    <img src="/public/assets/img (4).webp" class="card-img-top" alt="...">
+                    <div class="card-body d-flex flex-column">
+                      <h5 class="card-title text-center">Valoración nutricional</h5>
+                      <p class="card-text">Utiliza nuestra calculadora para obtener tu TMB y tus requerimientos
+                        nutricionales
+                        diarios de proteínas, carbohidratos, grasas y micronutrientes.</p>
+                      <a href="/valoracion" class="btn btn-primary mt-auto">Calcula tu GET</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-3 mb-4 d-flex">
+                  <div class="card w-100">
+                    <img src="/public/assets/img (6).webp" class="card-img-top" alt="...">
+                    <div class="card-body d-flex flex-column">
+                      <h5 class="card-title text-center">Prueba de esfuerzo</h5>
+                      <p class="card-text">El VO2 máximo indica la capacidad aeróbica y resistencia física. Calcula tu
+                        Vo2
+                        Máximo y tus METS para evaluar tu condición fisica.</p>
+                      <a href="/pruebaEsfuerzo" class="btn btn-primary mt-auto">Test Esfuerzo</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-3 mb-4 d-flex">
+                  <div class="card w-100">
+                    <img src="/public/assets/img (13).webp" class="card-img-top" alt="...">
+                    <div class="card-body d-flex flex-column">
+                      <h5 class="card-title text-center">Blog Nutricional</h5>
+                      <p class="card-text">La guía del ICBF facilita la distribución adecuada de alimentos. Proporciona
+                        porcentajes recomendados por grupo alimenticio.</p>
+                      <a href="/blog" class="btn btn-primary mt-auto">Ver Blog</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- FIN CARDS -->
+          <%- include('footer',{ user: user }) %>
+        </div>
+      </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://kit.fontawesome.com/52b9ec387c.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- <script type="module" src="/public/js/datoscombinados.js"></script> -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9371741460887435"
+     crossorigin="anonymous"></script>  
+</body>
+
+</html>

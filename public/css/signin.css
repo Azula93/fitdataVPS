@@ -1,0 +1,135 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    font-family: "Poppins", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: inherit;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-signin .checkbox {
+  font-weight: 400;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+header, footer {
+  background-color: #f8f9fa;
+  
+}
+
+main {
+  flex: 1;
+}
+
+.container {
+  max-width: 960px;
+  margin: auto;
+}
+
+footer {
+  padding: 20px 0;
+}
+
+.footer h5, .footer ul, .footer p {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer ul {
+  padding-left: 0;
+}
+
+.footer ul li {
+  padding: 5px 0;
+}
+
+.main-content {
+  margin-top: 20px;
+}
+
+/* Estilo para los enlaces del navbar */
+.navbar-nav .nav-link {
+  position: relative;
+  padding-bottom: 5px; /* Ajusta el padding según sea necesario */
+  margin: 0 10px;
+}
+
+/* Línea debajo del enlace al pasar el mouse */
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: #007bff; /* Cambia el color de la línea según sea necesario */
+  transition: width 0.3s;
+}
+
+/* Anima la línea al pasar el mouse */
+.navbar-nav .nav-link:hover::after {
+  width: 100%;
+}
+
+/* Estilo para los enlaces del footer */
+.footer-links a {
+  position: relative;
+  padding-bottom: 5px; /* Ajusta el padding según sea necesario */
+  margin: 0 10px; /* Ajusta el margen entre enlaces */
+  display: block; /* Asegura que el enlace ocupe todo el espacio */
+}
+
+/* Línea debajo del enlace al pasar el mouse */
+.footer-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: #007bff; /* Cambia el color de la línea según sea necesario */
+  transition: width 0.3s;
+}
+
+/* Anima la línea al pasar el mouse */
+.footer-links a:hover::after {
+  width: 55%;
+}
+
+.profile-img{
+  cursor: pointer;
+}
