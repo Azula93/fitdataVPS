@@ -39,6 +39,7 @@ app.use(helmet({
                 "cdnjs.cloudflare.com",
                 "stackpath.bootstrapcdn.com",
                 "ka-f.fontawesome.com",
+                "fonts.googleapis.com",      // Google Fonts (Poppins, etc.)
             ],
             imgSrc: [
                 "'self'",
@@ -52,6 +53,7 @@ app.use(helmet({
                 "'self'",
                 "ka-f.fontawesome.com",
                 "cdnjs.cloudflare.com",
+                "fonts.gstatic.com",         // Google Fonts (archivos de fuente)
             ],
             frameSrc: [
                 "www.youtube.com",           // videos embebidos

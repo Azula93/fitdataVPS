@@ -1,135 +1,666 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="google-adsense-account" content="ca-pub-9371741460887435">
+    <meta name="description" content="FitData — Calcula tu IMC, VO₂ máximo, gasto energético y más. Herramientas científicas de evaluación física, gratis.">
+    <meta name="google-adsense-account" content="ca-pub-9371741460887435">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9371741460887435" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/public/css/signin.css" rel="stylesheet">
-    <link href="/public/css/styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/x-icon">
-    <title>FitData</title>
-</head>
+    <title>FitData — Conoce tu estado físico real</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+        :root {
+            --green:     #22c55e;
+            --green-dark:#16a34a;
+            --green-soft:#dcfce7;
+            --blue:      #3b82f6;
+            --dark:      #0f172a;
+            --gray:      #64748b;
+            --light:     #f8fafc;
+            --white:     #ffffff;
+            --radius:    14px;
+            --shadow:    0 4px 24px rgba(0,0,0,.08);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,.12);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--white);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* ── NAVBAR ── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 5%; height: 68px;
+            background: rgba(255,255,255,.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,.06);
+        }
+        .nav-logo {
+            font-size: 1.4rem; font-weight: 700; color: var(--dark);
+            text-decoration: none; display: flex; align-items: center; gap: 8px;
+        }
+        .nav-logo span { color: var(--green); }
+        .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--gray); font-size: .95rem; font-weight: 500; transition: color .2s; }
+        .nav-links a:hover { color: var(--dark); }
+        .nav-cta {
+            background: var(--green); color: white; border: none;
+            padding: .55rem 1.4rem; border-radius: 50px; font-size: .9rem;
+            font-weight: 600; cursor: pointer; text-decoration: none;
+            transition: background .2s, transform .15s;
+        }
+        .nav-cta:hover { background: var(--green-dark); transform: translateY(-1px); }
+        .nav-cta-outline {
+            background: transparent; color: var(--dark); border: 2px solid rgba(0,0,0,.12);
+            padding: .5rem 1.3rem; border-radius: 50px; font-size: .9rem;
+            font-weight: 600; text-decoration: none; transition: all .2s;
+            margin-right: .5rem;
+        }
+        .nav-cta-outline:hover { border-color: var(--green); color: var(--green); }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center;
+            padding: 100px 5% 60px;
+            background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; top: -40%; right: -10%;
+            width: 700px; height: 700px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(34,197,94,.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-content { max-width: 580px; position: relative; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--green-soft); color: var(--green-dark);
+            padding: .35rem .9rem; border-radius: 50px;
+            font-size: .8rem; font-weight: 600; margin-bottom: 1.5rem;
+        }
+        .hero-badge::before { content: '●'; font-size: .6rem; }
+        h1 {
+            font-size: clamp(2rem, 4.5vw, 3.2rem);
+            font-weight: 800; line-height: 1.15;
+            color: var(--dark); margin-bottom: 1.2rem;
+        }
+        h1 .accent { color: var(--green); }
+        .hero p {
+            font-size: 1.1rem; color: var(--gray);
+            max-width: 460px; margin-bottom: 2rem;
+        }
+        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+        .btn-primary {
+            background: var(--green); color: white;
+            padding: .85rem 2rem; border-radius: 50px;
+            font-size: 1rem; font-weight: 600; text-decoration: none;
+            transition: all .2s; display: inline-flex; align-items: center; gap: 8px;
+            box-shadow: 0 4px 14px rgba(34,197,94,.4);
+        }
+        .btn-primary:hover { background: var(--green-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(34,197,94,.45); }
+        .btn-secondary {
+            background: white; color: var(--dark);
+            padding: .85rem 2rem; border-radius: 50px;
+            font-size: 1rem; font-weight: 600; text-decoration: none;
+            border: 2px solid rgba(0,0,0,.1); transition: all .2s;
+        }
+        .btn-secondary:hover { border-color: var(--green); color: var(--green); }
+        .hero-stats { display: flex; gap: 2rem; }
+        .stat { text-align: center; }
+        .stat-num { font-size: 1.6rem; font-weight: 800; color: var(--dark); }
+        .stat-label { font-size: .78rem; color: var(--gray); font-weight: 500; }
+
+        /* Hero visual */
+        .hero-visual {
+            position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 1rem;
+        }
+        .result-card {
+            background: white; border-radius: var(--radius);
+            padding: 1.2rem 1.5rem; box-shadow: var(--shadow-lg);
+            min-width: 220px; animation: float 3s ease-in-out infinite;
+        }
+        .result-card:nth-child(2) { animation-delay: .8s; margin-left: 2rem; }
+        .result-card:nth-child(3) { animation-delay: 1.6s; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .card-label { font-size: .75rem; color: var(--gray); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+        .card-value { font-size: 1.8rem; font-weight: 800; color: var(--dark); }
+        .card-status {
+            display: inline-block; font-size: .75rem; font-weight: 600;
+            padding: .2rem .7rem; border-radius: 50px; margin-top: .3rem;
+        }
+        .status-ok   { background: #dcfce7; color: #16a34a; }
+        .status-warn { background: #fef9c3; color: #854d0e; }
+        .progress-bar { height: 6px; background: #f1f5f9; border-radius: 3px; margin-top: .6rem; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--green), #86efac); }
+
+        /* ── ANUNCIO BANNER ── */
+        .ad-banner {
+            background: #f8fafc; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 5%; text-align: center; min-height: 110px;
+            display: flex; align-items: center; justify-content: center; flex-direction: column;
+        }
+        .ad-label { font-size: .65rem; color: #94a3b8; text-transform: uppercase; letter-spacing: .08em; margin-bottom: .4rem; }
+
+        /* ── HERRAMIENTAS ── */
+        .tools { padding: 80px 5%; background: white; }
+        .section-header { text-align: center; margin-bottom: 3.5rem; }
+        .section-tag {
+            display: inline-block; background: var(--green-soft);
+            color: var(--green-dark); font-size: .78rem; font-weight: 700;
+            padding: .3rem .9rem; border-radius: 50px;
+            text-transform: uppercase; letter-spacing: .06em; margin-bottom: .8rem;
+        }
+        h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; color: var(--dark); margin-bottom: .6rem; }
+        .section-sub { color: var(--gray); font-size: 1rem; max-width: 500px; margin: 0 auto; }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem; max-width: 1100px; margin: 0 auto;
+        }
+        .tool-card {
+            background: var(--light); border-radius: var(--radius);
+            padding: 1.8rem; transition: all .25s; cursor: pointer;
+            border: 2px solid transparent; text-decoration: none; color: inherit;
+            display: block;
+        }
+        .tool-card:hover { background: white; border-color: var(--green); box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+        .tool-icon {
+            width: 52px; height: 52px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; margin-bottom: 1rem;
+        }
+        .tool-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: .4rem; }
+        .tool-card p { font-size: .85rem; color: var(--gray); line-height: 1.5; }
+        .tool-free {
+            display: inline-block; font-size: .7rem; font-weight: 700;
+            padding: .15rem .6rem; border-radius: 50px; margin-top: .8rem;
+            background: var(--green-soft); color: var(--green-dark);
+        }
+
+        /* ── CÓMO FUNCIONA ── */
+        .how { padding: 80px 5%; background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%); }
+        .steps { display: flex; gap: 2rem; max-width: 900px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+        .step { flex: 1; min-width: 220px; text-align: center; position: relative; }
+        .step:not(:last-child)::after {
+            content: '→'; position: absolute; right: -1.2rem; top: 1.5rem;
+            font-size: 1.5rem; color: var(--green);
+        }
+        .step-num {
+            width: 56px; height: 56px; background: var(--green);
+            color: white; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center;
+            font-size: 1.3rem; font-weight: 800; margin: 0 auto 1rem;
+            box-shadow: 0 4px 14px rgba(34,197,94,.35);
+        }
+        .step h3 { font-size: 1rem; font-weight: 700; margin-bottom: .4rem; }
+        .step p { font-size: .85rem; color: var(--gray); }
+
+        /* ── DEMO IMC ── */
+        .demo { padding: 80px 5%; background: white; }
+        .demo-container {
+            max-width: 900px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+        }
+        .demo-form { background: var(--light); padding: 2rem; border-radius: var(--radius); }
+        .demo-form h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; font-size: .82rem; font-weight: 600; color: var(--gray); margin-bottom: .4rem; }
+        .form-group input, .form-group select {
+            width: 100%; padding: .7rem 1rem;
+            border: 2px solid #e2e8f0; border-radius: 10px;
+            font-family: 'Poppins', sans-serif; font-size: .9rem;
+            transition: border-color .2s; outline: none; background: white;
+        }
+        .form-group input:focus, .form-group select:focus { border-color: var(--green); }
+        .btn-calc {
+            width: 100%; background: var(--green); color: white;
+            border: none; padding: .8rem; border-radius: 50px;
+            font-size: .95rem; font-weight: 600; cursor: pointer;
+            margin-top: .5rem; transition: background .2s;
+            font-family: 'Poppins', sans-serif;
+        }
+        .btn-calc:hover { background: var(--green-dark); }
+        .demo-result { text-align: center; }
+        .imc-gauge { width: 180px; height: 90px; margin: 0 auto 1.5rem; }
+        .imc-gauge svg { width: 180px; height: 90px; }
+        .result-imc { font-size: 3rem; font-weight: 800; color: var(--dark); }
+        .result-cat { font-size: 1rem; font-weight: 600; color: var(--green); margin-bottom: 1rem; }
+        .result-desc { font-size: .85rem; color: var(--gray); margin-bottom: 1.5rem; }
+        .save-prompt {
+            background: var(--green-soft); border-radius: var(--radius);
+            padding: 1rem; font-size: .85rem; color: var(--green-dark); font-weight: 500;
+        }
+        .save-prompt a { color: var(--green-dark); font-weight: 700; }
+
+        /* ── ANUNCIO MEDIO ── */
+        .ad-mid { padding: 2rem 5%; background: #f8fafc; }
+        .ad-mid-inner {
+            max-width: 728px; margin: 0 auto; min-height: 110px;
+            background: white; border: 1px solid #e2e8f0;
+            border-radius: var(--radius); padding: 1.5rem;
+            text-align: center; color: #94a3b8;
+            display: flex; align-items: center; justify-content: center; flex-direction: column;
+        }
+
+        /* ── TESTIMONIOS ── */
+        .testimonials { padding: 80px 5%; background: white; }
+        .test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; max-width: 900px; margin: 0 auto; }
+        .test-card { background: var(--light); padding: 1.8rem; border-radius: var(--radius); }
+        .stars { color: #f59e0b; font-size: 1rem; margin-bottom: .8rem; }
+        .test-card p { font-size: .9rem; color: var(--gray); font-style: italic; margin-bottom: 1rem; line-height: 1.6; }
+        .test-author { display: flex; align-items: center; gap: .8rem; }
+        .avatar {
+            width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+            background: linear-gradient(135deg, var(--green), var(--blue));
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 700; font-size: .9rem;
+        }
+        .author-name { font-size: .85rem; font-weight: 600; }
+        .author-role { font-size: .75rem; color: var(--gray); }
+
+        /* ── CTA FINAL ── */
+        .cta-section {
+            padding: 80px 5%; text-align: center;
+            background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
+            color: white; position: relative; overflow: hidden;
+        }
+        .cta-section::before {
+            content: ''; pointer-events: none;
+            position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+            width: 600px; height: 600px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(34,197,94,.15) 0%, transparent 70%);
+        }
+        .cta-section h2 { color: white; font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: .8rem; position: relative; }
+        .cta-section p { color: #94a3b8; font-size: 1.05rem; margin-bottom: 2rem; max-width: 480px; margin-left: auto; margin-right: auto; position: relative; }
+        .cta-section .btn-primary { position: relative; font-size: 1.05rem; padding: 1rem 2.5rem; }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--dark); color: #64748b;
+            padding: 3rem 5% 2rem;
+            border-top: 1px solid #1e293b;
+        }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 2rem; }
+        .footer-brand .nav-logo { color: white; margin-bottom: .8rem; display: inline-flex; }
+        .footer-brand p { font-size: .85rem; color: #64748b; max-width: 240px; }
+        .footer-col h4 { color: white; font-size: .85rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: .06em; }
+        .footer-col a { display: block; color: #64748b; text-decoration: none; font-size: .85rem; margin-bottom: .5rem; transition: color .2s; }
+        .footer-col a:hover { color: var(--green); }
+        .footer-bottom { border-top: 1px solid #1e293b; padding-top: 1.5rem; font-size: .8rem; text-align: center; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            .hero-visual { display: none; }
+            .demo-container { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .step:not(:last-child)::after { display: none; }
+        }
+        @media (max-width: 600px) {
+            nav { padding: 0 4%; }
+            .nav-links { display: none; }
+            .hero-stats { gap: 1.2rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
 <body>
 
-    <div class="container-fluid d-flex flex-column min-vh-100">
-        <%- include('navbar',{ user: user }) %>
-            <main class="flex-grow-1 mt-5">
-                <div class="container mt-3 mt-5">
-                    <h1 class="text-center mt-5" style="color: #0db7c4"> Indices Antropométricos Básicos
-                    </h1>
-                    <h2 class=" pt-4 pb-3 fs-2 text-center">¿Qué es el Índice de Masa Corporal (IMC)? </h2>
-                    <p class="fs-4">Es
-                        una
-                        herramienta empleada para medir la relación entre el peso y la estatura de una persona.
-                        Habitualmente, se utiliza como un indicador de la salud general, permitiendo clasificar a
-                        los
-                        individuos en categorías como bajo peso, peso normal, sobrepeso y obesidad. <br>
-                    <h2 class="ImcTitle fs-1 text-center pt-5" style="color: #0db7c4">Calcula tu IMC</h2>
+<!-- ── NAVBAR ── -->
+<nav>
+    <% if (user) { %>
+        <a href="/panelcontrol" class="nav-logo">Fit<span>Data</span></a>
+        <ul class="nav-links">
+            <li><a href="/indicesantr">Herramientas</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/misdatos">Mis datos</a></li>
+        </ul>
+        <a href="/panelcontrol" class="nav-cta">Ir al panel →</a>
+    <% } else { %>
+        <a href="/" class="nav-logo">Fit<span>Data</span></a>
+        <ul class="nav-links">
+            <li><a href="#herramientas">Herramientas</a></li>
+            <li><a href="#como-funciona">Cómo funciona</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/login">Iniciar sesión</a></li>
+        </ul>
+        <a href="/register" class="nav-cta">Empieza gratis →</a>
+    <% } %>
+</nav>
 
-                    <!-- CALCULO IMC -->
-                    <form id="imc-form" class="fs-4 mb-5 mt-5" action="#" method="post" autocomplete="off">
-                        <div class="row g-3">
-                            <div class="mb-3 col">
-                                <label for="talla" class="form-label">Altura (en metros)</label>
-                                <input type="number" id="talla" class="form-control" step="0.01" placeholder="1.65m"
-                                    name="talla" maxlength="4" pattern="^[0-9]+"
-                                    oninput="limitarNumero(this, 4)"  required>
-                                 <p id="errorMensajeAltura" style="color: crimson;"></p>
-
-                            </div>
-
-                            <div class="mb-3 col">
-                                <label for="peso" class="form-label col">Peso (en kilogramos)</label>
-                                <input type="number" id="peso" class="form-control" placeholder="70kg" min="2" maxlength="3" pattern="^[0-9]+"
-                                    oninput="limitarNumero(this, 3)" required>
-                                <p id="errorMensajePeso" style="color: crimson;"></p>
-                            </div>
-                        </div>
-
-                        <div class="col ms-4 rounded">
-                            <span>
-                                <p></p> <!-- en este 👈 parrafo se dibuja el error desde JS     -->
-                                <div class="lh-lg col text-center fs-2" id="resultImc"></div>
-                                <p id="errorImc"></p>
-                            </span>
-                        </div>
-
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Calcula tu IMC</button>
-                        </div>
-                    </form>
-                    <hr class="my-4 border border-primary">
-                    <!-- FIN CALULO IMC -->
-
-                    <!-- CALCULO ICC -->
-                        <!-- CALCULO ICC -->
-                    <h1 class="fs-1 text-center pt-3 pb-5">¿Qué es el Índice de Cintura-Cadera (ICC)?</h1>
-                    <p class="fs-4"> Es una herramienta utilizada para evaluar cómo se distribuye la grasa en el cuerpo
-                        humano.
-                        Este índice permite identificar el riesgo de enfermedades relacionadas con la obesidad y
-                        proporciona información valiosa sobre la
-                        distribución de la grasa corporal. Una acumulación excesiva de grasa en la zona abdominal está
-                        asociada con un mayor riesgo para la salud.</p>
-                    <h2 class="fs-1 text-center pt-5" style="color: #0db7c4">Calcula tu Índice de Cintura-Cadera (ICC)
-                    </h2>
-
-                    <form class="col ms-5 p-3 rounded" id="icc-form" action="#" method="post" autocomplete="off">
-                        <fieldset>
-                            <legend class="text-start fs-3"> <b>Selecciona tu sexo</b></legend>
-                            <div class="form-check m-3">
-                                <label class="form-check-label fs-4" for="femenino">Femenino</label>
-                                <input class="form-check-input" type="radio" name="genero" value="mujer" id="femenino">
-
-                            </div>
-                            <div class="form-check m-3">
-                                <label class="form-check-label fs-4" for="masculino">Masculino</label>
-                                <input class="form-check-input" type="radio" name="genero" value="hombre"
-                                    id="masculino">
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend class="text-start fs-3"><b>Ingresa tus Medidas</b></legend>
-
-                            <div class="row g-3 m-3">
-                                <div class="mb-3 col">
-                                    <label for="cintura" class="form-label fs-4">Perimetro de Cintura (en cm)</label>
-                                    <input type="number" id="cintura" class="form-control" placeholder="Ej: 60" min="2"
-                                        maxlength="3" pattern="^[0-9]+" oninput="limitarNumero(this, 3)" aria-describedby="errorMensajePcintura" required>
-                                    <p id="errorMensajePcintura" style="color: crimson;"></p>
-                                </div>
-                                <div class="mb-3 col">
-                                    <label for="cadera" class="form-label fs-4">Perimetro de Cadera (en cm)</label>
-                                    <input type="number" id="cadera" class="form-control" placeholder="Ej: 92" min="2"
-                                        maxlength="3" pattern="^[0-9]+" oninput="limitarNumero(this, 3)" aria-describedby="errorMensajePcadera" required>
-                                    <p id="errorMensajePcadera" style="color: crimson;"></p>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <div class="col ms-4 rounded">
-                            <span>
-                                <p></p><!-- en este 👈 parrafo se dibuja el error desde JS     -->
-                                <div class="lh-lg col text-center fs-2" id="resultIcc" aria-live="polite"></div>
-                                <p id="errorIcc"></p>
-                            </span>
-                        </div>
-
-                        <div class="text-center mb-5">
-                            <button type="submit" class="btn btn-primary ">Calcula tu ICC</button>
-                        </div>
-                    </form>
-                    <!-- FIN CALCULO ICC -->
-                </div>
-                <%- include('footer',{ user: user }) %>
-            </main>            
+<!-- ── HERO ── -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">Herramienta gratuita de salud</div>
+        <h1>Conoce tu estado<br>físico <span class="accent">real</span><br>en 5 minutos</h1>
+        <p>Calcula tu IMC, consumo de oxígeno, gasto energético y más. Todo en un solo lugar, gratis.</p>
+        <div class="hero-actions">
+            <% if (user) { %>
+                <a href="/indicesantr" class="btn-primary">Ir a mis herramientas →</a>
+                <a href="/misdatos" class="btn-secondary">Ver mis resultados</a>
+            <% } else { %>
+                <a href="#demo" class="btn-primary">Calcular mi IMC gratis →</a>
+                <a href="#como-funciona" class="btn-secondary">Ver cómo funciona</a>
+            <% } %>
+        </div>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-num">100+</div>
+                <div class="stat-label">Usuarios activos</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">10+</div>
+                <div class="stat-label">Herramientas</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">100%</div>
+                <div class="stat-label">Gratis</div>
+            </div>
+        </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/52b9ec387c.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/public/js/antropometria.js"></script>
 
+    <!-- Tarjetas flotantes decorativas -->
+    <div class="hero-visual" aria-hidden="true">
+        <div class="result-card">
+            <div class="card-label">IMC</div>
+            <div class="card-value">22.4</div>
+            <div class="card-status status-ok">✓ Peso normal</div>
+            <div class="progress-bar"><div class="progress-fill" style="width:55%"></div></div>
+        </div>
+        <div class="result-card">
+            <div class="card-label">VO₂ Máx</div>
+            <div class="card-value">48.2</div>
+            <div class="card-status status-ok">✓ Excelente</div>
+            <div class="progress-bar"><div class="progress-fill" style="width:78%"></div></div>
+        </div>
+        <div class="result-card">
+            <div class="card-label">Gasto Energético</div>
+            <div class="card-value">2,340</div>
+            <div class="card-status status-warn">kcal/día</div>
+            <div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ── ANUNCIO SUPERIOR (leaderboard 728×90) ── -->
+<div class="ad-banner">
+    <div class="ad-label">Publicidad</div>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-9371741460887435"
+         data-ad-slot="auto"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<!-- ── HERRAMIENTAS ── -->
+<section class="tools" id="herramientas">
+    <div class="section-header">
+        <div class="section-tag">Herramientas gratuitas</div>
+        <h2>Todo lo que necesitas para<br>evaluar tu salud física</h2>
+        <p class="section-sub">Calculadoras basadas en fórmulas científicas validadas</p>
+    </div>
+    <div class="tools-grid">
+        <a href="#demo" class="tool-card">
+            <div class="tool-icon" style="background:#dcfce7">⚖️</div>
+            <h3>Índice de Masa Corporal</h3>
+            <p>Calcula tu IMC y descubre si tu peso es adecuado para tu altura.</p>
+            <span class="tool-free">Gratis</span>
+        </a>
+        <a href="/valoracion" class="tool-card">
+            <div class="tool-icon" style="background:#dbeafe">📏</div>
+            <h3>Índice Cintura-Cadera</h3>
+            <p>Evalúa la distribución de grasa corporal y el riesgo cardiovascular.</p>
+            <span class="tool-free">Gratis</span>
+        </a>
+        <a href="/pruebaEsfuerzo" class="tool-card">
+            <div class="tool-icon" style="background:#fce7f3">🫁</div>
+            <h3>VO₂ Máximo</h3>
+            <p>Mide tu capacidad aeróbica máxima y nivel de condición física.</p>
+            <span class="tool-free">Gratis</span>
+        </a>
+        <a href="/valoracion" class="tool-card">
+            <div class="tool-icon" style="background:#fef9c3">🔥</div>
+            <h3>Gasto Energético Total</h3>
+            <p>Calcula las calorías que necesitas según tu actividad diaria.</p>
+            <span class="tool-free">Gratis</span>
+        </a>
+        <a href="/valoracion" class="tool-card">
+            <div class="tool-icon" style="background:#ede9fe">🥗</div>
+            <h3>Macronutrientes</h3>
+            <p>Descubre la distribución ideal de proteínas, carbohidratos y grasas.</p>
+            <span class="tool-free">Gratis</span>
+        </a>
+        <a href="/pruebaEsfuerzo" class="tool-card">
+            <div class="tool-icon" style="background:#ffedd5">💓</div>
+            <h3>Prueba de Esfuerzo</h3>
+            <p>Evalúa tu rendimiento cardiovascular con protocolos estandarizados.</p>
+            <span class="tool-free">Gratis</span>
+        </a>
+    </div>
+</section>
+
+<!-- ── CÓMO FUNCIONA ── -->
+<section class="how" id="como-funciona">
+    <div class="section-header">
+        <div class="section-tag">Simple y rápido</div>
+        <h2>¿Cómo funciona?</h2>
+        <p class="section-sub">En 3 pasos obtienes un análisis completo de tu estado físico</p>
+    </div>
+    <div class="steps">
+        <div class="step">
+            <div class="step-num">1</div>
+            <h3>Ingresa tus datos</h3>
+            <p>Peso, altura, edad y nivel de actividad física. Sin datos sensibles.</p>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <h3>Obtén tus resultados</h3>
+            <p>Cálculos instantáneos basados en fórmulas científicas validadas.</p>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <h3>Guarda y monitorea</h3>
+            <p>Crea una cuenta gratis para guardar tu historial y ver tu evolución.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ── DEMO CALCULADORA IMC ── -->
+<section class="demo" id="demo">
+    <div class="section-header">
+        <div class="section-tag">Pruébalo ahora</div>
+        <h2>Calcula tu IMC gratis</h2>
+        <p class="section-sub">Sin registrarte. Resultado inmediato.</p>
+    </div>
+    <div class="demo-container">
+        <div class="demo-form">
+            <h3>Ingresa tus datos</h3>
+            <div class="form-group">
+                <label for="demo-peso">Peso (kg)</label>
+                <input type="number" id="demo-peso" placeholder="70" min="30" max="250">
+            </div>
+            <div class="form-group">
+                <label for="demo-altura">Altura (cm)</label>
+                <input type="number" id="demo-altura" placeholder="170" min="100" max="250">
+            </div>
+            <div class="form-group">
+                <label for="demo-sexo">Sexo</label>
+                <select id="demo-sexo">
+                    <option value="m">Masculino</option>
+                    <option value="f">Femenino</option>
+                </select>
+            </div>
+            <button class="btn-calc" onclick="calcularIMC()">Calcular mi IMC →</button>
+        </div>
+        <div class="demo-result" id="resultado">
+            <div class="imc-gauge">
+                <svg viewBox="0 0 180 90">
+                    <path d="M 20 80 A 70 70 0 0 1 160 80" fill="none" stroke="#e2e8f0" stroke-width="12" stroke-linecap="round"/>
+                    <path id="gauge-fill" d="M 20 80 A 70 70 0 0 1 90 10" fill="none" stroke="#22c55e" stroke-width="12" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="result-imc" id="imc-valor">—</div>
+            <div class="result-cat" id="imc-categoria">Ingresa tus datos</div>
+            <div class="result-desc" id="imc-desc">Completa el formulario para ver tu resultado</div>
+            <div class="save-prompt" id="save-prompt" style="display:none">
+                <% if (user) { %>
+                    💾 <a href="/indicesantr">Ir a tus herramientas</a> para guardar tus resultados y ver tu evolución
+                <% } else { %>
+                    💾 <a href="/register">Crea una cuenta gratis</a> para guardar tu resultado y ver tu evolución en el tiempo
+                <% } %>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── ANUNCIO MEDIO (728×90) ── -->
+<div class="ad-mid">
+    <div class="ad-mid-inner">
+        <div class="ad-label">Publicidad</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-9371741460887435"
+             data-ad-slot="auto"
+             data-ad-format="horizontal"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+</div>
+
+<!-- ── TESTIMONIOS ── -->
+<section class="testimonials">
+    <div class="section-header">
+        <div class="section-tag">Opiniones</div>
+        <h2>Lo que dicen nuestros usuarios</h2>
+    </div>
+    <div class="test-grid">
+        <div class="test-card">
+            <div class="stars">★★★★★</div>
+            <p>"Muy fácil de usar. Calculé mi IMC y el gasto energético en menos de 5 minutos. Los resultados son muy claros."</p>
+            <div class="test-author">
+                <div class="avatar">ML</div>
+                <div>
+                    <div class="author-name">María López</div>
+                    <div class="author-role">Nutricionista</div>
+                </div>
+            </div>
+        </div>
+        <div class="test-card">
+            <div class="stars">★★★★★</div>
+            <p>"La prueba de esfuerzo me ayudó a entender mi condición cardiovascular. Muy recomendado para atletas."</p>
+            <div class="test-author">
+                <div class="avatar">CA</div>
+                <div>
+                    <div class="author-name">Carlos Andrade</div>
+                    <div class="author-role">Entrenador personal</div>
+                </div>
+            </div>
+        </div>
+        <div class="test-card">
+            <div class="stars">★★★★★</div>
+            <p>"Uso FitData con mis pacientes para hacer seguimiento de sus índices antropométricos. Herramienta imprescindible."</p>
+            <div class="test-author">
+                <div class="avatar">PS</div>
+                <div>
+                    <div class="author-name">Patricia Suárez</div>
+                    <div class="author-role">Médico deportivo</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── CTA FINAL ── -->
+<section class="cta-section">
+    <h2>Empieza a conocer<br>tu cuerpo hoy</h2>
+    <p>Gratis para siempre. Sin tarjeta de crédito. Resultados en segundos.</p>
+    <% if (user) { %>
+        <a href="/panelcontrol" class="btn-primary">Ir a mi panel →</a>
+    <% } else { %>
+        <a href="/register" class="btn-primary">Crear cuenta gratis →</a>
+    <% } %>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="/" class="nav-logo">Fit<span>Data</span></a>
+            <p>Herramientas científicas de evaluación física para todos.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Herramientas</h4>
+            <a href="#demo">IMC</a>
+            <a href="/valoracion">ICC &amp; Nutrición</a>
+            <a href="/pruebaEsfuerzo">VO₂ Máximo</a>
+            <a href="/valoracion">Gasto Energético</a>
+            <a href="/valoracion">Macronutrientes</a>
+        </div>
+        <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="/privacyPolicy">Política de privacidad</a>
+            <a href="/avisoLegal">Aviso legal</a>
+            <a href="/politicacookies">Cookies</a>
+            <a href="/contact">Contacto</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 FitData. Todos los derechos reservados.
+    </div>
+</footer>
+
+<script>
+function calcularIMC() {
+    const peso   = parseFloat(document.getElementById('demo-peso').value);
+    const altCm  = parseFloat(document.getElementById('demo-altura').value);
+    const altura = altCm / 100;
+
+    if (!peso || !altura || peso < 30 || altura < 1) {
+        document.getElementById('imc-categoria').textContent = 'Ingresa datos válidos';
+        return;
+    }
+
+    const imc = (peso / (altura * altura)).toFixed(1);
+    let categoria, desc, color, pct;
+
+    if      (imc < 18.5) { categoria = 'Bajo peso';       desc = 'Tu peso está por debajo del rango saludable.';     color = '#3b82f6'; pct = 20; }
+    else if (imc < 25)   { categoria = '✓ Peso normal';   desc = '¡Felicidades! Tu peso está en el rango saludable.'; color = '#22c55e'; pct = 50; }
+    else if (imc < 30)   { categoria = 'Sobrepeso';        desc = 'Tu peso está ligeramente por encima del rango.';   color = '#f59e0b'; pct = 72; }
+    else                 { categoria = 'Obesidad';          desc = 'Se recomienda consultar con un profesional.';      color = '#ef4444'; pct = 90; }
+
+    document.getElementById('imc-valor').textContent      = imc;
+    document.getElementById('imc-categoria').textContent  = categoria;
+    document.getElementById('imc-categoria').style.color  = color;
+    document.getElementById('imc-desc').textContent       = desc;
+    document.getElementById('save-prompt').style.display  = 'block';
+
+    // Animar gauge
+    const r = 70, cx = 90, cy = 80;
+    const angle = -180 + (pct / 100) * 180;
+    const rad = (angle * Math.PI) / 180;
+    const x = cx + r * Math.cos(rad);
+    const y = cy + r * Math.sin(rad);
+    const large = pct > 50 ? 1 : 0;
+    document.getElementById('gauge-fill').setAttribute('d',
+        `M 20 80 A 70 70 0 ${large} 1 ${x.toFixed(1)} ${y.toFixed(1)}`);
+    document.getElementById('gauge-fill').style.stroke = color;
+}
+</script>
 </body>
 </html>
