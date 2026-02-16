@@ -140,7 +140,8 @@ function filtrarYLimpiarTextoIcc(texto) {
 // FUNCIONES PARA FILTRAR TEXTO PARA LA TABLA MIS DATOS
 
 // calcula IMC
-document.getElementById('imc-form').addEventListener('submit', async function (e) {
+const imcFormEl = document.getElementById('imc-form');
+if (imcFormEl) imcFormEl.addEventListener('submit', async function (e) {
   e.preventDefault();
 obtenerValores();
   const peso = parseFloat(document.getElementById('peso').value);
