@@ -19,17 +19,11 @@ router.get('/', authController.optionalAuth, (req, res) => {
 })
 
 router.get('/login', (req, res) => {
-    const crypto = require('crypto');
-    const token = crypto.randomBytes(32).toString('hex');
-    req.session.csrfToken = token;
-    res.render('login', { alert: false, csrfToken: token });
+    res.render('login', { alert: false });
 })
 
 router.get('/register', (req, res) => {
-    const crypto = require('crypto');
-    const token = crypto.randomBytes(32).toString('hex');
-    req.session.csrfToken = token;
-    res.render('register', { alert: false, csrfToken: token });
+    res.render('register', { alert: false })
 })
 
 router.get('/panelcontrol', authController.isAuthenticated, (req, res) => {
