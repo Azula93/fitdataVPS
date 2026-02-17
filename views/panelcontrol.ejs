@@ -13,38 +13,24 @@
         .dash-hero {
             padding: 88px 5% 40px;
             background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid var(--border);
         }
         .dash-hero-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1.5rem;
+            max-width: 1100px; margin: 0 auto;
+            display: flex; align-items: center;
+            justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
         }
-        .dash-identity {
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-        }
+        .dash-identity { display: flex; align-items: center; gap: 1.2rem; }
         .dash-avatar {
-            width: 60px; height: 60px;
-            border-radius: 50%;
-            background: var(--green);
-            color: white;
-            font-size: 1.4rem;
-            font-weight: 800;
+            width: 60px; height: 60px; border-radius: 50%;
+            background: var(--green); color: white;
+            font-size: 1.4rem; font-weight: 800;
             display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(34,197,94,.35);
+            flex-shrink: 0; box-shadow: 0 4px 12px rgba(34,197,94,.35);
         }
         .dash-identity h1 {
             font-size: clamp(1.3rem, 2.5vw, 1.8rem);
-            font-weight: 800;
-            color: var(--dark);
-            line-height: 1.2;
+            font-weight: 800; color: var(--dark); line-height: 1.2;
         }
         .dash-identity h1 span { color: var(--green); }
         .dash-identity p { font-size: .85rem; color: var(--gray); margin-top: .25rem; }
@@ -69,12 +55,8 @@
             max-width: 1100px; margin: 0 auto;
             display: flex; align-items: center; gap: 1.2rem;
         }
-        .quote-icon {
-            font-size: 2rem; flex-shrink: 0; opacity: .85;
-        }
-        .quote-text {
-            color: white; font-size: .9rem; line-height: 1.6;
-        }
+        .quote-icon { font-size: 2rem; flex-shrink: 0; opacity: .85; }
+        .quote-text { color: white; font-size: .9rem; line-height: 1.6; }
         .quote-text strong { font-size: 1rem; font-weight: 600; display: block; margin-bottom: .2rem; }
         .quote-author { font-size: .78rem; opacity: .8; margin-top: .3rem; }
 
@@ -92,22 +74,19 @@
             display: flex; align-items: center; gap: 1rem;
             text-decoration: none; transition: all .22s;
         }
-        .quick-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
-        .quick-card:hover.qc-green { border-color: #22c55e; }
-        .quick-card:hover.qc-orange { border-color: #f97316; }
-        .quick-card:hover.qc-blue { border-color: #3b82f6; }
-        .quick-card:hover.qc-purple { border-color: #a855f7; }
-
+        .qc-green:hover  { border-color: #22c55e; box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+        .qc-orange:hover { border-color: #f97316; box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+        .qc-blue:hover   { border-color: #3b82f6; box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+        .qc-purple:hover { border-color: #a855f7; box-shadow: var(--shadow-lg); transform: translateY(-3px); }
         .quick-icon {
             width: 46px; height: 46px; border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.3rem; flex-shrink: 0;
         }
-        .qc-green .quick-icon  { background: #dcfce7; }
+        .qc-green  .quick-icon { background: #dcfce7; }
         .qc-orange .quick-icon { background: #ffedd5; }
         .qc-blue   .quick-icon { background: #dbeafe; }
         .qc-purple .quick-icon { background: #f3e8ff; }
-
         .quick-info .quick-label { font-size: .72rem; color: var(--gray); font-weight: 500; }
         .quick-info .quick-value { font-size: .95rem; font-weight: 700; color: var(--dark); line-height: 1.2; }
 
@@ -124,6 +103,45 @@
         .section-heading::after {
             content: ''; flex: 1; height: 2px; background: var(--border); margin-left: .4rem;
         }
+
+        /* ── RESULTS SUMMARY ── */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+            gap: 1rem;
+        }
+        .result-stat {
+            background: white; border: 2px solid var(--border);
+            border-radius: var(--radius); padding: 1.2rem;
+            text-align: center; transition: all .2s;
+        }
+        .result-stat:hover { border-color: var(--green); box-shadow: var(--shadow); transform: translateY(-2px); }
+        .rs-icon { font-size: 1.6rem; margin-bottom: .4rem; }
+        .rs-label {
+            font-size: .7rem; color: var(--gray); font-weight: 600;
+            text-transform: uppercase; letter-spacing: .05em;
+        }
+        .rs-value {
+            font-size: 1.35rem; font-weight: 800; line-height: 1.2; margin-top: .3rem;
+        }
+        .rs-value.has-data { color: var(--green-dark); }
+        .rs-value.no-data { color: #cbd5e1; font-size: 1.1rem; }
+        .results-empty {
+            margin-top: 1rem; padding: 1rem 1.3rem;
+            background: var(--light); border-radius: 10px;
+            font-size: .85rem; color: var(--gray); line-height: 1.6;
+        }
+        .results-actions { margin-top: 1.2rem; display: flex; gap: .8rem; flex-wrap: wrap; }
+        .btn-result-action {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: .65rem 1.2rem; border-radius: 10px;
+            font-family: 'Poppins', sans-serif; font-size: .85rem; font-weight: 600;
+            text-decoration: none; transition: all .2s;
+        }
+        .btn-result-green { background: var(--green-soft); color: var(--green-dark); }
+        .btn-result-green:hover { background: var(--green); color: white; }
+        .btn-result-blue { background: #eff6ff; color: #2563eb; }
+        .btn-result-blue:hover { background: #2563eb; color: white; }
 
         /* ── TOOL CARDS ── */
         .tools-grid {
@@ -142,27 +160,26 @@
         .tc-orange .tool-card-accent { background: linear-gradient(90deg, #f97316, #fb923c); }
         .tc-blue   .tool-card-accent { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
         .tc-purple .tool-card-accent { background: linear-gradient(90deg, #a855f7, #c084fc); }
-
-        .tool-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
-        .tc-green:hover  { border-color: #22c55e; }
-        .tc-orange:hover { border-color: #f97316; }
-        .tc-blue:hover   { border-color: #3b82f6; }
-        .tc-purple:hover { border-color: #a855f7; }
-
+        .tc-green:hover  { border-color: #22c55e; box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+        .tc-orange:hover { border-color: #f97316; box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+        .tc-blue:hover   { border-color: #3b82f6; box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+        .tc-purple:hover { border-color: #a855f7; box-shadow: var(--shadow-lg); transform: translateY(-4px); }
         .tool-card-inner { padding: 1.4rem; flex: 1; display: flex; flex-direction: column; gap: .6rem; }
         .tool-card-icon { font-size: 2rem; margin-bottom: .2rem; }
         .tool-card-title { font-size: 1rem; font-weight: 700; color: var(--dark); line-height: 1.3; }
         .tool-card-desc { font-size: .82rem; color: var(--gray); line-height: 1.6; flex: 1; }
         .tool-card-cta {
             display: inline-flex; align-items: center; gap: 5px;
-            font-size: .82rem; font-weight: 700; margin-top: .4rem;
-            transition: gap .2s;
+            font-size: .82rem; font-weight: 700; margin-top: .4rem; transition: gap .2s;
         }
         .tc-green  .tool-card-cta { color: #16a34a; }
         .tc-orange .tool-card-cta { color: #ea580c; }
         .tc-blue   .tool-card-cta { color: #2563eb; }
         .tc-purple .tool-card-cta { color: #9333ea; }
-        .tool-card:hover .tool-card-cta { gap: 9px; }
+        .tc-green:hover  .tool-card-cta,
+        .tc-orange:hover .tool-card-cta,
+        .tc-blue:hover   .tool-card-cta,
+        .tc-purple:hover .tool-card-cta { gap: 9px; }
 
         /* ── ACCOUNT ── */
         .dash-account {
@@ -178,6 +195,24 @@
             transition: all .2s;
         }
         .btn-logout:hover { background: #e11d48; color: white; border-color: #e11d48; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .results-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 520px) {
+            .dash-hero { padding: 82px 4% 32px; }
+            .dash-hero-btns { width: 100%; }
+            .btn-hero { flex: 1; justify-content: center; }
+            .dash-quick { grid-template-columns: 1fr 1fr; gap: .75rem; padding: 1.5rem 4% 0; }
+            .dash-section { padding: 2rem 4%; }
+            .results-grid { grid-template-columns: repeat(2, 1fr); }
+            .tools-grid { grid-template-columns: 1fr; }
+            .quote-banner { padding: 1rem 4%; }
+            .dash-account { padding: 0 4% 2.5rem; }
+            .results-actions { flex-direction: column; }
+            .btn-result-action { justify-content: center; }
+        }
     </style>
 </head>
 <body>
@@ -190,7 +225,7 @@
         <li><a href="/blog">Blog</a></li>
         <li><a href="/misdatos">Mis datos</a></li>
     </ul>
-    <a href="/panelcontrol" class="nav-cta">Mi panel →</a>
+    <a href="/logout" class="nav-cta" style="background:#fff1f2;color:#e11d48;border:2px solid #fecdd3;">↩ Salir</a>
 </nav>
 
 <!-- ── HERO ── -->
@@ -198,6 +233,7 @@
 const initials = user.nombreUsuario
     .trim().split(/\s+/)
     .map(w => w[0]).slice(0, 2).join('').toUpperCase();
+const hasData = userData && (userData.imc || userData.vo2 || userData.gasto_energetico);
 %>
 <div class="dash-hero">
     <div class="dash-hero-inner">
@@ -258,8 +294,82 @@ const initials = user.nombreUsuario
     </a>
 </div>
 
-<!-- ── HERRAMIENTAS ── -->
+<!-- ── MIS ÚLTIMOS RESULTADOS ── -->
 <div class="dash-section">
+    <div class="section-heading">📊 Mis últimos resultados</div>
+    <div class="results-grid">
+        <div class="result-stat">
+            <div class="rs-icon">⚖️</div>
+            <div class="rs-label">IMC</div>
+            <% if (userData && userData.imc) { %>
+                <div class="rs-value has-data"><%= userData.imc %></div>
+            <% } else { %>
+                <div class="rs-value no-data">—</div>
+            <% } %>
+        </div>
+        <div class="result-stat">
+            <div class="rs-icon">📏</div>
+            <div class="rs-label">ICC</div>
+            <% if (userData && userData.icc) { %>
+                <div class="rs-value has-data"><%= userData.icc %></div>
+            <% } else { %>
+                <div class="rs-value no-data">—</div>
+            <% } %>
+        </div>
+        <div class="result-stat">
+            <div class="rs-icon">🔥</div>
+            <div class="rs-label">GET (kcal)</div>
+            <% if (userData && userData.gasto_energetico) { %>
+                <div class="rs-value has-data"><%= userData.gasto_energetico %></div>
+            <% } else { %>
+                <div class="rs-value no-data">—</div>
+            <% } %>
+        </div>
+        <div class="result-stat">
+            <div class="rs-icon">🫁</div>
+            <div class="rs-label">VO₂ Máx</div>
+            <% if (userData && userData.vo2) { %>
+                <div class="rs-value has-data"><%= userData.vo2 %></div>
+            <% } else { %>
+                <div class="rs-value no-data">—</div>
+            <% } %>
+        </div>
+        <div class="result-stat">
+            <div class="rs-icon">⚡</div>
+            <div class="rs-label">METs</div>
+            <% if (userData && userData.mets) { %>
+                <div class="rs-value has-data"><%= userData.mets %></div>
+            <% } else { %>
+                <div class="rs-value no-data">—</div>
+            <% } %>
+        </div>
+        <div class="result-stat">
+            <div class="rs-icon">⏳</div>
+            <div class="rs-label">Expect. Vida</div>
+            <% if (userData && userData.expect_vida) { %>
+                <div class="rs-value has-data"><%= userData.expect_vida %></div>
+            <% } else { %>
+                <div class="rs-value no-data">—</div>
+            <% } %>
+        </div>
+    </div>
+
+    <% if (!hasData) { %>
+    <div class="results-empty">
+        Aún no tienes resultados guardados. Usa las herramientas de abajo y guarda tus cálculos para verlos aquí.
+    </div>
+    <% } %>
+
+    <div class="results-actions">
+        <a href="/misdatos" class="btn-result-action btn-result-green">📋 Ver todos mis datos</a>
+        <% if (hasData) { %>
+        <a href="/generar-pdf" class="btn-result-action btn-result-blue" target="_blank">📄 Descargar PDF</a>
+        <% } %>
+    </div>
+</div>
+
+<!-- ── HERRAMIENTAS ── -->
+<div class="dash-section" style="padding-top: 0;">
     <div class="section-heading">🛠 Herramientas</div>
     <div class="tools-grid">
 

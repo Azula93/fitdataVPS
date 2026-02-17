@@ -26,7 +26,7 @@ router.get('/register', (req, res) => {
     res.render('register', { alert: false })
 })
 
-router.get('/panelcontrol', authController.isAuthenticated, (req, res) => {
+router.get('/panelcontrol', authController.isAuthenticated, async (req, res) => {
     const frases = [
         { texto: "La consistencia es el puente entre tus objetivos y tus logros.", autor: "Anónimo" },
         { texto: "Tu cuerpo puede hacerlo. Es tu mente la que tienes que convencer.", autor: "Anónimo" },
@@ -60,7 +60,21 @@ router.get('/panelcontrol', authController.isAuthenticated, (req, res) => {
         { texto: "Un paso a la vez, un día a la vez. Así se construyen los cambios duraderos.", autor: "FitData" },
     ];
     const indice = Math.floor(Date.now() / 86400000) % frases.length;
-    res.render('panelcontrol', { user: req.user, frase: frases[indice] });
+
+    let userData = null;
+    try {
+        const client = await pool.connect();
+        try {
+            const result = await client.query('SELECT * FROM user_data WHERE user_id = $1', [req.user.id]);
+            userData = result.rows[0] || null;
+        } finally {
+            client.release();
+        }
+    } catch (err) {
+        console.error('Error al cargar datos del panel:', err);
+    }
+
+    res.render('panelcontrol', { user: req.user, frase: frases[indice], userData });
 })
 
 router.get('/indicesantr', authController.optionalAuth, (req, res) => {
