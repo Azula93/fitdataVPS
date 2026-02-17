@@ -27,7 +27,40 @@ router.get('/register', (req, res) => {
 })
 
 router.get('/panelcontrol', authController.isAuthenticated, (req, res) => {
-    res.render('panelcontrol', { user: req.user })
+    const frases = [
+        { texto: "La consistencia es el puente entre tus objetivos y tus logros.", autor: "Anónimo" },
+        { texto: "Tu cuerpo puede hacerlo. Es tu mente la que tienes que convencer.", autor: "Anónimo" },
+        { texto: "Cada vez que entrenas, te conviertes en una versión mejor de ti mismo.", autor: "FitData" },
+        { texto: "La nutrición es el cimiento de tu rendimiento físico.", autor: "FitData" },
+        { texto: "Pequeños cambios diarios llevan a grandes transformaciones.", autor: "Anónimo" },
+        { texto: "El único mal entrenamiento es el que no hiciste.", autor: "Anónimo" },
+        { texto: "Tu salud es una inversión, no un gasto.", autor: "Anónimo" },
+        { texto: "Comer bien no es una restricción, es un acto de amor propio.", autor: "FitData" },
+        { texto: "El éxito en el fitness se construye hábito a hábito.", autor: "FitData" },
+        { texto: "No busques la perfección, busca el progreso.", autor: "Anónimo" },
+        { texto: "Hidratarse es tan importante como entrenar. Bebe agua constantemente.", autor: "FitData" },
+        { texto: "Descansar también es parte del proceso. Tu cuerpo se reconstruye en el sueño.", autor: "FitData" },
+        { texto: "Un cuerpo activo envejece más lento. Muévete cada día.", autor: "FitData" },
+        { texto: "Las proteínas son los ladrillos con los que construyes tu mejor versión.", autor: "FitData" },
+        { texto: "El VO₂ máximo es el termómetro de tu salud cardiovascular.", autor: "FitData" },
+        { texto: "Cada porción de frutas y verduras es un paso hacia una vida más larga.", autor: "FitData" },
+        { texto: "La disciplina te lleva donde la motivación no alcanza.", autor: "Anónimo" },
+        { texto: "Un buen balance de macronutrientes es la base de la energía diaria.", autor: "FitData" },
+        { texto: "El IMC es solo un número, pero tu bienestar es un estilo de vida.", autor: "FitData" },
+        { texto: "No compares tu progreso con el de otros. Compárate solo con quien eras ayer.", autor: "Anónimo" },
+        { texto: "El ejercicio es el antidepresivo más poderoso y económico que existe.", autor: "Anónimo" },
+        { texto: "Cuida tu alimentación y ella cuidará tu salud.", autor: "Anónimo" },
+        { texto: "Los grandes atletas no nacen, se hacen con dedicación y constancia.", autor: "FitData" },
+        { texto: "Cada gramo de fibra en tu dieta es un aliado de tu digestión.", autor: "FitData" },
+        { texto: "La salud es riqueza. Invierte en ella cada día.", autor: "Anónimo" },
+        { texto: "Moverse es vivir. Encuentra tu actividad favorita y hazla parte de tu rutina.", autor: "FitData" },
+        { texto: "Las grasas saludables no son el enemigo; son combustible para tu cerebro.", autor: "FitData" },
+        { texto: "Medir tu progreso te ayuda a mantener el rumbo hacia tus metas.", autor: "FitData" },
+        { texto: "El desayuno no es solo una comida, es el combustible para tu día.", autor: "FitData" },
+        { texto: "Un paso a la vez, un día a la vez. Así se construyen los cambios duraderos.", autor: "FitData" },
+    ];
+    const indice = Math.floor(Date.now() / 86400000) % frases.length;
+    res.render('panelcontrol', { user: req.user, frase: frases[indice] });
 })
 
 router.get('/indicesantr', authController.optionalAuth, (req, res) => {

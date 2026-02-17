@@ -9,221 +9,175 @@
     <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/x-icon">
     <title>Mi Panel | FitData</title>
     <style>
-        /* ── DASHBOARD HEADER ── */
-        .dash-header {
-            padding: 100px 5% 48px;
+        /* ── HERO ── */
+        .dash-hero {
+            padding: 88px 5% 40px;
             background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
             border-bottom: 1px solid #e2e8f0;
         }
-        .dash-header-inner {
+        .dash-hero-inner {
             max-width: 1100px;
             margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 1.5rem;
         }
-        .dash-welcome h1 {
-            font-size: clamp(1.5rem, 3vw, 2rem);
+        .dash-identity {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+        .dash-avatar {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            background: var(--green);
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 800;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(34,197,94,.35);
+        }
+        .dash-identity h1 {
+            font-size: clamp(1.3rem, 2.5vw, 1.8rem);
             font-weight: 800;
             color: var(--dark);
             line-height: 1.2;
         }
-        .dash-welcome h1 span { color: var(--green); }
-        .dash-welcome p {
-            font-size: .9rem;
-            color: var(--gray);
-            margin-top: .4rem;
+        .dash-identity h1 span { color: var(--green); }
+        .dash-identity p { font-size: .85rem; color: var(--gray); margin-top: .25rem; }
+        .dash-hero-btns { display: flex; gap: .8rem; flex-wrap: wrap; }
+        .btn-hero {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: .65rem 1.2rem; border-radius: 10px;
+            font-family: 'Poppins', sans-serif; font-size: .85rem; font-weight: 600;
+            text-decoration: none; transition: all .2s;
         }
-        .dash-actions {
-            display: flex;
-            gap: .8rem;
-            flex-wrap: wrap;
-        }
-        .btn-dash {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: .65rem 1.2rem;
-            border-radius: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-size: .85rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all .2s;
-        }
-        .btn-dash-primary {
-            background: var(--green);
-            color: white;
-        }
-        .btn-dash-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
-        .btn-dash-outline {
-            background: white;
-            color: var(--dark);
-            border: 2px solid var(--border);
-        }
-        .btn-dash-outline:hover { border-color: var(--green); color: var(--green-dark); }
+        .btn-hero-primary { background: var(--green); color: white; }
+        .btn-hero-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+        .btn-hero-outline { background: white; color: var(--dark); border: 2px solid var(--border); }
+        .btn-hero-outline:hover { border-color: var(--green); color: var(--green-dark); }
 
-        /* ── STATS ROW ── */
-        .dash-stats {
-            max-width: 1100px;
-            margin: 0 auto;
+        /* ── QUOTE BANNER ── */
+        .quote-banner {
+            background: linear-gradient(120deg, #16a34a 0%, #0891b2 100%);
+            padding: 1.4rem 5%;
+        }
+        .quote-banner-inner {
+            max-width: 1100px; margin: 0 auto;
+            display: flex; align-items: center; gap: 1.2rem;
+        }
+        .quote-icon {
+            font-size: 2rem; flex-shrink: 0; opacity: .85;
+        }
+        .quote-text {
+            color: white; font-size: .9rem; line-height: 1.6;
+        }
+        .quote-text strong { font-size: 1rem; font-weight: 600; display: block; margin-bottom: .2rem; }
+        .quote-author { font-size: .78rem; opacity: .8; margin-top: .3rem; }
+
+        /* ── QUICK ACCESS ── */
+        .dash-quick {
+            max-width: 1100px; margin: 0 auto;
             padding: 2rem 5% 0;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
         }
-        .stat-card {
-            background: white;
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.2rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            text-decoration: none;
-            transition: all .2s;
+        .quick-card {
+            background: white; border: 2px solid var(--border);
+            border-radius: var(--radius); padding: 1.1rem 1.3rem;
+            display: flex; align-items: center; gap: 1rem;
+            text-decoration: none; transition: all .22s;
         }
-        .stat-card:hover {
-            border-color: var(--green);
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-2px);
-        }
-        .stat-icon {
-            width: 44px;
-            height: 44px;
-            background: var(--green-soft);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            flex-shrink: 0;
-        }
-        .stat-info .stat-label {
-            font-size: .75rem;
-            color: var(--gray);
-            font-weight: 500;
-        }
-        .stat-info .stat-value {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--dark);
-            line-height: 1.2;
-        }
+        .quick-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+        .quick-card:hover.qc-green { border-color: #22c55e; }
+        .quick-card:hover.qc-orange { border-color: #f97316; }
+        .quick-card:hover.qc-blue { border-color: #3b82f6; }
+        .quick-card:hover.qc-purple { border-color: #a855f7; }
 
-        /* ── SECTION TITLE ── */
+        .quick-icon {
+            width: 46px; height: 46px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; flex-shrink: 0;
+        }
+        .qc-green .quick-icon  { background: #dcfce7; }
+        .qc-orange .quick-icon { background: #ffedd5; }
+        .qc-blue   .quick-icon { background: #dbeafe; }
+        .qc-purple .quick-icon { background: #f3e8ff; }
+
+        .quick-info .quick-label { font-size: .72rem; color: var(--gray); font-weight: 500; }
+        .quick-info .quick-value { font-size: .95rem; font-weight: 700; color: var(--dark); line-height: 1.2; }
+
+        /* ── SECTION ── */
         .dash-section {
-            max-width: 1100px;
-            margin: 0 auto;
+            max-width: 1100px; margin: 0 auto;
             padding: 2.5rem 5%;
         }
-        .dash-section-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--dark);
+        .section-heading {
+            font-size: 1rem; font-weight: 700; color: var(--dark);
             margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: .5rem;
+            display: flex; align-items: center; gap: .6rem;
         }
-        .dash-section-title::after {
-            content: '';
-            flex: 1;
-            height: 2px;
-            background: var(--border);
-            margin-left: .5rem;
+        .section-heading::after {
+            content: ''; flex: 1; height: 2px; background: var(--border); margin-left: .4rem;
         }
 
         /* ── TOOL CARDS ── */
-        .tool-grid {
+        .tools-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
+            gap: 1.4rem;
         }
         .tool-card {
-            background: white;
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            text-decoration: none;
-            color: inherit;
-            transition: all .25s;
-            display: flex;
-            flex-direction: column;
+            background: white; border: 2px solid var(--border);
+            border-radius: var(--radius); overflow: hidden;
+            text-decoration: none; color: inherit;
+            transition: all .25s; display: flex; flex-direction: column;
         }
-        .tool-card:hover {
-            border-color: var(--green);
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-4px);
-        }
-        .tool-card-img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            display: block;
-        }
-        .tool-card-body {
-            padding: 1.2rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: .5rem;
-        }
-        .tool-card-badge {
-            display: inline-flex;
-            align-items: center;
-            background: var(--green-soft);
-            color: var(--green-dark);
-            font-size: .7rem;
-            font-weight: 700;
-            padding: .2rem .7rem;
-            border-radius: 50px;
-            width: fit-content;
-            text-transform: uppercase;
-            letter-spacing: .04em;
-        }
-        .tool-card-title {
-            font-size: .95rem;
-            font-weight: 700;
-            color: var(--dark);
-            line-height: 1.3;
-        }
-        .tool-card-desc {
-            font-size: .82rem;
-            color: var(--gray);
-            line-height: 1.6;
-            flex: 1;
-        }
+        .tool-card-accent { height: 5px; }
+        .tc-green  .tool-card-accent { background: linear-gradient(90deg, #22c55e, #4ade80); }
+        .tc-orange .tool-card-accent { background: linear-gradient(90deg, #f97316, #fb923c); }
+        .tc-blue   .tool-card-accent { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+        .tc-purple .tool-card-accent { background: linear-gradient(90deg, #a855f7, #c084fc); }
+
+        .tool-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+        .tc-green:hover  { border-color: #22c55e; }
+        .tc-orange:hover { border-color: #f97316; }
+        .tc-blue:hover   { border-color: #3b82f6; }
+        .tc-purple:hover { border-color: #a855f7; }
+
+        .tool-card-inner { padding: 1.4rem; flex: 1; display: flex; flex-direction: column; gap: .6rem; }
+        .tool-card-icon { font-size: 2rem; margin-bottom: .2rem; }
+        .tool-card-title { font-size: 1rem; font-weight: 700; color: var(--dark); line-height: 1.3; }
+        .tool-card-desc { font-size: .82rem; color: var(--gray); line-height: 1.6; flex: 1; }
         .tool-card-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--green-dark);
-            font-size: .82rem;
-            font-weight: 600;
-            margin-top: .4rem;
+            display: inline-flex; align-items: center; gap: 5px;
+            font-size: .82rem; font-weight: 700; margin-top: .4rem;
+            transition: gap .2s;
         }
+        .tc-green  .tool-card-cta { color: #16a34a; }
+        .tc-orange .tool-card-cta { color: #ea580c; }
+        .tc-blue   .tool-card-cta { color: #2563eb; }
+        .tc-purple .tool-card-cta { color: #9333ea; }
         .tool-card:hover .tool-card-cta { gap: 9px; }
 
-        /* ── LOGOUT ── */
+        /* ── ACCOUNT ── */
+        .dash-account {
+            max-width: 1100px; margin: 0 auto;
+            padding: 0 5% 3rem;
+        }
         .btn-logout {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: .65rem 1.2rem;
-            background: #fee2e2;
-            color: #dc2626;
-            border: 2px solid #fecaca;
-            border-radius: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-size: .85rem;
-            font-weight: 600;
-            text-decoration: none;
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: .7rem 1.4rem; background: #fff1f2;
+            color: #e11d48; border: 2px solid #fecdd3;
+            border-radius: 10px; font-family: 'Poppins', sans-serif;
+            font-size: .85rem; font-weight: 600; text-decoration: none;
             transition: all .2s;
         }
-        .btn-logout:hover { background: #dc2626; color: white; border-color: #dc2626; }
+        .btn-logout:hover { background: #e11d48; color: white; border-color: #e11d48; }
     </style>
 </head>
 <body>
@@ -239,104 +193,125 @@
     <a href="/panelcontrol" class="nav-cta">Mi panel →</a>
 </nav>
 
-<!-- ── DASHBOARD HEADER ── -->
-<div class="dash-header">
-    <div class="dash-header-inner">
-        <div class="dash-welcome">
-            <h1>Hola, <span><%= user.nombreUsuario %></span> 👋</h1>
-            <p>Bienvenido a tu panel de FitData. Accede a tus herramientas y datos.</p>
+<!-- ── HERO ── -->
+<%
+const initials = user.nombreUsuario
+    .trim().split(/\s+/)
+    .map(w => w[0]).slice(0, 2).join('').toUpperCase();
+%>
+<div class="dash-hero">
+    <div class="dash-hero-inner">
+        <div class="dash-identity">
+            <div class="dash-avatar"><%= initials %></div>
+            <div>
+                <h1>Hola, <span><%= user.nombreUsuario.split(' ')[0] %></span> 👋</h1>
+                <p>Bienvenido a tu panel personal de FitData</p>
+            </div>
         </div>
-        <div class="dash-actions">
-            <a href="/misdatos" class="btn-dash btn-dash-outline">📊 Mis datos</a>
-            <a href="/indicesantr" class="btn-dash btn-dash-primary">Usar herramientas →</a>
+        <div class="dash-hero-btns">
+            <a href="/misdatos" class="btn-hero btn-hero-outline">📊 Mis datos</a>
+            <a href="/indicesantr" class="btn-hero btn-hero-primary">Ir a herramientas →</a>
         </div>
     </div>
 </div>
 
-<!-- ── STATS / ACCESOS RÁPIDOS ── -->
-<div class="dash-stats">
-    <a href="/indicesantr" class="stat-card">
-        <div class="stat-icon">⚖️</div>
-        <div class="stat-info">
-            <div class="stat-label">Índices</div>
-            <div class="stat-value">IMC & ICC</div>
+<!-- ── BANNER MOTIVACIONAL ── -->
+<div class="quote-banner">
+    <div class="quote-banner-inner">
+        <div class="quote-icon">💬</div>
+        <div class="quote-text">
+            <strong>"<%= frase.texto %>"</strong>
+            <div class="quote-author">— <%= frase.autor %></div>
+        </div>
+    </div>
+</div>
+
+<!-- ── ACCESOS RÁPIDOS ── -->
+<div class="dash-quick">
+    <a href="/indicesantr" class="quick-card qc-green">
+        <div class="quick-icon">⚖️</div>
+        <div class="quick-info">
+            <div class="quick-label">Antropometría</div>
+            <div class="quick-value">IMC & ICC</div>
         </div>
     </a>
-    <a href="/valoracion" class="stat-card">
-        <div class="stat-icon">🔥</div>
-        <div class="stat-info">
-            <div class="stat-label">Nutrición</div>
-            <div class="stat-value">Gasto Energético</div>
+    <a href="/valoracion" class="quick-card qc-orange">
+        <div class="quick-icon">🔥</div>
+        <div class="quick-info">
+            <div class="quick-label">Nutrición</div>
+            <div class="quick-value">Gasto Energético</div>
         </div>
     </a>
-    <a href="/pruebaEsfuerzo" class="stat-card">
-        <div class="stat-icon">🫁</div>
-        <div class="stat-info">
-            <div class="stat-label">Esfuerzo</div>
-            <div class="stat-value">VO₂ Máximo</div>
+    <a href="/pruebaEsfuerzo" class="quick-card qc-blue">
+        <div class="quick-icon">🫁</div>
+        <div class="quick-info">
+            <div class="quick-label">Esfuerzo físico</div>
+            <div class="quick-value">VO₂ Máximo</div>
         </div>
     </a>
-    <a href="/misdatos" class="stat-card">
-        <div class="stat-icon">📋</div>
-        <div class="stat-info">
-            <div class="stat-label">Historial</div>
-            <div class="stat-value">Mis datos</div>
+    <a href="/misdatos" class="quick-card qc-purple">
+        <div class="quick-icon">📋</div>
+        <div class="quick-info">
+            <div class="quick-label">Historial</div>
+            <div class="quick-value">Mis datos</div>
         </div>
     </a>
 </div>
 
 <!-- ── HERRAMIENTAS ── -->
 <div class="dash-section">
-    <div class="dash-section-title">🛠 Herramientas disponibles</div>
-    <div class="tool-grid">
+    <div class="section-heading">🛠 Herramientas</div>
+    <div class="tools-grid">
 
-        <a href="/indicesantr" class="tool-card">
-            <img src="/public/assets/img (5).webp" class="tool-card-img" alt="Índices Antropométricos" loading="lazy">
-            <div class="tool-card-body">
-                <span class="tool-card-badge">⚖️ Antropometría</span>
+        <a href="/indicesantr" class="tool-card tc-green">
+            <div class="tool-card-accent"></div>
+            <div class="tool-card-inner">
+                <div class="tool-card-icon">⚖️</div>
                 <div class="tool-card-title">Índices Antropométricos</div>
-                <div class="tool-card-desc">Calcula tu IMC e ICC para evaluar tu composición corporal y riesgo cardiovascular.</div>
+                <div class="tool-card-desc">Calcula tu IMC e ICC para evaluar tu composición corporal, riesgo cardiovascular y peso ideal.</div>
                 <span class="tool-card-cta">Calcular →</span>
             </div>
         </a>
 
-        <a href="/valoracion" class="tool-card">
-            <img src="/public/assets/img (4).webp" class="tool-card-img" alt="Valoración Nutricional" loading="lazy">
-            <div class="tool-card-body">
-                <span class="tool-card-badge">🥗 Nutrición</span>
+        <a href="/valoracion" class="tool-card tc-orange">
+            <div class="tool-card-accent"></div>
+            <div class="tool-card-inner">
+                <div class="tool-card-icon">🥗</div>
                 <div class="tool-card-title">Valoración Nutricional</div>
-                <div class="tool-card-desc">Calcula tu TMB, gasto energético total y requerimientos de macronutrientes diarios.</div>
+                <div class="tool-card-desc">Obtén tu TMB, gasto energético total y distribución de macronutrientes adaptada a tus objetivos.</div>
                 <span class="tool-card-cta">Calcular →</span>
             </div>
         </a>
 
-        <a href="/pruebaEsfuerzo" class="tool-card">
-            <img src="/public/assets/img (6).webp" class="tool-card-img" alt="Prueba de Esfuerzo" loading="lazy">
-            <div class="tool-card-body">
-                <span class="tool-card-badge">🫁 Esfuerzo físico</span>
+        <a href="/pruebaEsfuerzo" class="tool-card tc-blue">
+            <div class="tool-card-accent"></div>
+            <div class="tool-card-inner">
+                <div class="tool-card-icon">🏃</div>
                 <div class="tool-card-title">Prueba de Esfuerzo</div>
-                <div class="tool-card-desc">Evalúa tu capacidad aeróbica calculando VO₂ Máximo y METs según tu nivel de actividad.</div>
+                <div class="tool-card-desc">Evalúa tu capacidad aeróbica con el cálculo de VO₂ Máximo y METs según tu nivel de actividad.</div>
                 <span class="tool-card-cta">Calcular →</span>
             </div>
         </a>
 
-        <a href="/blog" class="tool-card">
-            <img src="/public/assets/img (13).webp" class="tool-card-img" alt="Blog Nutricional" loading="lazy">
-            <div class="tool-card-body">
-                <span class="tool-card-badge">📝 Blog</span>
+        <a href="/blog" class="tool-card tc-purple">
+            <div class="tool-card-accent"></div>
+            <div class="tool-card-inner">
+                <div class="tool-card-icon">📖</div>
                 <div class="tool-card-title">Blog de Nutrición y Deporte</div>
                 <div class="tool-card-desc">Artículos científicos sobre alimentación, clasificación de alimentos y rendimiento deportivo.</div>
-                <span class="tool-card-cta">Ver artículos →</span>
+                <span class="tool-card-cta">Leer artículos →</span>
             </div>
         </a>
 
     </div>
 </div>
 
-<!-- ── CERRAR SESIÓN ── -->
-<div class="dash-section" style="padding-top:0; padding-bottom: 3rem;">
-    <div class="dash-section-title">⚙️ Cuenta</div>
-    <a href="/logout" class="btn-logout">Cerrar sesión</a>
+<!-- ── CUENTA ── -->
+<div class="dash-account">
+    <div class="section-heading">⚙️ Cuenta</div>
+    <a href="/logout" class="btn-logout">
+        <span>↩</span> Cerrar sesión
+    </a>
 </div>
 
 <!-- ── FOOTER ── -->
