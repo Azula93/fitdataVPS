@@ -1,95 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="/public/css/signin.css" rel="stylesheet">
-    <link href="/public/css/styles.css" rel="stylesheet">
-    <link rel="icon" href="/public/assets/favicons/favicon-removebg.png" type="image/x-icon">
-    <title>Contáctanos</title>
+    <meta name="csrf-token" content="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="/public/css/tools.css" rel="stylesheet">
+    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/x-icon">
+    <title>Contacto | FitData</title>
 </head>
-
 <body>
 
-    <%- include('navbar',{ user: user }) %>
-        <div class="container mt-5 mb-5">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <h1 class="card-title text-center mb-4">Contáctanos</h1>
-                            
-                            <p class="text-center mb-4">Escribe tus datos y cuéntanos tu inquietud. Te daremos respuesta lo mas pronto posible.</p>
+<!-- ── NAVBAR ── -->
+<nav class="tool-nav">
+    <% if (user) { %>
+        <a href="/panelcontrol" class="nav-logo">Fit<span>Data</span></a>
+        <ul class="nav-links">
+            <li><a href="/indicesantr">Herramientas</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/misdatos">Mis datos</a></li>
+        </ul>
+        <a href="/panelcontrol" class="nav-cta">Mi panel →</a>
+    <% } else { %>
+        <a href="/" class="nav-logo">Fit<span>Data</span></a>
+        <ul class="nav-links">
+            <li><a href="/#herramientas">Herramientas</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/login">Iniciar sesión</a></li>
+        </ul>
+        <a href="/register" class="nav-cta">Empieza gratis →</a>
+    <% } %>
+</nav>
 
-                             <form id="contactForm">
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" id="name" name="name" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Correo Electrónico</label>
-                                    <input type="email" class="form-control" id="email" name="email" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message" class="form-label">Mensaje</label>
-                                    <textarea class="form-control" id="message" name="message" rows="5"
-                                        required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100">Enviar</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+<!-- ── HEADER ── -->
+<div class="tool-header">
+    <div class="breadcrumb-nav">
+        <a href="/">Inicio</a>
+        <span class="breadcrumb-sep">›</span>
+        <span>Contacto</span>
+    </div>
+    <div class="tool-badge">✉️ Soporte</div>
+    <h1>Contáctanos</h1>
+    <p>Escribe tus datos y cuéntanos tu inquietud. Te daremos respuesta lo antes posible.</p>
+</div>
+
+<!-- ── FORMULARIO ── -->
+<div class="tool-main" style="padding-top: 2rem; padding-bottom: 3rem;">
+    <div class="form-panel" style="max-width: 560px; margin: 0 auto;">
+        <h2>Envíanos un mensaje</h2>
+        <form id="contactForm" autocomplete="off">
+            <div class="form-group">
+                <label for="name">Nombre</label>
+                <input type="text" id="name" name="name" placeholder="Tu nombre completo" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Correo Electrónico</label>
+                <input type="email" id="email" name="email" placeholder="tu@correo.com" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Mensaje</label>
+                <textarea id="message" name="message" rows="6" placeholder="Cuéntanos tu consulta o comentario..." required style="resize: vertical; font-family: 'Poppins', sans-serif; font-size: .9rem;"></textarea>
+            </div>
+            <button type="submit" class="btn-calc">Enviar mensaje →</button>
+        </form>
+    </div>
+
+    <div class="result-panel" style="max-width: 360px; margin: 0 auto;">
+        <div class="result-card-main" style="height: auto; padding: 2rem;">
+            <div style="font-size: 2.5rem; margin-bottom: 1rem;">📬</div>
+            <div style="font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: .5rem;">¿Tienes alguna duda?</div>
+            <p style="font-size: .85rem; color: var(--gray); line-height: 1.7; margin-bottom: 1.2rem;">También puedes escribirnos directamente a:</p>
+            <a href="mailto:info@fitdata.online" style="display: inline-flex; align-items: center; gap: 6px; font-size: .85rem; font-weight: 700; color: var(--green-dark); text-decoration: none;">
+                📧 info@fitdata.online
+            </a>
+            <div class="result-info" style="display: block; margin-top: 1.5rem; font-size: .8rem;">
+                ⏱ Tiempo de respuesta habitual: <strong>24–48 horas</strong>
             </div>
         </div>
-        <script>
-            document.getElementById('contactForm').addEventListener('submit', async function (event) {
-                event.preventDefault();
+    </div>
+</div>
 
-                const formData = {
-                    name: document.getElementById('name').value,
-                    email: document.getElementById('email').value,
-                    message: document.getElementById('message').value,
-                };
+<!-- ── FOOTER ── -->
+<footer class="tool-footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="/" class="nav-logo">Fit<span>Data</span></a>
+            <p>Herramientas científicas de evaluación física para todos.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Herramientas</h4>
+            <a href="/indicesantr">IMC</a>
+            <a href="/icc">ICC</a>
+            <a href="/pruebaEsfuerzo">VO₂ Máximo</a>
+            <a href="/valoracion">Gasto Energético</a>
+        </div>
+        <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="/privacyPolicy">Privacidad</a>
+            <a href="/avisoLegal">Aviso legal</a>
+            <a href="/politicacookies">Cookies</a>
+            <a href="/contact">Contacto</a>
+        </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 FitData. Todos los derechos reservados.</div>
+</footer>
 
-                try {
-                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                    const response = await fetch('/submit', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'x-csrf-token': csrfToken
-                        },
-                        body: JSON.stringify(formData),
-                    });
-
-                    const result = await response.json();
-                    if (result.success) {
-                        Swal.fire('¡Éxito!', result.message, 'success');
-                        this.reset();
-                    } else {
-                        Swal.fire('Error', result.message, 'error');
-                    }
-                } catch (error) {
-                    Swal.fire('Error', 'Hubo un problema al enviar el formulario', 'error');
-                    console.error('Error:', error);
-                }
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById('contactForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            message: document.getElementById('message').value,
+        };
+        try {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            const response = await fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-csrf-token': csrfToken
+                },
+                body: JSON.stringify(formData),
             });
-
-        </script>
-        <%- include('footer',{ user: user }) %>
-            <!-- Botón "Volver arriba" -->
-            <section class="scroll">
-                <a id="scroll-to-top" href="#" class="back-to-top" role="button">
-                    <i class="bi bi-arrow-up-circle-fill"></i></a>
-            </section>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-            <script src="https://kit.fontawesome.com/52b9ec387c.js" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            <!-- <script src="/public/js/formData.js"></script> -->
+            const result = await response.json();
+            if (result.success) {
+                Swal.fire('¡Enviado!', result.message, 'success');
+                this.reset();
+            } else {
+                Swal.fire('Error', result.message, 'error');
+            }
+        } catch (error) {
+            Swal.fire('Error', 'Hubo un problema al enviar el formulario', 'error');
+            console.error('Error:', error);
+        }
+    });
+</script>
 </body>
-
 </html>

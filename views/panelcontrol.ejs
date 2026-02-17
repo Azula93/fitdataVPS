@@ -122,10 +122,11 @@
             text-transform: uppercase; letter-spacing: .05em;
         }
         .rs-value {
-            font-size: 1.35rem; font-weight: 800; line-height: 1.2; margin-top: .3rem;
+            font-size: 1rem; font-weight: 800; line-height: 1.2; margin-top: .3rem;
+            word-break: break-word; overflow-wrap: break-word; max-width: 100%;
         }
         .rs-value.has-data { color: var(--green-dark); }
-        .rs-value.no-data { color: #cbd5e1; font-size: 1.1rem; }
+        .rs-value.no-data { color: #cbd5e1; }
         .results-empty {
             margin-top: 1rem; padding: 1rem 1.3rem;
             background: var(--light); border-radius: 10px;
