@@ -1,110 +1,368 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="google-adsense-account" content="ca-pub-9371741460887435">
-  <meta name="description" content="">
-  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Custom styles for this template -->
-  <link href="/public/css/signin.css" rel="stylesheet">
-  <link href="/public/css/styles.css" rel="stylesheet">
-  <link href="/public/css/dashboard.css" rel="stylesheet">
-<link rel="icon" href="/public/assets/favicons/favicon-removebg.png" type="image/x-icon">
-  <meta name="generator" content="Hugo 0.87.0">
-  <title>FitData</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="/public/css/tools.css" rel="stylesheet">
+    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/x-icon">
+    <title>Mi Panel | FitData</title>
+    <style>
+        /* ── DASHBOARD HEADER ── */
+        .dash-header {
+            padding: 100px 5% 48px;
+            background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .dash-header-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .dash-welcome h1 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 800;
+            color: var(--dark);
+            line-height: 1.2;
+        }
+        .dash-welcome h1 span { color: var(--green); }
+        .dash-welcome p {
+            font-size: .9rem;
+            color: var(--gray);
+            margin-top: .4rem;
+        }
+        .dash-actions {
+            display: flex;
+            gap: .8rem;
+            flex-wrap: wrap;
+        }
+        .btn-dash {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: .65rem 1.2rem;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: .85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all .2s;
+        }
+        .btn-dash-primary {
+            background: var(--green);
+            color: white;
+        }
+        .btn-dash-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+        .btn-dash-outline {
+            background: white;
+            color: var(--dark);
+            border: 2px solid var(--border);
+        }
+        .btn-dash-outline:hover { border-color: var(--green); color: var(--green-dark); }
+
+        /* ── STATS ROW ── */
+        .dash-stats {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 5% 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+        .stat-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            transition: all .2s;
+        }
+        .stat-card:hover {
+            border-color: var(--green);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--green-soft);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        .stat-info .stat-label {
+            font-size: .75rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        .stat-info .stat-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1.2;
+        }
+
+        /* ── SECTION TITLE ── */
+        .dash-section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2.5rem 5%;
+        }
+        .dash-section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+        .dash-section-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: var(--border);
+            margin-left: .5rem;
+        }
+
+        /* ── TOOL CARDS ── */
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+        .tool-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: all .25s;
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-card:hover {
+            border-color: var(--green);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+        .tool-card-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            display: block;
+        }
+        .tool-card-body {
+            padding: 1.2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+        }
+        .tool-card-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--green-soft);
+            color: var(--green-dark);
+            font-size: .7rem;
+            font-weight: 700;
+            padding: .2rem .7rem;
+            border-radius: 50px;
+            width: fit-content;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+        .tool-card-title {
+            font-size: .95rem;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1.3;
+        }
+        .tool-card-desc {
+            font-size: .82rem;
+            color: var(--gray);
+            line-height: 1.6;
+            flex: 1;
+        }
+        .tool-card-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--green-dark);
+            font-size: .82rem;
+            font-weight: 600;
+            margin-top: .4rem;
+        }
+        .tool-card:hover .tool-card-cta { gap: 9px; }
+
+        /* ── LOGOUT ── */
+        .btn-logout {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: .65rem 1.2rem;
+            background: #fee2e2;
+            color: #dc2626;
+            border: 2px solid #fecaca;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: .85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all .2s;
+        }
+        .btn-logout:hover { background: #dc2626; color: white; border-color: #dc2626; }
+    </style>
 </head>
-
 <body>
-  <div class="container-fluid d-flex flex-column min-vh-100 ">
-    <%- include('navbar',{ user: user }) %>
-      <main class="flex-grow-1 mt-5">
-        <div class="container mt-3">
-          <!-- Contenido principal   -->
-          <section class="p-5">
-            <div
-              class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-              <h2>Dashboard</h2>
-              <h2>Bienvenid@:
-                <% if (user) { %>
-                  <span class="badge bg-success">
-                    <%= user.nombreUsuario %>
-                  </span>
-                  <% } %>
-              </h2>
-            </div>
-          </section>
 
-          <!-- INICIO CARDS -->
-          <section class="container d-flex justify-content-center align-items-center mb-5">
-            <div class="container">
-              <div class="row justify-content-center">
-                <div class="col-12 col-md-6 col-lg-3 mb-4 d-flex">
-                  <div class="card w-100">
-                    <img src="/public/assets/img (5).webp" class="card-img-top" alt="...">
-                    <div class="card-body d-flex flex-column">
-                      <h5 class="card-title text-center">Indices Antropometricos</h5>
-                      <p class="card-text">Calcula medidas como el IMC y el ICC para estimar tu salud general, evaluar
-                        el
-                        riesgo cardiovascular y determinar tu peso ideal.</p>
-                      <a href="/" class="btn btn-primary mt-auto">Calcula tu IMC</a>
-                    </div>
-                  </div>
-                </div>
+<!-- ── NAVBAR ── -->
+<nav class="tool-nav">
+    <a href="/panelcontrol" class="nav-logo">Fit<span>Data</span></a>
+    <ul class="nav-links">
+        <li><a href="/indicesantr">Herramientas</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/misdatos">Mis datos</a></li>
+    </ul>
+    <a href="/panelcontrol" class="nav-cta">Mi panel →</a>
+</nav>
 
-                <div class="col-12 col-md-6 col-lg-3 mb-4 d-flex">
-                  <div class="card w-100">
-                    <img src="/public/assets/img (4).webp" class="card-img-top" alt="...">
-                    <div class="card-body d-flex flex-column">
-                      <h5 class="card-title text-center">Valoración nutricional</h5>
-                      <p class="card-text">Utiliza nuestra calculadora para obtener tu TMB y tus requerimientos
-                        nutricionales
-                        diarios de proteínas, carbohidratos, grasas y micronutrientes.</p>
-                      <a href="/valoracion" class="btn btn-primary mt-auto">Calcula tu GET</a>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-3 mb-4 d-flex">
-                  <div class="card w-100">
-                    <img src="/public/assets/img (6).webp" class="card-img-top" alt="...">
-                    <div class="card-body d-flex flex-column">
-                      <h5 class="card-title text-center">Prueba de esfuerzo</h5>
-                      <p class="card-text">El VO2 máximo indica la capacidad aeróbica y resistencia física. Calcula tu
-                        Vo2
-                        Máximo y tus METS para evaluar tu condición fisica.</p>
-                      <a href="/pruebaEsfuerzo" class="btn btn-primary mt-auto">Test Esfuerzo</a>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-3 mb-4 d-flex">
-                  <div class="card w-100">
-                    <img src="/public/assets/img (13).webp" class="card-img-top" alt="...">
-                    <div class="card-body d-flex flex-column">
-                      <h5 class="card-title text-center">Blog Nutricional</h5>
-                      <p class="card-text">La guía del ICBF facilita la distribución adecuada de alimentos. Proporciona
-                        porcentajes recomendados por grupo alimenticio.</p>
-                      <a href="/blog" class="btn btn-primary mt-auto">Ver Blog</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          <!-- FIN CARDS -->
-          <%- include('footer',{ user: user }) %>
+<!-- ── DASHBOARD HEADER ── -->
+<div class="dash-header">
+    <div class="dash-header-inner">
+        <div class="dash-welcome">
+            <h1>Hola, <span><%= user.nombreUsuario %></span> 👋</h1>
+            <p>Bienvenido a tu panel de FitData. Accede a tus herramientas y datos.</p>
         </div>
-      </main>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://kit.fontawesome.com/52b9ec387c.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- <script type="module" src="/public/js/datoscombinados.js"></script> -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9371741460887435"
-     crossorigin="anonymous"></script>  
-</body>
+        <div class="dash-actions">
+            <a href="/misdatos" class="btn-dash btn-dash-outline">📊 Mis datos</a>
+            <a href="/indicesantr" class="btn-dash btn-dash-primary">Usar herramientas →</a>
+        </div>
+    </div>
+</div>
 
+<!-- ── STATS / ACCESOS RÁPIDOS ── -->
+<div class="dash-stats">
+    <a href="/indicesantr" class="stat-card">
+        <div class="stat-icon">⚖️</div>
+        <div class="stat-info">
+            <div class="stat-label">Índices</div>
+            <div class="stat-value">IMC & ICC</div>
+        </div>
+    </a>
+    <a href="/valoracion" class="stat-card">
+        <div class="stat-icon">🔥</div>
+        <div class="stat-info">
+            <div class="stat-label">Nutrición</div>
+            <div class="stat-value">Gasto Energético</div>
+        </div>
+    </a>
+    <a href="/pruebaEsfuerzo" class="stat-card">
+        <div class="stat-icon">🫁</div>
+        <div class="stat-info">
+            <div class="stat-label">Esfuerzo</div>
+            <div class="stat-value">VO₂ Máximo</div>
+        </div>
+    </a>
+    <a href="/misdatos" class="stat-card">
+        <div class="stat-icon">📋</div>
+        <div class="stat-info">
+            <div class="stat-label">Historial</div>
+            <div class="stat-value">Mis datos</div>
+        </div>
+    </a>
+</div>
+
+<!-- ── HERRAMIENTAS ── -->
+<div class="dash-section">
+    <div class="dash-section-title">🛠 Herramientas disponibles</div>
+    <div class="tool-grid">
+
+        <a href="/indicesantr" class="tool-card">
+            <img src="/public/assets/img (5).webp" class="tool-card-img" alt="Índices Antropométricos" loading="lazy">
+            <div class="tool-card-body">
+                <span class="tool-card-badge">⚖️ Antropometría</span>
+                <div class="tool-card-title">Índices Antropométricos</div>
+                <div class="tool-card-desc">Calcula tu IMC e ICC para evaluar tu composición corporal y riesgo cardiovascular.</div>
+                <span class="tool-card-cta">Calcular →</span>
+            </div>
+        </a>
+
+        <a href="/valoracion" class="tool-card">
+            <img src="/public/assets/img (4).webp" class="tool-card-img" alt="Valoración Nutricional" loading="lazy">
+            <div class="tool-card-body">
+                <span class="tool-card-badge">🥗 Nutrición</span>
+                <div class="tool-card-title">Valoración Nutricional</div>
+                <div class="tool-card-desc">Calcula tu TMB, gasto energético total y requerimientos de macronutrientes diarios.</div>
+                <span class="tool-card-cta">Calcular →</span>
+            </div>
+        </a>
+
+        <a href="/pruebaEsfuerzo" class="tool-card">
+            <img src="/public/assets/img (6).webp" class="tool-card-img" alt="Prueba de Esfuerzo" loading="lazy">
+            <div class="tool-card-body">
+                <span class="tool-card-badge">🫁 Esfuerzo físico</span>
+                <div class="tool-card-title">Prueba de Esfuerzo</div>
+                <div class="tool-card-desc">Evalúa tu capacidad aeróbica calculando VO₂ Máximo y METs según tu nivel de actividad.</div>
+                <span class="tool-card-cta">Calcular →</span>
+            </div>
+        </a>
+
+        <a href="/blog" class="tool-card">
+            <img src="/public/assets/img (13).webp" class="tool-card-img" alt="Blog Nutricional" loading="lazy">
+            <div class="tool-card-body">
+                <span class="tool-card-badge">📝 Blog</span>
+                <div class="tool-card-title">Blog de Nutrición y Deporte</div>
+                <div class="tool-card-desc">Artículos científicos sobre alimentación, clasificación de alimentos y rendimiento deportivo.</div>
+                <span class="tool-card-cta">Ver artículos →</span>
+            </div>
+        </a>
+
+    </div>
+</div>
+
+<!-- ── CERRAR SESIÓN ── -->
+<div class="dash-section" style="padding-top:0; padding-bottom: 3rem;">
+    <div class="dash-section-title">⚙️ Cuenta</div>
+    <a href="/logout" class="btn-logout">Cerrar sesión</a>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="tool-footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="/panelcontrol" class="nav-logo">Fit<span>Data</span></a>
+            <p>Herramientas científicas de evaluación física para todos.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Herramientas</h4>
+            <a href="/indicesantr">IMC</a>
+            <a href="/icc">ICC</a>
+            <a href="/pruebaEsfuerzo">VO₂ Máximo</a>
+            <a href="/valoracion">Gasto Energético</a>
+        </div>
+        <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="/privacyPolicy">Privacidad</a>
+            <a href="/avisoLegal">Aviso legal</a>
+            <a href="/politicacookies">Cookies</a>
+            <a href="/contact">Contacto</a>
+        </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 FitData. Todos los derechos reservados.</div>
+</footer>
+
+</body>
 </html>
