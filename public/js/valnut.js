@@ -268,7 +268,7 @@ document.getElementById('macro-form').addEventListener('submit', async function 
   // Mostrar los resultados
   document.getElementById('resultMacro').innerHTML = macronutrientesGr;
   const textoLimpioMacro = filtrarYLimpiarTextoMacro(macronutrientesGr);
-  document.getElementById("errorMacro").innerHTML = errorMacro;
+  document.getElementById("errorMacro").innerHTML = '';
 
   try {
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');

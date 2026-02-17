@@ -73,7 +73,7 @@ document.getElementById('vo2-form').addEventListener('submit',async function (e)
             resultadoMets = ` <p class="fs-2 text-danger fw-bold text-center"> Error! </p>`;
     }
     document.getElementById("resultadoMets").innerHTML = resultadoMets;
-    document.getElementById('resultVo2').innerHTML = resultadoMets;
+    document.getElementById('resultVo2').innerHTML = '';
     const textoLimpioVo2 = eliminarEtiquetasHTML(vo2Final);
     const textoLimpiomets = eliminarEtiquetasHTML(metsFinal);
 

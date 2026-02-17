@@ -506,7 +506,7 @@
                     <option value="f">Femenino</option>
                 </select>
             </div>
-            <button class="btn-calc" onclick="calcularIMC()">Calcular mi IMC →</button>
+            <button class="btn-calc" id="btn-calc-imc">Calcular mi IMC →</button>
         </div>
         <div class="demo-result" id="resultado">
             <div class="imc-gauge">
@@ -626,6 +626,7 @@
 </footer>
 
 <script>
+document.getElementById('btn-calc-imc').addEventListener('click', calcularIMC);
 function calcularIMC() {
     const peso   = parseFloat(document.getElementById('demo-peso').value);
     const altCm  = parseFloat(document.getElementById('demo-altura').value);

@@ -147,11 +147,14 @@ nav.tool-nav {
 
 /* Imágenes dentro de resultados */
 .result-card-main img {
-    max-width: 130px;
-    width: 100%;
+    max-width: 200px;
+    width: clamp(100px, 30%, 200px);
     display: block;
     margin: .8rem auto 0;
     border-radius: 8px;
+}
+@media (max-width: 600px) {
+    .result-card-main img { max-width: 130px; width: clamp(80px, 40%, 130px); }
 }
 
 /* Result output (populated by JS) */

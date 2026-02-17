@@ -59,7 +59,7 @@
     </div>
     <p><strong>Materiales necesarios:</strong> banca o escalón de 30–50 cm de altura, cinta métrica, cronómetro y app de metrónomo.</p>
     <p><strong>Requisitos:</strong> Haber comido al menos 1 hora antes. Edad entre 16 y 55 años.</p>
-    <button class="btn-danger-outline" onclick="document.getElementById('modal-contra').classList.add('open')">
+    <button class="btn-danger-outline" id="btn-abrir-modal">
         ⚠️ Ver contraindicaciones
     </button>
 </div>
@@ -210,7 +210,7 @@
 </footer>
 
 <!-- ── MODAL CONTRAINDICACIONES ── -->
-<div class="modal-overlay" id="modal-contra" onclick="if(event.target===this)this.classList.remove('open')">
+<div class="modal-overlay" id="modal-contra">
     <div class="modal-box">
         <h3>⚠️ Contraindicaciones para el Test de la Banca</h3>
         <p style="font-size:.85rem; color:var(--gray); margin-bottom:.8rem">No podrás realizar el test si presentas alguna de las siguientes condiciones:</p>
@@ -229,7 +229,7 @@
             <li>Desmayos, Epilepsia o Mareos frecuentes</li>
             <li>Diabetes tipo I y II</li>
         </ul>
-        <button class="modal-close" onclick="document.getElementById('modal-contra').classList.remove('open')">Cerrar</button>
+        <button class="modal-close" id="btn-cerrar-modal">Cerrar</button>
     </div>
 </div>
 
@@ -239,6 +239,16 @@ document.getElementById('vo2-form').addEventListener('submit', function() {
     if (ph) ph.style.display = 'none';
     const hint = document.getElementById('save-vo2-hint');
     if (hint) hint.style.display = 'block';
+});
+const modal = document.getElementById('modal-contra');
+document.getElementById('btn-abrir-modal').addEventListener('click', function() {
+    modal.classList.add('open');
+});
+document.getElementById('btn-cerrar-modal').addEventListener('click', function() {
+    modal.classList.remove('open');
+});
+modal.addEventListener('click', function(e) {
+    if (e.target === modal) modal.classList.remove('open');
 });
 </script>
 <script src="/public/js/calculovo2.js"></script>
