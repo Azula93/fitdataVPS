@@ -1,108 +1,468 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="utf-8">
-<meta name="google-adsense-account" content="ca-pub-9371741460887435">   
- <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="/public/css/signin.css" rel="stylesheet">
-    <link href="/public/css/styles.css" rel="stylesheet">
-    <link href="/public/css/dashboard.css" rel="stylesheet">
-<link rel="icon" href="/public/assets/favicons/favicon-removebg.png" type="image/x-icon">
-    <meta name="generator" content="Hugo 0.87.0">
-    <title>Mis Datos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-9371741460887435">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="/public/css/tools.css" rel="stylesheet">
+    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/x-icon">
+    <title>Mis Datos | FitData</title>
+    <style>
+        /* ── HERO ── */
+        .md-hero {
+            padding: 88px 5% 40px;
+            background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
+            border-bottom: 1px solid var(--border);
+        }
+        .md-hero-inner {
+            max-width: 1100px; margin: 0 auto;
+            display: flex; align-items: center;
+            justify-content: space-between; flex-wrap: wrap; gap: 1.2rem;
+        }
+        .md-hero h1 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 800; color: var(--dark); }
+        .md-hero h1 span { color: var(--green); }
+        .md-hero p { font-size: .85rem; color: var(--gray); margin-top: .3rem; }
+        .md-hero-actions { display: flex; gap: .8rem; flex-wrap: wrap; }
+
+        /* ── SECTION ── */
+        .md-section {
+            max-width: 1100px; margin: 0 auto;
+            padding: 2.5rem 5%;
+        }
+        .md-section-title {
+            font-size: 1rem; font-weight: 700; color: var(--dark);
+            margin-bottom: 1.4rem;
+            display: flex; align-items: center; gap: .6rem;
+        }
+        .md-section-title::after {
+            content: ''; flex: 1; height: 2px; background: var(--border); margin-left: .4rem;
+        }
+
+        /* ── RESULT CARDS ── */
+        .results-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+            gap: 1.1rem;
+        }
+        .rc {
+            background: white; border: 2px solid var(--border);
+            border-radius: var(--radius); padding: 1.3rem 1.1rem;
+            display: flex; flex-direction: column; align-items: center;
+            text-align: center; gap: .35rem; transition: all .2s;
+            position: relative; overflow: hidden;
+        }
+        .rc::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 4px;
+        }
+        .rc:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+
+        /* colores según clasificación */
+        .rc-green  { border-color: #22c55e; }
+        .rc-green::before  { background: linear-gradient(90deg, #22c55e, #4ade80); }
+        .rc-yellow { border-color: #f59e0b; }
+        .rc-yellow::before { background: linear-gradient(90deg, #f59e0b, #fcd34d); }
+        .rc-red    { border-color: #ef4444; }
+        .rc-red::before    { background: linear-gradient(90deg, #ef4444, #f87171); }
+        .rc-neutral { border-color: #94a3b8; }
+        .rc-neutral::before { background: linear-gradient(90deg, #94a3b8, #cbd5e1); }
+        .rc-blue   { border-color: #3b82f6; }
+        .rc-blue::before   { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+
+        .rc-icon { font-size: 1.7rem; margin-top: .3rem; }
+        .rc-label {
+            font-size: .68rem; font-weight: 600; color: var(--gray);
+            text-transform: uppercase; letter-spacing: .05em;
+        }
+        .rc-value {
+            font-size: 1.5rem; font-weight: 800; color: var(--dark);
+            line-height: 1.1; word-break: break-word;
+        }
+        .rc-value.no-data { color: #cbd5e1; font-size: 1.2rem; }
+        .rc-badge {
+            font-size: .7rem; font-weight: 700;
+            padding: .18rem .65rem; border-radius: 50px;
+            margin-top: .1rem;
+        }
+        .rc-green  .rc-badge { background: #dcfce7; color: #16a34a; }
+        .rc-yellow .rc-badge { background: #fef3c7; color: #b45309; }
+        .rc-red    .rc-badge { background: #fee2e2; color: #dc2626; }
+        .rc-neutral .rc-badge { background: #f1f5f9; color: #64748b; }
+        .rc-blue   .rc-badge { background: #dbeafe; color: #2563eb; }
+
+        .rc-update {
+            font-size: .72rem; font-weight: 600; color: var(--gray);
+            text-decoration: none; margin-top: .3rem;
+            display: flex; align-items: center; gap: 3px; transition: color .2s;
+        }
+        .rc-update:hover { color: var(--green); }
+
+        /* ── Macros card: ancha ── */
+        .rc-wide {
+            grid-column: span 2;
+        }
+        .rc-macro-value {
+            font-size: .85rem; font-weight: 600; color: var(--dark);
+            line-height: 1.7; text-align: left; white-space: pre-line;
+            margin-top: .2rem;
+        }
+
+        /* ── ACTIONS ── */
+        .md-actions {
+            max-width: 1100px; margin: 0 auto;
+            padding: 0 5% 2.5rem;
+            display: flex; gap: .8rem; flex-wrap: wrap;
+        }
+        .btn-action {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: .7rem 1.3rem; border-radius: 10px;
+            font-family: 'Poppins', sans-serif; font-size: .85rem; font-weight: 600;
+            text-decoration: none; transition: all .2s; cursor: pointer; border: none;
+        }
+        .btn-action-blue  { background: #eff6ff; color: #2563eb; }
+        .btn-action-blue:hover  { background: #2563eb; color: white; }
+        .btn-action-red   { background: #fff1f2; color: #e11d48; border: 2px solid #fecdd3; }
+        .btn-action-red:hover   { background: #e11d48; color: white; border-color: #e11d48; }
+
+        /* ── INFO CARDS ── */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.2rem;
+        }
+        .info-card {
+            background: var(--light); border-radius: var(--radius);
+            padding: 1.4rem; border-left: 4px solid var(--green);
+        }
+        .info-card h3 {
+            font-size: .9rem; font-weight: 700; color: var(--dark);
+            margin-bottom: .7rem; display: flex; align-items: center; gap: .4rem;
+        }
+        .info-card p, .info-card li {
+            font-size: .82rem; color: var(--gray); line-height: 1.7; margin-bottom: .25rem;
+        }
+        .info-card ul { padding-left: 1rem; margin: 0; }
+        .info-card .range {
+            display: flex; align-items: center; gap: .5rem;
+            font-size: .78rem; font-weight: 600; margin-bottom: .2rem;
+        }
+        .info-card .range .dot {
+            width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+        }
+        .dot-green  { background: #22c55e; }
+        .dot-yellow { background: #f59e0b; }
+        .dot-red    { background: #ef4444; }
+        .dot-blue   { background: #3b82f6; }
+
+        /* ── EMPTY STATE ── */
+        .md-empty {
+            max-width: 1100px; margin: 0 auto; padding: 3rem 5%;
+            text-align: center;
+        }
+        .md-empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .md-empty h2 { font-size: 1.1rem; font-weight: 700; color: var(--dark); margin-bottom: .5rem; }
+        .md-empty p  { font-size: .88rem; color: var(--gray); margin-bottom: 1.5rem; }
+
+        /* ── BUTTONS hero ── */
+        .btn-hero {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: .65rem 1.2rem; border-radius: 10px;
+            font-family: 'Poppins', sans-serif; font-size: .85rem; font-weight: 600;
+            text-decoration: none; transition: all .2s;
+        }
+        .btn-hero-primary { background: var(--green); color: white; }
+        .btn-hero-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+        .btn-hero-outline { background: white; color: var(--dark); border: 2px solid var(--border); }
+        .btn-hero-outline:hover { border-color: var(--green); color: var(--green-dark); }
+
+        /* ── RESPONSIVE ── */
+        html, body { overflow-x: hidden; max-width: 100%; }
+        .md-section, .md-actions { min-width: 0; }
+
+        @media (max-width: 600px) {
+            .md-hero { padding: 82px 4% 28px; }
+            .md-hero-inner { flex-direction: column; align-items: flex-start; }
+            .md-hero-actions { width: 100%; }
+            .btn-hero { flex: 1; justify-content: center; }
+            .md-section { padding: 2rem 4%; }
+            .md-actions { padding: 0 4% 2rem; flex-direction: column; }
+            .btn-action { justify-content: center; }
+            .results-cards { grid-template-columns: repeat(2, 1fr); }
+            .rc-wide { grid-column: span 2; }
+            .info-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 380px) {
+            .results-cards { grid-template-columns: 1fr 1fr; }
+            .rc-value { font-size: 1.2rem; }
+        }
+    </style>
 </head>
-
 <body>
-    <div class="container-fluid d-flex flex-column min-vh-100">
-        <%- include('navbar', { user: user }) %>
-            <main class="flex-grow-1 mt-5">
-                <div class="container mt-3">
-                    <section class="p-3 p-md-5">
-                        <div
-                            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3 border-bottom">
-                            <!-- <h2>Mis Datos</h2> -->
-                            <h2> Resultados
-                                <% if (user) { %>
-                                    <span class="badge bg-success">
-                                        <%= user.nombreUsuario %>
-                                    </span>
-                                    <% } %>
-                            </h2>
-                        </div>
-                    </section>
 
-                    <div class="container px-0 px-md-3 fs-6">
-                        <div class="table-responsive">
-                        <table class="table table-striped table-hover table-bordered align-middle" id="misdatos_table">
-                            <thead>
-                                <tr class="text-center">
-                                    <th class="p-3">IMC</th>
-                                    <th class="p-3">ICC</th>
-                                    <th class="p-3">GET</th>
-                                    <th class="p-3">Macronutrientes</th>
-                                    <th class="p-3">VO2</th>
-                                    <th class="p-3">METS</th>
-                                    <th class="p-3">Expect Vida</th>
-                                    <th class="p-3">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
-                                <% if (Object.keys(datos).length> 0) { %>
-                                    <tr class="text-center" id="data-row-<%= datos.user_id %>">
-                                        <td class="p-3">
-                                            <%= datos.imc %>
-                                        </td>
-                                        <td class="p-3">
-                                            <%= datos.icc %>
-                                        </td>
-                                        <td class="p-3 text-start">
-                                            <%= datos.gasto_energetico %>
-                                        </td>
-                                        <td class="p-3 text-center ">
-                                            <%= datos.macro %>
-                                        </td>
-                                        <td class="p-3">
-                                            <%= datos.vo2 %>
-                                        </td>
-                                        <td class="p-3">
-                                            <%= datos.mets %>
-                                        </td>
-                                        <td class="p-3">
-                                            <%= datos.expect_vida %>
-                                        </td>
-                                        <td class="p-3">
-                                            <button class="btn btn-danger btn-eliminar btn-sm" data-id="<%= datos.user_id %>">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                    <% } else { %>
-                                        <tr>
-                                            <td colspan="8">No hay datos disponibles</td>
-                                        </tr>
-                                        <% } %>
-                            </tbody>
+<!-- ── NAVBAR ── -->
+<nav class="tool-nav">
+    <a href="/panelcontrol" class="nav-logo">Fit<span>Data</span></a>
+    <ul class="nav-links">
+        <li><a href="/indicesantr">Herramientas</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/misdatos" style="color:var(--dark); font-weight:700;">Mis datos</a></li>
+    </ul>
+    <a href="/panelcontrol" class="nav-cta">Mi panel →</a>
+</nav>
 
-                        </table>
-                        </div>
-                    </div>
-                    <div class="p-3 text-center">
-                        <a class="btn btn-primary btn-lg" href="/generar-pdf" target="_blank">Generar PDF</a>
-                    </div>
+<%
+/* ── Lógica de interpretación ── */
+const tieneData = datos && Object.keys(datos).length > 0;
 
-                    <%- include('footer', { user: user }) %>
-                </div>
-            </main>
+// IMC
+const imcNum = parseFloat(datos && datos.imc);
+let imcClass = 'rc-neutral', imcBadge = 'Sin datos';
+if (!isNaN(imcNum)) {
+    if      (imcNum < 18.5) { imcClass = 'rc-red';    imcBadge = 'Bajo peso'; }
+    else if (imcNum < 25)   { imcClass = 'rc-green';  imcBadge = 'Peso normal'; }
+    else if (imcNum < 30)   { imcClass = 'rc-yellow'; imcBadge = 'Sobrepeso'; }
+    else if (imcNum < 35)   { imcClass = 'rc-red';    imcBadge = 'Obesidad I'; }
+    else                    { imcClass = 'rc-red';    imcBadge = 'Obesidad II+'; }
+}
+
+// ICC — rango general OMS sin distinción de género (para referencia)
+const iccNum = parseFloat(datos && datos.icc);
+let iccClass = 'rc-neutral', iccBadge = 'Sin datos';
+if (!isNaN(iccNum)) {
+    if      (iccNum < 0.80) { iccClass = 'rc-green';  iccBadge = 'Bajo riesgo'; }
+    else if (iccNum < 0.90) { iccClass = 'rc-yellow'; iccBadge = 'Riesgo moderado'; }
+    else                    { iccClass = 'rc-red';    iccBadge = 'Riesgo alto'; }
+}
+
+// VO2 — referencia general (adulto activo)
+const vo2Num = parseFloat(datos && datos.vo2);
+let vo2Class = 'rc-neutral', vo2Badge = 'Sin datos';
+if (!isNaN(vo2Num)) {
+    if      (vo2Num < 30)  { vo2Class = 'rc-red';    vo2Badge = 'Bajo'; }
+    else if (vo2Num < 40)  { vo2Class = 'rc-yellow'; vo2Badge = 'Moderado'; }
+    else if (vo2Num < 50)  { vo2Class = 'rc-green';  vo2Badge = 'Bueno'; }
+    else                   { vo2Class = 'rc-green';  vo2Badge = 'Excelente'; }
+}
+
+// METs
+const metsNum = parseFloat(datos && datos.mets);
+let metsClass = 'rc-neutral', metsBadge = 'Sin datos';
+if (!isNaN(metsNum)) {
+    if      (metsNum < 3)  { metsClass = 'rc-yellow'; metsBadge = 'Sedentario'; }
+    else if (metsNum < 6)  { metsClass = 'rc-green';  metsBadge = 'Moderado'; }
+    else                   { metsClass = 'rc-blue';   metsBadge = 'Vigoroso'; }
+}
+%>
+
+<!-- ── HERO ── -->
+<div class="md-hero">
+    <div class="md-hero-inner">
+        <div>
+            <h1>Mis resultados, <span><%= user.nombreUsuario.split(' ')[0] %></span></h1>
+            <p>Aquí están todos tus datos guardados con su interpretación clínica</p>
+        </div>
+        <div class="md-hero-actions">
+            <a href="/panelcontrol" class="btn-hero btn-hero-outline">← Panel</a>
+            <% if (tieneData) { %>
+            <a href="/generar-pdf" class="btn-hero btn-hero-primary" target="_blank">📄 Descargar PDF</a>
+            <% } %>
+        </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/52b9ec387c.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/public/js/delete.js"></script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9371741460887435"
-     crossorigin="anonymous"></script>
-</body>
+</div>
 
+<% if (tieneData) { %>
+
+<!-- ── TARJETAS DE RESULTADOS ── -->
+<div class="md-section">
+    <div class="md-section-title">📊 Tus últimos resultados</div>
+    <div class="results-cards">
+
+        <!-- IMC -->
+        <div class="rc <%= imcClass %>">
+            <div class="rc-icon">⚖️</div>
+            <div class="rc-label">IMC</div>
+            <div class="rc-value"><%= datos.imc %></div>
+            <div class="rc-badge"><%= imcBadge %></div>
+            <a href="/indicesantr" class="rc-update">↺ Recalcular</a>
+        </div>
+
+        <!-- ICC -->
+        <div class="rc <%= iccClass %>">
+            <div class="rc-icon">📏</div>
+            <div class="rc-label">ICC</div>
+            <div class="rc-value"><%= datos.icc || '—' %></div>
+            <div class="rc-badge"><%= iccBadge %></div>
+            <a href="/icc" class="rc-update">↺ Recalcular</a>
+        </div>
+
+        <!-- GET -->
+        <div class="rc rc-blue">
+            <div class="rc-icon">🔥</div>
+            <div class="rc-label">GET (kcal/día)</div>
+            <div class="rc-value" style="font-size:1.15rem"><%= datos.gasto_energetico || '—' %></div>
+            <div class="rc-badge">Gasto energético</div>
+            <a href="/valoracion" class="rc-update">↺ Recalcular</a>
+        </div>
+
+        <!-- VO2 -->
+        <div class="rc <%= vo2Class %>">
+            <div class="rc-icon">🫁</div>
+            <div class="rc-label">VO₂ Máximo</div>
+            <div class="rc-value"><%= datos.vo2 || '—' %></div>
+            <div class="rc-badge"><%= vo2Badge %></div>
+            <a href="/pruebaEsfuerzo" class="rc-update">↺ Recalcular</a>
+        </div>
+
+        <!-- METs -->
+        <div class="rc <%= metsClass %>">
+            <div class="rc-icon">⚡</div>
+            <div class="rc-label">METs</div>
+            <div class="rc-value"><%= datos.mets || '—' %></div>
+            <div class="rc-badge"><%= metsBadge %></div>
+            <a href="/pruebaEsfuerzo" class="rc-update">↺ Recalcular</a>
+        </div>
+
+        <!-- Expectativa de vida -->
+        <div class="rc rc-neutral">
+            <div class="rc-icon">⏳</div>
+            <div class="rc-label">Expect. de Vida</div>
+            <div class="rc-value" style="font-size:1.1rem"><%= datos.expect_vida || '—' %></div>
+            <div class="rc-badge">Estimación</div>
+            <a href="/pruebaEsfuerzo" class="rc-update">↺ Recalcular</a>
+        </div>
+
+        <!-- Macronutrientes — tarjeta ancha -->
+        <% if (datos.macro) { %>
+        <div class="rc rc-neutral rc-wide" style="align-items:flex-start; text-align:left;">
+            <div style="display:flex; align-items:center; gap:.6rem;">
+                <span style="font-size:1.7rem;">🥩</span>
+                <div>
+                    <div class="rc-label">Macronutrientes diarios</div>
+                    <div class="rc-badge" style="margin-top:.2rem; display:inline-block;">Distribución recomendada</div>
+                </div>
+            </div>
+            <div class="rc-macro-value"><%= datos.macro %></div>
+            <a href="/valoracion" class="rc-update" style="margin-top:.4rem;">↺ Recalcular</a>
+        </div>
+        <% } %>
+
+    </div>
+</div>
+
+<!-- ── ACCIONES ── -->
+<div class="md-actions">
+    <a href="/generar-pdf" class="btn-action btn-action-blue" target="_blank">📄 Descargar PDF</a>
+    <button class="btn-action btn-action-red btn-eliminar" data-id="<%= datos.user_id %>">🗑 Eliminar todos mis datos</button>
+</div>
+
+<% } else { %>
+
+<!-- ── ESTADO VACÍO ── -->
+<div class="md-empty">
+    <div class="md-empty-icon">📋</div>
+    <h2>Aún no tienes datos guardados</h2>
+    <p>Usa las herramientas y pulsa "Guardar resultado" para verlos aquí con su interpretación.</p>
+    <a href="/indicesantr" class="btn-hero btn-hero-primary">Ir a herramientas →</a>
+</div>
+
+<% } %>
+
+<!-- ── QUÉ SIGNIFICAN TUS DATOS ── -->
+<div class="md-section" style="<% if (!tieneData) { %>padding-top:0;<% } %>">
+    <div class="md-section-title">📖 ¿Qué significan tus resultados?</div>
+    <div class="info-grid">
+
+        <div class="info-card">
+            <h3>⚖️ IMC — Índice de Masa Corporal</h3>
+            <p>Relaciona tu peso con tu estatura. Es el indicador más usado para clasificar el estado nutricional del adulto.</p>
+            <div class="range"><span class="dot dot-red"></span> Menor de 18.5 → Bajo peso</div>
+            <div class="range"><span class="dot dot-green"></span> 18.5 – 24.9 → Peso normal</div>
+            <div class="range"><span class="dot dot-yellow"></span> 25.0 – 29.9 → Sobrepeso</div>
+            <div class="range"><span class="dot dot-red"></span> 30.0 o más → Obesidad</div>
+            <p style="margin-top:.6rem; font-size:.77rem;">⚠️ El IMC no distingue masa muscular de grasa. Atletas pueden tener IMC alto sin sobrepeso real.</p>
+        </div>
+
+        <div class="info-card" style="border-left-color:#f59e0b;">
+            <h3>📏 ICC — Índice Cintura-Cadera</h3>
+            <p>Mide cómo se distribuye la grasa en tu cuerpo. La acumulación en la zona abdominal (androide) aumenta el riesgo cardiovascular.</p>
+            <div class="range"><span class="dot dot-green"></span> Menor de 0.80 → Bajo riesgo</div>
+            <div class="range"><span class="dot dot-yellow"></span> 0.80 – 0.89 → Riesgo moderado</div>
+            <div class="range"><span class="dot dot-red"></span> 0.90 o más → Riesgo alto</div>
+            <p style="margin-top:.6rem; font-size:.77rem;">Los valores de corte varían ligeramente por sexo y etnia. Consulta a un profesional para una valoración personalizada.</p>
+        </div>
+
+        <div class="info-card" style="border-left-color:#3b82f6;">
+            <h3>🔥 GET — Gasto Energético Total</h3>
+            <p>Es la cantidad de calorías que necesita tu cuerpo cada día considerando tu nivel de actividad física. Base para diseñar dietas de pérdida, mantenimiento o ganancia de peso.</p>
+            <ul>
+                <li><strong>Déficit:</strong> Consume menos del GET para perder peso</li>
+                <li><strong>Mantenimiento:</strong> Ingiere igual a tu GET</li>
+                <li><strong>Superávit:</strong> Consume más para ganar masa muscular</li>
+            </ul>
+        </div>
+
+        <div class="info-card" style="border-left-color:#a855f7;">
+            <h3>🥩 Macronutrientes</h3>
+            <p>Son las proteínas, carbohidratos y grasas que necesitas diariamente. Se calculan en función de tu GET y objetivos.</p>
+            <ul>
+                <li><strong>Proteínas:</strong> Construyen y reparan tejido muscular</li>
+                <li><strong>Carbohidratos:</strong> Principal fuente de energía para el ejercicio</li>
+                <li><strong>Grasas:</strong> Esenciales para hormonas y absorción de vitaminas</li>
+            </ul>
+        </div>
+
+        <div class="info-card" style="border-left-color:#22c55e;">
+            <h3>🫁 VO₂ Máximo</h3>
+            <p>Es la cantidad máxima de oxígeno que tu cuerpo puede utilizar durante el ejercicio. Principal indicador de tu capacidad aeróbica y salud cardiovascular.</p>
+            <div class="range"><span class="dot dot-red"></span> Menor de 30 → Capacidad baja</div>
+            <div class="range"><span class="dot dot-yellow"></span> 30 – 39 → Capacidad moderada</div>
+            <div class="range"><span class="dot dot-green"></span> 40 – 49 → Buena capacidad</div>
+            <div class="range"><span class="dot dot-green"></span> 50 o más → Excelente capacidad</div>
+            <p style="margin-top:.6rem; font-size:.77rem;">Los rangos óptimos varían por edad y sexo. Mejora con entrenamiento aeróbico constante.</p>
+        </div>
+
+        <div class="info-card" style="border-left-color:#0891b2;">
+            <h3>⚡ METs — Equivalentes Metabólicos</h3>
+            <p>Mide la intensidad de tu actividad física. 1 MET equivale al gasto energético en reposo absoluto.</p>
+            <div class="range"><span class="dot dot-yellow"></span> 1 – 2.9 → Actividad leve (caminar despacio)</div>
+            <div class="range"><span class="dot dot-green"></span> 3 – 5.9 → Actividad moderada (caminar rápido)</div>
+            <div class="range"><span class="dot dot-blue"></span> 6 o más → Actividad vigorosa (correr, ciclismo)</div>
+            <p style="margin-top:.6rem; font-size:.77rem;">La OMS recomienda acumular al menos 150 min/semana de actividad moderada (≥3 METs).</p>
+        </div>
+
+    </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="tool-footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="/panelcontrol" class="nav-logo">Fit<span>Data</span></a>
+            <p>Herramientas científicas de evaluación física para todos.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Herramientas</h4>
+            <a href="/indicesantr">IMC</a>
+            <a href="/icc">ICC</a>
+            <a href="/pruebaEsfuerzo">VO₂ Máximo</a>
+            <a href="/valoracion">Gasto Energético</a>
+        </div>
+        <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="/privacyPolicy">Privacidad</a>
+            <a href="/avisoLegal">Aviso legal</a>
+            <a href="/politicacookies">Cookies</a>
+            <a href="/contact">Contacto</a>
+        </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 FitData. Todos los derechos reservados.</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/public/js/delete.js"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9371741460887435"
+    crossorigin="anonymous"></script>
+
+</body>
 </html>
