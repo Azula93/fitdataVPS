@@ -1,155 +1,172 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords"
-        content="etiquetas alimentos, tabla nutricional de alimentos, etiqueta nutricional, etiqueta nutricional de alimentos">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="/public/css/signin.css" rel="stylesheet">
-    <link href="/public/css/styles.css" rel="stylesheet">
-    <link rel="icon" href="/public/assets/favicons/favicon-removebg.png" type="image/x-icon">
-    <title>Clasificación de los alimentos</title>
+    <meta name="csrf-token" content="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+    <meta name="google-adsense-account" content="ca-pub-9371741460887435">
+    <meta name="description" content="Conoce cómo se clasifican los alimentos según su origen, función nutritiva y composición química. Guía completa para una dieta balanceada.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9371741460887435" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="/public/css/tools.css" rel="stylesheet">
+    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/x-icon">
+    <title>Clasificación de los Alimentos | FitData Blog</title>
 </head>
-
 <body>
-    <main class="container mt-5">
-        <%- include('navbar',{ user: user }) %>
-            <section class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h1 class="text-center" style="color: #0db7c4">Clasificación de los Alimentos</h1>
-                    </div>
-                </div>
-                <div class="row align-items-center mb-4">
-                    <div class="col-md-8 p-3">
-                        <p>En los procesos de alimentación saludable siempre es importante conocer cómo se clasifican
-                            los diferentes grupos alimenticios y bajo qué criterios. De esta manera, sabremos cuál es la
-                            función que cumplen en nuestro organismo, los aportes nutricionales, su composición química
-                            y aporte calórico. Partiendo de la base de que un alimento es toda sustancia elaborada que
-                            está destinada al consumo humano, que al ser ingerida nos aporta los nutrientes y energía
-                            necesarios para el desarrollo de procesos biológicos, excluyendo las bebidas alcohólicas
-                            (Fernández, 2003). Podemos establecer los criterios de clasificación de la siguiente manera:
-                        </p>
-                    </div>
-                    <div class="col-md-4 mt-4 mt-md-0">
-                        <img src="/public/assets/img (38).webp" alt="Clasificación de los Alimentos"
-                            class="img-fluid rounded" loading="lazy">
-                    </div>
-                </div>
 
-                <div class="row align-items-center mb-4">
-                    <!-- Columna para el texto -->
-                    <div class="col-md-8 order-md-2">
-                        <h2>Alimentos según su origen</h2>
-                        <p>Esta es la manera más fácil de clasificarlos. Los alimentos pueden ser de origen animal o
-                            vegetal,
-                            independiente de su composición química, esta nos ayuda a determinar la procedencia del
-                            alimento, es de
-                            utilidad para quienes tienen interés en un grupo específico de alimentos basándose en
-                            creencias o
-                            tendencias alimentarias como el veganismo o el vegetarianismo.</p>
-                        <ul>
-                            <li><strong>Origen animal:</strong> Carnes (cerdo, pescado, res, pollo entre otros.),
-                                huevos, lácteos y
-                                otros.</li>
-                            <li><strong>Origen vegetal:</strong> Frutas, verduras, legumbres, tubérculos entre otros.
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- Columna para la imagen -->
-                    <div class="col-md-4 order-md-1">
-                        <img src="/public/assets/img (39).webp" alt="Origen de los Alimentos" class="img-fluid rounded">
-                    </div>
-                </div>
+<!-- ── NAVBAR ── -->
+<nav class="tool-nav">
+    <% if (user) { %>
+        <a href="/panelcontrol" class="nav-logo">Fit<span>Data</span></a>
+        <ul class="nav-links">
+            <li><a href="/indicesantr">Herramientas</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/misdatos">Mis datos</a></li>
+        </ul>
+        <a href="/panelcontrol" class="nav-cta">Mi panel →</a>
+    <% } else { %>
+        <a href="/" class="nav-logo">Fit<span>Data</span></a>
+        <ul class="nav-links">
+            <li><a href="/#herramientas">Herramientas</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/login">Iniciar sesión</a></li>
+        </ul>
+        <a href="/register" class="nav-cta">Empieza gratis →</a>
+    <% } %>
+</nav>
 
-                <div class="row">
-                    <div class="col-12">
-                        <h2 class="">Según su función nutritiva</h2>
-                    </div>
-                </div>
-                <div class="row align-items-center mb-4">
-                    <div class="col-md-8 p-3">
-                        <p>Esta clasificación tiene en cuenta la función que desempeñan los alimentos en nuestro
-                            organismo:</p>
-                        <ul>
-                            <li><strong>Energéticos:</strong> Se encargan de brindar energía para los procesos
-                                metabólicos de
-                                nuestro organismo. Se destacan principalmente los hidratos de carbono, los cuales pueden
-                                ser simples
-                                como el azúcar de mesa o complejos como los tubérculos y las grasas.</li>
-                            <li><strong>Constructores:</strong> Estos suelen ser de mayor interés, puesto que participan
-                                en los
-                                procesos anabólicos de nuestro organismo, es decir, en la construcción, mantenimiento y
-                                reparación
-                                de los tejidos corporales, como los músculos, tendones, ligamentos, cabello, uñas, piel
-                                entre otros.
-                            </li>
-                            <li><strong>Reguladores:</strong> Se encargan de regular los procesos metabólicos de nuestro
-                                organismo.
-                                Se conocen comúnmente como vitaminas y minerales, que encontramos principalmente en las
-                                frutas y
-                                verduras.</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-4 mt-4 mt-md-0">
-                        <img src="/public/assets/img (41).webp" alt="Clasificación de los Alimentos"
-                            class="img-fluid rounded" loading="lazy">
-                    </div>
-                </div>
+<!-- ── ARTICLE HEADER ── -->
+<div class="article-header">
+    <div class="breadcrumb-nav">
+        <a href="/">Inicio</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="/blog">Blog</a>
+        <span class="breadcrumb-sep">›</span>
+        <span>Clasificación de los Alimentos</span>
+    </div>
+    <div class="tool-badge">🍎 Alimentación</div>
+    <h1>Clasificación<br>de los Alimentos</h1>
+    <p>Comprende los diferentes criterios para clasificar los alimentos y cómo usarlos para construir una dieta balanceada y adaptada a tus objetivos.</p>
+    <div class="article-meta">
+        <span class="article-meta-item">📖 Lectura: ~4 min</span>
+        <span class="article-meta-item">✍️ Lic. Luis Alexander Bolaños — Santiago de Cali (2025)</span>
+    </div>
+</div>
 
-                <div class="row align-items-center mb-4">
-                    <!-- Columna para la imagen -->
-                    <div class="col-md-4 order-md-2">
-                        <img src="/public/assets/img (36).webp" alt="Origen de los Alimentos" class="img-fluid rounded">
-                    </div>
-                    <!-- Columna para el texto -->
-                    <div class="col-md-8 order-md-1">
-                        <h2>Según su composición química</h2>
-                        <p>En sus dimensiones más fundamentales, los alimentos están compuestos de la siguiente manera:
-                        </p>
-                        <ul>
-                            <li><strong>Glucídicos:</strong> A nivel bioquímico se trata de los carbohidratos (Cereales,
-                                Tubérculos
-                                y leguminosas).</li>
-                            <li><strong>Proteicos:</strong> Principalmente predominan las proteínas, que son cadenas
-                                polipeptídicas,
-                                es decir, cadenas de aminoácidos, los cuales son los ladrillos con los que se construyen
-                                nuestras
-                                estructuras corporales.</li>
-                            <li><strong>Lipídicos:</strong> Conocidos popularmente como grasas, pueden ser compuestos a
-                                base de
-                                gliceroles y ácidos grasos, ya sea saturados o insaturados.</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+<!-- ── ANUNCIO ── -->
+<div class="ad-section">
+    <div class="ad-label">Publicidad</div>
+    <ins class="adsbygoogle" style="display:block"
+         data-ad-client="ca-pub-9371741460887435"
+         data-ad-slot="auto" data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 
-            <p>Existen otras clasificaciones más simplificadas como la de la FAO que establece 3 categorías:
-                Reguladores, formadores y energéticos, que están basadas fundamentalmente en la función que cumplen en
-                el organismo. La importancia de este conocimiento es la de poder organizar los propios procesos
-                nutricionales, teniendo en cuenta que una buena nutrición se trata de generar un aporte alimentario
-                variado basándose en las necesidades individuales, de manera que una alimentación “saludable” solo
-                requiere conocer los alimentos a niveles generales y de ahí establecer nuestra dieta. (Rodríguez &
-                Gallego, 1999)</p>
+<!-- ── ARTICLE BODY ── -->
+<div class="article-body">
+    <a href="/blog" class="btn-back">← Volver al blog</a>
 
-            <p>Santiago de cali, 08-01-2025 - Elaborado por: <strong>Lic. Luis Alexander Bolaños</strong></p>
-            <h3>Referencias</h3>
-            <p>
-                <cite>Rodríguez, M. H., & Gallego, A. S. (1999). Tratado de nutrición. Ediciones Díaz de Santos.</cite>
-            </p>
-            <p>
-                <cite>Fernández, M. L., Otero, M. C., Castro, Y. R., & Prieto, M. F. (2003). Hábitos alimentarios e
-                    imagen
-                    corporal en estudiantes universitarios sin trastornos alimentarios. International Journal of
-                    Clinical
-                    and Health Psychology, 3(1), 23-33.</cite>
-            </p>
+    <img src="/public/assets/img (38).webp" class="article-img-side" alt="Clasificación de los alimentos" loading="lazy">
 
-    </main>
-    <%- include('footer',{ user: user }) %>
+    <p>En los procesos de alimentación saludable siempre es importante conocer cómo se clasifican los diferentes grupos alimenticios y bajo qué criterios. De esta manera, sabremos cuál es la función que cumplen en nuestro organismo, los aportes nutricionales, su composición química y aporte calórico.</p>
+
+    <p>Partiendo de la base de que un alimento es toda sustancia elaborada destinada al consumo humano que, al ser ingerida, nos aporta los nutrientes y energía necesarios para el desarrollo de procesos biológicos, excluyendo las bebidas alcohólicas (Fernández, 2003), podemos establecer los criterios de clasificación de la siguiente manera:</p>
+
+    <h2>1. Según su origen</h2>
+
+    <img src="/public/assets/img (39).webp" class="article-img-side" alt="Origen de los alimentos" loading="lazy">
+
+    <p>Esta es la manera más fácil de clasificarlos. Los alimentos pueden ser de origen animal o vegetal, independiente de su composición química. Esta clasificación es de utilidad para quienes tienen interés en un grupo específico de alimentos basándose en creencias o tendencias alimentarias como el veganismo o el vegetarianismo.</p>
+    <ul>
+        <li><strong>Origen animal:</strong> Carnes (cerdo, pescado, res, pollo, entre otros), huevos, lácteos y otros derivados.</li>
+        <li><strong>Origen vegetal:</strong> Frutas, verduras, legumbres, tubérculos, cereales, entre otros.</li>
+    </ul>
+
+    <h2>2. Según su función nutritiva</h2>
+
+    <img src="/public/assets/img (41).webp" class="article-img-side" alt="Función nutritiva de los alimentos" loading="lazy">
+
+    <p>Esta clasificación tiene en cuenta la función que desempeñan los alimentos en nuestro organismo:</p>
+    <ul>
+        <li><strong>Energéticos:</strong> Se encargan de brindar energía para los procesos metabólicos del organismo. Se destacan principalmente los hidratos de carbono —simples como el azúcar de mesa o complejos como los tubérculos— y las grasas.</li>
+        <li><strong>Constructores:</strong> Participan en los procesos anabólicos del organismo, es decir, en la construcción, mantenimiento y reparación de los tejidos corporales: músculos, tendones, ligamentos, cabello, uñas, piel, entre otros.</li>
+        <li><strong>Reguladores:</strong> Se encargan de regular los procesos metabólicos del organismo. Se conocen comúnmente como vitaminas y minerales, que encontramos principalmente en frutas y verduras.</li>
+    </ul>
+
+    <h2>3. Según su composición química</h2>
+
+    <img src="/public/assets/img (36).webp" class="article-img-side" alt="Composición química de los alimentos" loading="lazy">
+
+    <p>En sus dimensiones más fundamentales, los alimentos están compuestos de la siguiente manera:</p>
+    <ul>
+        <li><strong>Glucídicos:</strong> A nivel bioquímico se trata de los carbohidratos (cereales, tubérculos y leguminosas).</li>
+        <li><strong>Proteicos:</strong> Principalmente predominan las proteínas, que son cadenas polipeptídicas —cadenas de aminoácidos— los ladrillos con los que se construyen las estructuras corporales.</li>
+        <li><strong>Lipídicos:</strong> Conocidos popularmente como grasas, pueden ser compuestos a base de gliceroles y ácidos grasos, ya sea saturados o insaturados.</li>
+    </ul>
+
+    <h2>Conclusión</h2>
+    <p>Existen otras clasificaciones más simplificadas como la de la FAO, que establece 3 categorías: reguladores, formadores y energéticos, basadas fundamentalmente en la función que cumplen en el organismo. La importancia de este conocimiento es poder organizar los propios procesos nutricionales, teniendo en cuenta que una buena nutrición requiere un aporte alimentario variado basado en las necesidades individuales. (Rodríguez & Gallego, 1999)</p>
+
+    <div class="article-author">
+        <strong>Elaborado por:</strong> Lic. Luis Alexander Bolaños<br>
+        Santiago de Cali, 08-01-2025
+    </div>
+
+    <div class="article-refs">
+        <h3>Referencias</h3>
+        <cite>Rodríguez, M. H., & Gallego, A. S. (1999). <em>Tratado de nutrición.</em> Ediciones Díaz de Santos.</cite>
+        <cite>Fernández, M. L., Otero, M. C., Castro, Y. R., & Prieto, M. F. (2003). Hábitos alimentarios e imagen corporal en estudiantes universitarios sin trastornos alimentarios. <em>International Journal of Clinical and Health Psychology, 3</em>(1), 23–33.</cite>
+    </div>
+</div>
+
+<!-- ── HERRAMIENTAS RELACIONADAS ── -->
+<div class="related-section">
+    <h3>Complementa con nuestras herramientas</h3>
+    <div class="related-grid">
+        <a href="/valoracion" class="related-card">
+            <span class="related-icon">🥗</span>
+            <div><div class="related-name">Macronutrientes</div><div class="related-desc">Proteínas, carbs y grasas</div></div>
+        </a>
+        <a href="/valoracion" class="related-card">
+            <span class="related-icon">🔥</span>
+            <div><div class="related-name">Gasto Energético</div><div class="related-desc">Calorías diarias</div></div>
+        </a>
+        <a href="/indicesantr" class="related-card">
+            <span class="related-icon">⚖️</span>
+            <div><div class="related-name">IMC</div><div class="related-desc">Índice de Masa Corporal</div></div>
+        </a>
+        <a href="/blog" class="related-card">
+            <span class="related-icon">📝</span>
+            <div><div class="related-name">Más artículos</div><div class="related-desc">Volver al blog</div></div>
+        </a>
+    </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="tool-footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="/" class="nav-logo">Fit<span>Data</span></a>
+            <p>Herramientas científicas de evaluación física para todos.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Herramientas</h4>
+            <a href="/indicesantr">IMC</a>
+            <a href="/icc">ICC</a>
+            <a href="/pruebaEsfuerzo">VO₂ Máximo</a>
+            <a href="/valoracion">Gasto Energético</a>
+        </div>
+        <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="/privacyPolicy">Privacidad</a>
+            <a href="/avisoLegal">Aviso legal</a>
+            <a href="/politicacookies">Cookies</a>
+            <a href="/contact">Contacto</a>
+        </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 FitData. Todos los derechos reservados.</div>
+</footer>
+
 </body>
-
 </html>

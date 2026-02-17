@@ -1,43 +1,160 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords"
-        content="etiquetas alimentos, tabla nutricional de alimentos, etiqueta nutricional, etiqueta nutricional de alimentos">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="/public/css/signin.css" rel="stylesheet">
-    <link href="/public/css/styles.css" rel="stylesheet">
-    <link rel="icon" href="/public/assets/favicons/favicon-removebg.png" type="image/x-icon">
-    <title>Evolución de las marcas en atletismo</title>
+    <meta name="csrf-token" content="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+    <meta name="google-adsense-account" content="ca-pub-9371741460887435">
+    <meta name="description" content="Análisis estadístico de la evolución de las marcas olímpicas en atletismo: velocidad, medio fondo y fondo. Estudio de Lic. Luis Alexander Bolaños.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9371741460887435" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="/public/css/tools.css" rel="stylesheet">
+    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/x-icon">
+    <title>Evolución de las Marcas en Atletismo | FitData Blog</title>
 </head>
 <body>
-    <div class="container mt-5">
-        <%- include('navbar',{ user: user }) %>
-        <h1 class="text-center mb-3">Evolución de las marcas en atletismo de pista en los juegos olímpicos</h1>
-        <p>La historia del atletismo, a pesar de estar documentada en una cantidad considerable de obras literarias, presenta una notable carencia en el ámbito investigativo. Este deporte no solo ha evolucionado en términos de su conceptualización interna, sino también en la capacidad de los atletas para superar límites que parecían inalcanzables. Estas marcas, que anteriormente se rompían con mayor frecuencia, en la actualidad tienden a ser superadas en intervalos más prolongados, a menudo de varios años.</p>
-        <p>El presente artículo tiene como objetivo principal analizar, a través de un enfoque estadístico, los registros Olímpicos en diversas modalidades de atletismo: velocidad (100, 200 y 400 metros), medio fondo (800 y 1500 metros) y fondo (5000 y 10000 metros). A partir de este análisis, se busca establecer indicadores que reflejen la evolución de estas disciplinas a lo largo del tiempo. La propuesta se centra en construir una base sólida sobre la progresión competitiva del atletismo a nivel mundial, tomando como referencia los Juegos Olímpicos, considerados la máxima expresión de esta disciplina. Además, se exploran las diversas condiciones culturales, políticas y económicas que podrían influir en el desempeño de los atletas.</p>
-        <p>Los datos utilizados en el estudio fueron obtenidos de la página oficial de la Asociación Internacional de Federaciones de Atletismo (IAAF), consultada el 24 de noviembre de 2016. Para garantizar la precisión de la información y minimizar posibles errores de digitación, las marcas fueron unificadas en una misma unidad de medida, convirtiendo todas las cifras en segundos. Posteriormente, se calculó el logaritmo en base 10 de estos tiempos, así como la velocidad (V = D/t) y el logaritmo en base 10 de dicha velocidad.</p>
-        <p>Una vez recopilados estos datos, se procedió a su representación gráfica, agrupando las disciplinas según su afinidad: velocidad (100, 200 y 400 metros), medio fondo (800 y 1500 metros) y fondo (5000 y 10000 metros). Para facilitar el análisis, los registros se organizaron por intervalos históricos (1896-1912, 1912-1936, 1936-1964, 1964-1984, 1984-2004, 2004-2016), graficando los resultados más destacados de cada periodo. Finalmente, se calculó el porcentaje de variación entre las marcas de cada modalidad a lo largo de los diferentes intervalos temporales, permitiendo observar patrones de evolución en el rendimiento deportivo.</p>
-        
-        <h2 class="mt-5">Tabla 1</h2>
-        <p>Marcas en segundos con logaritmo de tiempo y velocidad para las modalidades de 100 a 400 metros</p>
-        <img class="mb-4 d-flex img-fluid" src="/public/assets/img (40).webp" alt="Marcas en segundos con logaritmo de tiempo y velocidad para las modalidades de 100 a 400 metros">
-        
-        <p>Desde la inauguración de los Juegos Olímpicos modernos en 1896, surgió un creciente interés entre diversos autores por el deporte y el entrenamiento deportivo. Sin embargo, fue a principios del siglo XX cuando se realizaron los aportes más significativos que sentaron las bases del entrenamiento deportivo moderno. Estos avances influyeron directamente en la evolución de los atletas y su desempeño en las competencias. Con el transcurso del tiempo, el deporte adquirió mayor relevancia, convirtiéndose no solo en una muestra de las capacidades individuales, sino también en un medio para destacar el potencial de las naciones, incluso con implicaciones políticas. Dentro de este marco, las marcas olímpicas representan los momentos culminantes del rendimiento de los deportistas en distintas épocas.</p>
-        
-        <p>El análisis histórico evidencia un progreso constante en las marcas deportivas, aunque no exento de altibajos y fluctuaciones presentes en todas las modalidades. A pesar de sus diferencias, estas disciplinas han seguido trayectorias de evolución similares, influenciadas por diversos acontecimientos históricos que han impactado los resultados. Entre 1896 y 1964 se registró el mayor incremento en las marcas, mientras que a partir de ese periodo se observaron fluctuaciones y una evolución más segmentada entre las diferentes modalidades.</p>
-        
-        <p>En términos históricos, se pueden identificar dos fases clave: la primera corresponde al periodo de mejora continua entre 1896 y 1964, y la segunda a una etapa de estabilización en la que la frecuencia de ruptura de récords disminuyó progresivamente. Este patrón persiste hasta 2008, cuando se produjo un resurgimiento de las marcas, marcando un nuevo periodo de progreso que se extendió hasta 2012. Sin embargo, hacia 2016, se observó nuevamente una estabilización general, acompañada de una disminución en el rendimiento de modalidades como los 100, 200, 800 y 1500 metros. En contraste, disciplinas como los 400, 5000 y 10000 metros continuaron mostrando mejoras significativas.</p>
-        
-        <p>Elaborado por: <strong>Lic. Luis Alexander Bolaños</strong></p>
-        <p>Universidad del Valle, Santiago de Cali (2018)</p>
-        <p>
-            <cite>Bolaños, L. (2018). Análisis de la evolución de las marcas olímpicas en atletismo en las modalidades de velocidad, semi - fondo y fondo (100, 200, 400, 800, 1500, 5000 y 10000) de la rama masculina. Universidad del Valle.</cite>
-        </p>
 
-        <%- include('footer',{ user: user }) %>
+<!-- ── NAVBAR ── -->
+<nav class="tool-nav">
+    <% if (user) { %>
+        <a href="/panelcontrol" class="nav-logo">Fit<span>Data</span></a>
+        <ul class="nav-links">
+            <li><a href="/indicesantr">Herramientas</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/misdatos">Mis datos</a></li>
+        </ul>
+        <a href="/panelcontrol" class="nav-cta">Mi panel →</a>
+    <% } else { %>
+        <a href="/" class="nav-logo">Fit<span>Data</span></a>
+        <ul class="nav-links">
+            <li><a href="/#herramientas">Herramientas</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/login">Iniciar sesión</a></li>
+        </ul>
+        <a href="/register" class="nav-cta">Empieza gratis →</a>
+    <% } %>
+</nav>
+
+<!-- ── ARTICLE HEADER ── -->
+<div class="article-header">
+    <div class="breadcrumb-nav">
+        <a href="/">Inicio</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="/blog">Blog</a>
+        <span class="breadcrumb-sep">›</span>
+        <span>Evolución Marcas Atletismo</span>
+    </div>
+    <div class="tool-badge">🏃 Atletismo</div>
+    <h1>Evolución de las Marcas<br>en Atletismo Olímpico</h1>
+    <p>Análisis estadístico de los registros olímpicos en velocidad, medio fondo y fondo desde 1896 hasta 2016.</p>
+    <div class="article-meta">
+        <span class="article-meta-item">📖 Lectura: ~5 min</span>
+        <span class="article-meta-item">✍️ Lic. Luis Alexander Bolaños — Universidad del Valle (2018)</span>
+    </div>
 </div>
+
+<!-- ── ANUNCIO ── -->
+<div class="ad-section">
+    <div class="ad-label">Publicidad</div>
+    <ins class="adsbygoogle" style="display:block"
+         data-ad-client="ca-pub-9371741460887435"
+         data-ad-slot="auto" data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<!-- ── ARTICLE BODY ── -->
+<div class="article-body">
+    <a href="/blog" class="btn-back">← Volver al blog</a>
+
+    <p>La historia del atletismo, a pesar de estar documentada en una cantidad considerable de obras literarias, presenta una notable carencia en el ámbito investigativo. Este deporte no solo ha evolucionado en términos de su conceptualización interna, sino también en la capacidad de los atletas para superar límites que parecían inalcanzables. Estas marcas, que anteriormente se rompían con mayor frecuencia, en la actualidad tienden a ser superadas en intervalos más prolongados, a menudo de varios años.</p>
+
+    <p>El presente artículo tiene como objetivo principal analizar, a través de un enfoque estadístico, los registros olímpicos en diversas modalidades de atletismo: velocidad (100, 200 y 400 metros), medio fondo (800 y 1500 metros) y fondo (5000 y 10000 metros). A partir de este análisis, se busca establecer indicadores que reflejen la evolución de estas disciplinas a lo largo del tiempo.</p>
+
+    <p>La propuesta se centra en construir una base sólida sobre la progresión competitiva del atletismo a nivel mundial, tomando como referencia los Juegos Olímpicos, considerados la máxima expresión de esta disciplina. Además, se exploran las diversas condiciones culturales, políticas y económicas que podrían influir en el desempeño de los atletas.</p>
+
+    <h2>Metodología</h2>
+    <p>Los datos utilizados en el estudio fueron obtenidos de la página oficial de la Asociación Internacional de Federaciones de Atletismo (IAAF), consultada el 24 de noviembre de 2016. Para garantizar la precisión de la información y minimizar posibles errores de digitación, las marcas fueron unificadas en una misma unidad de medida, convirtiendo todas las cifras en segundos.</p>
+    <p>Posteriormente, se calculó el logaritmo en base 10 de estos tiempos, así como la velocidad (V = D/t) y el logaritmo en base 10 de dicha velocidad. Los registros se organizaron por intervalos históricos: <strong>1896–1912, 1912–1936, 1936–1964, 1964–1984, 1984–2004 y 2004–2016</strong>.</p>
+
+    <h2>Tabla 1 — Marcas en modalidades de 100 a 400 metros</h2>
+    <p>Marcas en segundos con logaritmo de tiempo y velocidad para las modalidades de velocidad:</p>
+    <img src="/public/assets/img (40).webp" class="article-img" alt="Marcas en segundos con logaritmo de tiempo y velocidad para las modalidades de 100 a 400 metros" loading="lazy">
+
+    <h2>Contexto histórico y evolución</h2>
+    <p>Desde la inauguración de los Juegos Olímpicos modernos en 1896, surgió un creciente interés entre diversos autores por el deporte y el entrenamiento deportivo. Sin embargo, fue a principios del siglo XX cuando se realizaron los aportes más significativos que sentaron las bases del entrenamiento deportivo moderno. Estos avances influyeron directamente en la evolución de los atletas y su desempeño en las competencias.</p>
+
+    <p>Con el transcurso del tiempo, el deporte adquirió mayor relevancia, convirtiéndose no solo en una muestra de las capacidades individuales, sino también en un medio para destacar el potencial de las naciones, incluso con implicaciones políticas. Dentro de este marco, las marcas olímpicas representan los momentos culminantes del rendimiento de los deportistas en distintas épocas.</p>
+
+    <h2>Resultados y conclusiones</h2>
+    <p>El análisis histórico evidencia un progreso constante en las marcas deportivas, aunque no exento de altibajos y fluctuaciones presentes en todas las modalidades. A pesar de sus diferencias, estas disciplinas han seguido trayectorias de evolución similares, influenciadas por diversos acontecimientos históricos que han impactado los resultados.</p>
+
+    <p>Entre 1896 y 1964 se registró el mayor incremento en las marcas, mientras que a partir de ese periodo se observaron fluctuaciones y una evolución más segmentada entre las diferentes modalidades. En términos históricos, se pueden identificar dos fases clave:</p>
+    <ul>
+        <li><strong>Primera fase (1896–1964):</strong> Periodo de mejora continua y acelerada en todas las modalidades.</li>
+        <li><strong>Segunda fase (1964–presente):</strong> Etapa de estabilización en la que la frecuencia de ruptura de récords disminuyó progresivamente.</li>
+    </ul>
+
+    <p>Este patrón persiste hasta 2008, cuando se produjo un resurgimiento de las marcas, marcando un nuevo periodo de progreso que se extendió hasta 2012. Sin embargo, hacia 2016, se observó nuevamente una estabilización general, acompañada de una disminución en el rendimiento de modalidades como los 100, 200, 800 y 1500 metros. En contraste, disciplinas como los 400, 5000 y 10000 metros continuaron mostrando mejoras significativas.</p>
+
+    <div class="article-author">
+        <strong>Elaborado por:</strong> Lic. Luis Alexander Bolaños<br>
+        Universidad del Valle, Santiago de Cali (2018)
+    </div>
+
+    <div class="article-refs">
+        <h3>Referencia</h3>
+        <cite>Bolaños, L. (2018). Análisis de la evolución de las marcas olímpicas en atletismo en las modalidades de velocidad, semi-fondo y fondo (100, 200, 400, 800, 1500, 5000 y 10000) de la rama masculina. Universidad del Valle.</cite>
+    </div>
+</div>
+
+<!-- ── HERRAMIENTAS RELACIONADAS ── -->
+<div class="related-section">
+    <h3>Complementa con nuestras herramientas</h3>
+    <div class="related-grid">
+        <a href="/pruebaEsfuerzo" class="related-card">
+            <span class="related-icon">🫁</span>
+            <div><div class="related-name">VO₂ Máximo</div><div class="related-desc">Capacidad aeróbica</div></div>
+        </a>
+        <a href="/indicesantr" class="related-card">
+            <span class="related-icon">⚖️</span>
+            <div><div class="related-name">IMC</div><div class="related-desc">Índice de Masa Corporal</div></div>
+        </a>
+        <a href="/valoracion" class="related-card">
+            <span class="related-icon">🔥</span>
+            <div><div class="related-name">Gasto Energético</div><div class="related-desc">Calorías diarias</div></div>
+        </a>
+        <a href="/blog" class="related-card">
+            <span class="related-icon">📝</span>
+            <div><div class="related-name">Más artículos</div><div class="related-desc">Volver al blog</div></div>
+        </a>
+    </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="tool-footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="/" class="nav-logo">Fit<span>Data</span></a>
+            <p>Herramientas científicas de evaluación física para todos.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Herramientas</h4>
+            <a href="/indicesantr">IMC</a>
+            <a href="/icc">ICC</a>
+            <a href="/pruebaEsfuerzo">VO₂ Máximo</a>
+            <a href="/valoracion">Gasto Energético</a>
+        </div>
+        <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="/privacyPolicy">Privacidad</a>
+            <a href="/avisoLegal">Aviso legal</a>
+            <a href="/politicacookies">Cookies</a>
+            <a href="/contact">Contacto</a>
+        </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 FitData. Todos los derechos reservados.</div>
+</footer>
+
 </body>
 </html>
