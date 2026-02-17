@@ -1,4 +1,5 @@
 const express = require('express');
+const compression = require('compression');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const dotenv = require('dotenv');
@@ -15,11 +16,16 @@ const pool = require('./database/db');
 
 const app = express();
 
+// Compresión gzip/brotli — reduce el tamaño de las respuestas un 40-70%
+app.use(compression());
+
 // Confiar en el proxy inverso (nginx) — necesario para req.secure, cookies Secure y rate-limit
 app.set('trust proxy', 1);
 
 // Headers de seguridad
 app.use(helmet({
+    // Permitir dns-prefetch para reducir latencia de conexión a CDNs externos
+    dnsPrefetchControl: { allow: true },
     contentSecurityPolicy: {
         directives: {
             defaultSrc: ["'self'"],
@@ -173,7 +179,18 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Archivos estáticos ANTES del rate limiter — no deben consumir cuota
-app.use('/public', express.static(path.join(__dirname, 'public')));
+// maxAge 30 días: el navegador cachea CSS, JS e imágenes sin volver a pedirlos
+app.use('/public', express.static(path.join(__dirname, 'public'), {
+    maxAge: '30d',
+    etag: true,
+    lastModified: true,
+    setHeaders: (res, filePath) => {
+        // Fuentes y favicons: caché de 1 año (no cambian)
+        if (/\.(woff2?|ttf|otf|eot|ico|webp|svg|png)$/i.test(filePath)) {
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        }
+    }
+}));
 app.get('/ads.txt', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'ads.txt'));
 });
