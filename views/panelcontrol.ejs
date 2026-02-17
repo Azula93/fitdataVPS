@@ -196,22 +196,56 @@
         }
         .btn-logout:hover { background: #e11d48; color: white; border-color: #e11d48; }
 
+        /* ── OVERFLOW GLOBAL — evita scroll horizontal en todo el panel ── */
+        html, body { overflow-x: hidden; max-width: 100%; }
+
+        /* min-width: 0 en todos los hijos de grid y flex para que no rebosen su celda */
+        .dash-hero-inner > *,
+        .dash-quick > *,
+        .results-grid > *,
+        .tools-grid > *,
+        .results-actions > * { min-width: 0; }
+
         /* ── RESPONSIVE ── */
-        @media (max-width: 768px) {
+
+        /* Tablet: 4 quick-cards en una fila, resultados en 4 columnas */
+        @media (max-width: 860px) {
+            .dash-quick { grid-template-columns: repeat(2, 1fr); }
             .results-grid { grid-template-columns: repeat(3, 1fr); }
         }
-        @media (max-width: 520px) {
-            .dash-hero { padding: 82px 4% 32px; }
-            .dash-hero-btns { width: 100%; }
+
+        /* Móvil grande: apilamos el hero, ajustamos grids */
+        @media (max-width: 600px) {
+            .dash-hero { padding: 82px 4% 28px; }
+            .dash-hero-inner { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .dash-hero-btns { width: 100%; gap: .6rem; }
             .btn-hero { flex: 1; justify-content: center; }
-            .dash-quick { grid-template-columns: 1fr 1fr; gap: .75rem; padding: 1.5rem 4% 0; }
+
+            .quote-banner { padding: 1rem 4%; }
+            .quote-banner-inner { gap: .8rem; }
+            .quote-icon { font-size: 1.5rem; }
+            .quote-text { font-size: .82rem; }
+
+            .dash-quick {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 1.5rem 4% 0;
+                gap: .75rem;
+            }
+
             .dash-section { padding: 2rem 4%; }
             .results-grid { grid-template-columns: repeat(2, 1fr); }
             .tools-grid { grid-template-columns: 1fr; }
-            .quote-banner { padding: 1rem 4%; }
             .dash-account { padding: 0 4% 2.5rem; }
             .results-actions { flex-direction: column; }
-            .btn-result-action { justify-content: center; }
+            .btn-result-action { width: 100%; justify-content: center; }
+        }
+
+        /* Móvil pequeño: reducimos avatar y texto */
+        @media (max-width: 380px) {
+            .dash-avatar { width: 48px; height: 48px; font-size: 1.1rem; }
+            .dash-identity h1 { font-size: 1.1rem; }
+            .quick-icon { width: 38px; height: 38px; font-size: 1.1rem; }
+            .quick-info .quick-value { font-size: .85rem; }
         }
     </style>
 </head>

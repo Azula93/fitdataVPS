@@ -313,12 +313,13 @@ footer.tool-footer {
 @media (max-width: 800px) {
     .tool-main { grid-template-columns: 1fr; }
     .form-panel { position: static; }
-    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
 }
 @media (max-width: 600px) {
     nav.tool-nav { padding: 0 4%; }
     .nav-links { display: none; }
-    .footer-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 1.2rem; }
     .tool-header { padding: 90px 4% 36px; }
     .tool-main { padding: 32px 4%; gap: 2rem; }
+    footer.tool-footer { padding: 2rem 4% 1.2rem; }
 }
