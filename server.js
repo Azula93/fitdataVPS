@@ -89,14 +89,16 @@ const authLimiter = rateLimit({
     max: 10,
     standardHeaders: true,
     legacyHeaders: false,
-    message: {
-        alert: true,
-        alertTitle: 'Demasiados intentos',
-        alertMessage: 'Has superado el límite de intentos. Por favor espera 15 minutos.',
-        alertIcon: 'error',
-        showConfirmButton: true,
-        timer: false,
-        ruta: 'login'
+    handler: (req, res) => {
+        res.status(429).render('login', {
+            alert: true,
+            alertTitle: 'Demasiados intentos',
+            alertMessage: 'Has superado el límite de intentos. Por favor espera 15 minutos.',
+            alertIcon: 'error',
+            showConfirmButton: true,
+            timer: false,
+            ruta: 'login'
+        });
     }
 });
 
