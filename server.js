@@ -102,13 +102,29 @@ const authLimiter = rateLimit({
     }
 });
 
-// Límite general para el resto de endpoints: 100 peticiones por IP cada 15 minutos
+// Límite general para el resto de endpoints: 300 peticiones por IP cada 15 minutos
+// (los archivos estáticos ya se sirven antes y no consumen esta cuota)
 const generalLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 100,
+    max: 300,
     standardHeaders: true,
     legacyHeaders: false,
-    message: { error: 'Demasiadas peticiones. Por favor intenta más tarde.' }
+    handler: (req, res) => {
+        // Si el cliente espera JSON (llamadas AJAX), devolver JSON
+        if (req.xhr || (req.headers.accept && req.headers.accept.includes('application/json'))) {
+            return res.status(429).json({ error: 'Demasiadas peticiones. Por favor intenta más tarde.' });
+        }
+        // Si es una petición de navegador normal, mostrar página de login con alerta
+        res.status(429).render('login', {
+            alert: true,
+            alertTitle: 'Demasiadas peticiones',
+            alertMessage: 'Has realizado demasiadas peticiones. Por favor espera unos minutos e intenta de nuevo.',
+            alertIcon: 'warning',
+            showConfirmButton: true,
+            timer: false,
+            ruta: 'login'
+        });
+    }
 });
 
 app.use('/login', authLimiter);
@@ -152,13 +168,12 @@ app.use((err, req, res, next) => {
     }
 });
 
-// Motor de plantillas 
+// Motor de plantillas
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
-// Se usa para mostrar los archivos est�ticos
+// Archivos estáticos ANTES del rate limiter — no deben consumir cuota
 app.use('/public', express.static(path.join(__dirname, 'public')));
-
-// ads.txt en la raíz del dominio (requerido por Google AdSense)
 app.get('/ads.txt', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'ads.txt'));
 });
@@ -166,8 +181,6 @@ app.get('/ads.txt', (req, res) => {
 // Procesar datos enviados desde forms
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.set('views', path.join(__dirname, 'views'));
 
 // Cookies
 app.use(cookieParser());
