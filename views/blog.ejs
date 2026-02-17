@@ -1,98 +1,227 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
     <meta name="google-adsense-account" content="ca-pub-9371741460887435">
+    <meta name="description" content="Blog FitData — Artículos sobre nutrición, deporte y salud física basados en evidencia científica.">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9371741460887435" crossorigin="anonymous"></script>
-    <meta name="keywords"
-        content="etiquetas alimentos, tabla nutricional de alimentos, etiqueta nutricional, etiqueta nutricional de alimentos">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="/public/css/signin.css" rel="stylesheet">
-    <link href="/public/css/styles.css" rel="stylesheet">
-    <link rel="icon" href="/public/assets/favicons/favicon-removebg.png" type="image/x-icon">
-    <title>Blog: Información deportiva </title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="/public/css/tools.css" rel="stylesheet">
+    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/x-icon">
+    <title>Blog — Nutrición y Deporte | FitData</title>
+    <style>
+        /* ── BLOG HEADER ── */
+        .blog-header {
+            padding: 100px 5% 48px;
+            background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
+            border-bottom: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .blog-header h1 {
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 800; color: var(--dark);
+            margin-bottom: .8rem; line-height: 1.2;
+        }
+        .blog-header p {
+            font-size: 1rem; color: var(--gray);
+            max-width: 520px; margin: 0 auto; line-height: 1.7;
+        }
+
+        /* ── BLOG GRID ── */
+        .blog-section {
+            max-width: 1100px; margin: 0 auto;
+            padding: 56px 5%;
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* ── BLOG CARD ── */
+        .blog-card {
+            background: white; border-radius: var(--radius);
+            border: 2px solid #e2e8f0; overflow: hidden;
+            text-decoration: none; color: inherit;
+            transition: all .25s; display: flex; flex-direction: column;
+        }
+        .blog-card:hover {
+            border-color: var(--green);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+        .blog-card-img {
+            width: 100%; height: 200px;
+            object-fit: cover; display: block;
+        }
+        .blog-card-body {
+            padding: 1.5rem; flex: 1;
+            display: flex; flex-direction: column; gap: .8rem;
+        }
+        .blog-card-tag {
+            display: inline-flex; align-items: center;
+            background: var(--green-soft); color: var(--green-dark);
+            font-size: .72rem; font-weight: 700;
+            padding: .2rem .7rem; border-radius: 50px;
+            text-transform: uppercase; letter-spacing: .05em;
+            width: fit-content;
+        }
+        .blog-card-title {
+            font-size: 1rem; font-weight: 700;
+            color: var(--dark); line-height: 1.4;
+        }
+        .blog-card-desc {
+            font-size: .88rem; color: var(--gray);
+            line-height: 1.6; flex: 1;
+        }
+        .blog-card-cta {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--green-dark); font-size: .85rem; font-weight: 600;
+            margin-top: .4rem;
+        }
+        .blog-card:hover .blog-card-cta { gap: 10px; }
+    </style>
 </head>
-
 <body>
-    <main class="container my-5">
-        <%- include('navbar',{ user: user }) %>
-           
-            <section class="d-flex justify-content-center">
-                <div class="card mb-3" style="max-width: 640px;">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="/public/assets/img (31).webp" class="img-fluid rounded-start"
-                                alt="Cómo leer etiquetas nutricionales" loading="lazy">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h4 class="card-title text-center" style="color: #0db7c4">Cómo Leer Etiquetas
-                                    Nutricionales</h4>
-                                <p class="card-text fs-5">Descubre cómo interpretar la tabla nutricional de alimentos y
-                                    comprender las etiquetas de los productos.</p>
-                                <div class="d-grid gap-2">
-                                    <a href="/etiquetasNutricionales" class="btn btn-info" type="button">Leer más</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            <section class="d-flex justify-content-center">
-                <div class="card mb-3" style="max-width: 640px;">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="/public/assets/img (33).webp" class="img-fluid rounded-start"
-                                alt="Cómo leer etiquetas nutricionales" loading="lazy">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h4 class="card-title text-center" style="color: #0db7c4">Evolución de las marcas en atletismo</h4>
-                                <p class="card-text fs-5">Descubre cómo han evolucionado las marcas en atletismo a lo largo del tiempo.</p>
-                                <div class="d-grid gap-2">
-                                    <a href="/evolMarcas" class="btn btn-info" type="button">Leer más</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+<!-- ── NAVBAR ── -->
+<nav class="tool-nav">
+    <% if (user) { %>
+        <a href="/panelcontrol" class="nav-logo">Fit<span>Data</span></a>
+        <ul class="nav-links">
+            <li><a href="/indicesantr">Herramientas</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/misdatos">Mis datos</a></li>
+        </ul>
+        <a href="/panelcontrol" class="nav-cta">Mi panel →</a>
+    <% } else { %>
+        <a href="/" class="nav-logo">Fit<span>Data</span></a>
+        <ul class="nav-links">
+            <li><a href="/#herramientas">Herramientas</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/login">Iniciar sesión</a></li>
+        </ul>
+        <a href="/register" class="nav-cta">Empieza gratis →</a>
+    <% } %>
+</nav>
 
+<!-- ── BLOG HEADER ── -->
+<div class="blog-header">
+    <div class="breadcrumb-nav" style="justify-content:center">
+        <a href="/">Inicio</a>
+        <span class="breadcrumb-sep">›</span>
+        <span>Blog</span>
+    </div>
+    <div class="tool-badge">📝 Artículos</div>
+    <h1>Blog de Nutrición<br>y Deporte</h1>
+    <p>Artículos basados en evidencia científica para ayudarte a entender tu cuerpo, mejorar tu alimentación y rendir más.</p>
+</div>
 
-            <section class="d-flex justify-content-center">
-                <div class="card mb-3" style="max-width: 640px;">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="/public/assets/img (22).webp" class="img-fluid rounded-start"
-                                alt="Cómo leer etiquetas nutricionales" loading="lazy">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h4 class="card-title text-center" style="color: #0db7c4">Clasificacion de los alimentos</h4>
-                                <p class="card-text fs-5">Comprende como se clasifican los alimentos para que logres una dieta balanceada.</p>
-                                <div class="d-grid gap-2">
-                                    <a href="/clasAlimentos" class="btn btn-info" type="button">Leer más</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-    
+<!-- ── ANUNCIO ── -->
+<div class="ad-section">
+    <div class="ad-label">Publicidad</div>
+    <ins class="adsbygoogle" style="display:block"
+         data-ad-client="ca-pub-9371741460887435"
+         data-ad-slot="auto" data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 
-    <%- include('footer',{ user: user }) %>
-    <!-- Botón "Volver arriba" -->
-    <section class="scroll">
-        <a id="scroll-to-top" href="#" class="back-to-top" role="button">
-            <i class="bi bi-arrow-up-circle-fill"></i></a>
-    </section>
-</main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/52b9ec387c.js" crossorigin="anonymous"></script>
+<!-- ── ARTÍCULOS ── -->
+<div class="blog-section">
+    <div class="blog-grid">
+
+        <a href="/etiquetasNutricionales" class="blog-card">
+            <img src="/public/assets/img (31).webp"
+                 class="blog-card-img"
+                 alt="Cómo leer etiquetas nutricionales"
+                 loading="lazy">
+            <div class="blog-card-body">
+                <span class="blog-card-tag">🥗 Nutrición</span>
+                <div class="blog-card-title">Cómo Leer Etiquetas Nutricionales</div>
+                <div class="blog-card-desc">Descubre cómo interpretar la tabla nutricional de alimentos y comprender las etiquetas de los productos que consumes a diario.</div>
+                <span class="blog-card-cta">Leer artículo →</span>
+            </div>
+        </a>
+
+        <a href="/evolMarcas" class="blog-card">
+            <img src="/public/assets/img (33).webp"
+                 class="blog-card-img"
+                 alt="Evolución de las marcas en atletismo"
+                 loading="lazy">
+            <div class="blog-card-body">
+                <span class="blog-card-tag">🏃 Atletismo</span>
+                <div class="blog-card-title">Evolución de las Marcas en Atletismo</div>
+                <div class="blog-card-desc">Descubre cómo han evolucionado las marcas en atletismo a lo largo del tiempo y qué factores han impulsado el rendimiento humano al límite.</div>
+                <span class="blog-card-cta">Leer artículo →</span>
+            </div>
+        </a>
+
+        <a href="/clasAlimentos" class="blog-card">
+            <img src="/public/assets/img (22).webp"
+                 class="blog-card-img"
+                 alt="Clasificación de los alimentos"
+                 loading="lazy">
+            <div class="blog-card-body">
+                <span class="blog-card-tag">🍎 Alimentación</span>
+                <div class="blog-card-title">Clasificación de los Alimentos</div>
+                <div class="blog-card-desc">Comprende cómo se clasifican los alimentos para que logres construir una dieta balanceada y adaptada a tus objetivos de salud.</div>
+                <span class="blog-card-cta">Leer artículo →</span>
+            </div>
+        </a>
+
+    </div>
+</div>
+
+<!-- ── HERRAMIENTAS RELACIONADAS ── -->
+<div class="related-section">
+    <h3>Complementa con nuestras herramientas</h3>
+    <div class="related-grid">
+        <a href="/indicesantr" class="related-card">
+            <span class="related-icon">⚖️</span>
+            <div><div class="related-name">IMC</div><div class="related-desc">Índice de Masa Corporal</div></div>
+        </a>
+        <a href="/valoracion" class="related-card">
+            <span class="related-icon">🔥</span>
+            <div><div class="related-name">Gasto Energético</div><div class="related-desc">Calorías diarias</div></div>
+        </a>
+        <a href="/valoracion" class="related-card">
+            <span class="related-icon">🥗</span>
+            <div><div class="related-name">Macronutrientes</div><div class="related-desc">Proteínas, carbs y grasas</div></div>
+        </a>
+        <a href="/pruebaEsfuerzo" class="related-card">
+            <span class="related-icon">🫁</span>
+            <div><div class="related-name">VO₂ Máximo</div><div class="related-desc">Capacidad aeróbica</div></div>
+        </a>
+    </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="tool-footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="/" class="nav-logo">Fit<span>Data</span></a>
+            <p>Herramientas científicas de evaluación física para todos.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Herramientas</h4>
+            <a href="/indicesantr">IMC</a>
+            <a href="/icc">ICC</a>
+            <a href="/pruebaEsfuerzo">VO₂ Máximo</a>
+            <a href="/valoracion">Gasto Energético</a>
+        </div>
+        <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="/privacyPolicy">Privacidad</a>
+            <a href="/avisoLegal">Aviso legal</a>
+            <a href="/politicacookies">Cookies</a>
+            <a href="/contact">Contacto</a>
+        </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 FitData. Todos los derechos reservados.</div>
+</footer>
+
 </body>
-
 </html>
