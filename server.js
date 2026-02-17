@@ -15,6 +15,9 @@ const pool = require('./database/db');
 
 const app = express();
 
+// Confiar en el proxy inverso (nginx) — necesario para req.secure, cookies Secure y rate-limit
+app.set('trust proxy', 1);
+
 // Headers de seguridad
 app.use(helmet({
     contentSecurityPolicy: {
