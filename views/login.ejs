@@ -1,77 +1,217 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="google-adsense-account" content="ca-pub-9371741460887435">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.87.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="/public/css/signin.css" rel="stylesheet">
-    <link href="/public/css/styles.css" rel="stylesheet">
-<link rel="icon" href="/public/assets/favicons/favicon-removebg.png" type="image/x-icon">
-    <title>Inicia Sesión</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-9371741460887435">
+    <meta name="description" content="Inicia sesión en FitData y accede a tus herramientas de evaluación física personalizadas.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/x-icon">
+    <title>Iniciar Sesión | FitData</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --green: #22c55e;
+            --green-dark: #16a34a;
+            --green-soft: #dcfce7;
+            --dark: #0f172a;
+            --gray: #64748b;
+            --light: #f8fafc;
+            --border: #e2e8f0;
+            --radius: 16px;
+            --shadow: 0 4px 24px rgba(0,0,0,.08);
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        /* ── CARD ── */
+        .auth-card {
+            background: white;
+            border-radius: var(--radius);
+            border: 2px solid var(--border);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 420px;
+            padding: 2.5rem 2rem;
+        }
+
+        /* ── LOGO ── */
+        .auth-logo {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 1.8rem;
+        }
+        .auth-logo span { color: var(--green); }
+
+        /* ── TITLE ── */
+        .auth-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--dark);
+            text-align: center;
+            margin-bottom: .4rem;
+        }
+        .auth-subtitle {
+            font-size: .88rem;
+            color: var(--gray);
+            text-align: center;
+            margin-bottom: 1.8rem;
+        }
+
+        /* ── FORM ── */
+        .auth-form { display: flex; flex-direction: column; gap: 1rem; }
+
+        .field-group { display: flex; flex-direction: column; gap: .4rem; }
+        .field-group label {
+            font-size: .82rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        .field-group input {
+            width: 100%;
+            padding: .75rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: .92rem;
+            color: var(--dark);
+            outline: none;
+            transition: border-color .2s;
+            background: var(--light);
+        }
+        .field-group input:focus { border-color: var(--green); background: white; }
+        .field-group input::placeholder { color: #94a3b8; }
+
+        /* ── SUBMIT ── */
+        .btn-submit {
+            width: 100%;
+            padding: .85rem;
+            background: var(--green);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: .95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background .2s, transform .15s;
+            margin-top: .4rem;
+        }
+        .btn-submit:hover { background: var(--green-dark); transform: translateY(-1px); }
+        .btn-submit:active { transform: translateY(0); }
+
+        /* ── DIVIDER ── */
+        .auth-divider {
+            text-align: center;
+            color: var(--gray);
+            font-size: .82rem;
+            margin: 1.2rem 0;
+            position: relative;
+        }
+        .auth-divider::before, .auth-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 38%;
+            height: 1px;
+            background: var(--border);
+        }
+        .auth-divider::before { left: 0; }
+        .auth-divider::after { right: 0; }
+
+        /* ── LINKS ── */
+        .auth-link-box {
+            background: var(--green-soft);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .auth-link-box p { font-size: .88rem; color: var(--gray); margin-bottom: .5rem; }
+        .auth-link-btn {
+            display: inline-block;
+            padding: .6rem 1.4rem;
+            background: white;
+            border: 2px solid var(--green);
+            border-radius: 8px;
+            color: var(--green-dark);
+            font-weight: 700;
+            font-size: .88rem;
+            text-decoration: none;
+            transition: background .2s, color .2s;
+        }
+        .auth-link-btn:hover { background: var(--green); color: white; }
+
+        .auth-back {
+            display: block;
+            text-align: center;
+            margin-top: 1.2rem;
+            font-size: .82rem;
+            color: var(--gray);
+            text-decoration: none;
+        }
+        .auth-back:hover { color: var(--green-dark); }
+    </style>
 </head>
+<body>
 
-<body class="text-center">
+<div class="auth-card">
+    <a href="/" class="auth-logo">Fit<span>Data</span></a>
 
-    <main class="form-signin text-center shadow-lg p-3 mb-3">
+    <h1 class="auth-title">Bienvenido de nuevo</h1>
+    <p class="auth-subtitle">Inicia sesión para acceder a tus herramientas</p>
 
-        <form id="formLogin" action="/login" method="POST">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <form id="formLogin" action="/login" method="POST" class="auth-form">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
-            <img class="w-75" src="/public/assets/favicons/logoFD.webp" alt="logo" >
-
-            <h1 class="h3 mb-3 fw-normal">Inicia Sesión</h1>
-
-            <div class="form-floating m-2">
-                <input type="email" class="form-control" id="email" name="email" placeholder="Correo">
-                <label for="user">Correo</label>
-            </div>
-
-            <div class="form-floating m-2">
-                <input type="password" class="form-control" id="pass" name="pass" placeholder="Contraseña">
-                <label for="pass">Contraseña</label>
-            </div>
-
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Inicia Sesión</button>
-        </form>
-    </main>
-
-    <section class="form-signin text-center shadow-lg  mb-5 w-100 fs-4 ">
-        <div class="mt-2">
-            ¿Nuevo en FitData? <br> <a class="w-100 btn btn-lg btn-bd-primary mt-3" href="/register"
-                style="text-decoration:none">Crea una cuenta</a>
+        <div class="field-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" placeholder="tu@correo.com" required>
         </div>
 
-        <div class="mt-3 link-opacity-75 fs-6">
-            <a  href="/">Volver al Inicio</a>
+        <div class="field-group">
+            <label for="pass">Contraseña</label>
+            <input type="password" id="pass" name="pass" placeholder="••••••••" required>
         </div>
-    </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/52b9ec387c.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9371741460887435"
-     crossorigin="anonymous"></script>
-    <!-- SWEETALERT -->
-    <% if(alert) { %>
-        <script>
-            Swal.fire({
-                title: <%- JSON.stringify(alertTitle) %>,
-                text: <%- JSON.stringify(alertMessage) %>,
-                icon: <%- JSON.stringify(alertIcon) %>,
-                showConfirmButton: <%= showConfirmButton %>,
-                timer: <%= timer %>
-            }).then(() => {
-                window.location = <%- JSON.stringify(ruta) %>
-            })
-        </script>
-        <% } %>
-            <!-- SWEETALERT -->
+        <button type="submit" class="btn-submit">Iniciar sesión →</button>
+    </form>
+
+    <div class="auth-divider">o</div>
+
+    <div class="auth-link-box">
+        <p>¿Nuevo en FitData?</p>
+        <a href="/register" class="auth-link-btn">Crear cuenta gratis</a>
+    </div>
+
+    <a href="/" class="auth-back">← Volver al inicio</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<% if(alert) { %>
+<script>
+    Swal.fire({
+        title: <%- JSON.stringify(alertTitle) %>,
+        text: <%- JSON.stringify(alertMessage) %>,
+        icon: <%- JSON.stringify(alertIcon) %>,
+        showConfirmButton: <%= showConfirmButton %>,
+        timer: <%= timer %>
+    }).then(() => {
+        window.location = <%- JSON.stringify(ruta) %>
+    })
+</script>
+<% } %>
+
 </body>
-
 </html>
