@@ -107,7 +107,7 @@
         /* ── RESULTS SUMMARY ── */
         .results-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 1rem;
         }
         .result-stat {
@@ -233,7 +233,7 @@
 const initials = user.nombreUsuario
     .trim().split(/\s+/)
     .map(w => w[0]).slice(0, 2).join('').toUpperCase();
-const hasData = userData && (userData.imc || userData.vo2 || userData.gasto_energetico);
+const hasData = userData && (userData.imc || userData.vo2 || userData.gasto_energetico || userData.macro);
 %>
 <div class="dash-hero">
     <div class="dash-hero-inner">
@@ -348,6 +348,15 @@ const hasData = userData && (userData.imc || userData.vo2 || userData.gasto_ener
             <div class="rs-label">Expect. Vida</div>
             <% if (userData && userData.expect_vida) { %>
                 <div class="rs-value has-data"><%= userData.expect_vida %></div>
+            <% } else { %>
+                <div class="rs-value no-data">—</div>
+            <% } %>
+        </div>
+        <div class="result-stat">
+            <div class="rs-icon">🥩</div>
+            <div class="rs-label">Macros</div>
+            <% if (userData && userData.macro) { %>
+                <div class="rs-value has-data" style="font-size:.85rem; white-space:pre-line;"><%= userData.macro %></div>
             <% } else { %>
                 <div class="rs-value no-data">—</div>
             <% } %>
