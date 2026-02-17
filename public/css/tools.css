@@ -203,8 +203,12 @@ nav.tool-nav {
 .related-desc { font-size: .75rem; color: var(--gray); }
 
 /* ── VIDEO ── */
-.video-wrapper { display: flex; justify-content: center; margin: 1.5rem 0; }
-.video-wrapper iframe { border-radius: var(--radius); max-width: 100%; }
+.video-wrapper { display: flex; justify-content: center; margin: 1.5rem 0; width: 100%; }
+.video-wrapper iframe {
+    border-radius: var(--radius);
+    width: 480px; max-width: 100%;
+    aspect-ratio: 16 / 9; height: auto;
+}
 
 /* ── MODAL (Bootstrap-free) ── */
 .modal-overlay {
@@ -310,10 +314,15 @@ footer.tool-footer {
 }
 
 /* ── RESPONSIVE ── */
+
+/* Evitar scroll horizontal en cualquier página */
+html, body { overflow-x: hidden; max-width: 100%; }
+
 @media (max-width: 800px) {
     .tool-main { grid-template-columns: 1fr; }
     .form-panel { position: static; }
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .related-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 600px) {
     nav.tool-nav { padding: 0 4%; }
@@ -322,4 +331,24 @@ footer.tool-footer {
     .tool-header { padding: 90px 4% 36px; }
     .tool-main { padding: 32px 4%; gap: 2rem; }
     footer.tool-footer { padding: 2rem 4% 1.2rem; }
+
+    /* Radio buttons: envolver en varias filas si no caben */
+    .radio-group { flex-wrap: wrap; gap: .7rem; }
+
+    /* Related tools: 2 columnas en móvil */
+    .related-grid { grid-template-columns: repeat(2, 1fr); }
+
+    /* Modal responsive */
+    .modal-box { padding: 1.5rem 1rem; margin: 1rem; }
+    .modal-box ul { padding-left: 1rem; }
+
+    /* Info sections */
+    .info-section { padding: 32px 4%; }
+    .related-section { padding: 32px 4%; }
+}
+@media (max-width: 400px) {
+    /* Related tools: 1 columna en móvil muy pequeño */
+    .related-grid { grid-template-columns: 1fr; }
+    /* Reducir padding listas */
+    .info-section ul, .article-body ul, .article-body ol { padding-left: .9rem; }
 }
