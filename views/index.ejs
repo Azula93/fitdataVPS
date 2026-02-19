@@ -666,9 +666,8 @@ function calcularIMC() {
     const rad = (angle * Math.PI) / 180;
     const x = cx + r * Math.cos(rad);
     const y = cy + r * Math.sin(rad);
-    const large = pct > 50 ? 1 : 0;
     document.getElementById('gauge-fill').setAttribute('d',
-        `M 20 80 A 70 70 0 ${large} 1 ${x.toFixed(1)} ${y.toFixed(1)}`);
+        `M 20 80 A 70 70 0 0 1 ${x.toFixed(1)} ${y.toFixed(1)}`);
     document.getElementById('gauge-fill').style.stroke = color;
 }
 </script>
