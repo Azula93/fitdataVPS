@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"></noscript>
-    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/x-icon">
+    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/webp">
     <title>Crear Cuenta | FitData</title>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -18,7 +18,7 @@
             --green-dark: #16a34a;
             --green-soft: #dcfce7;
             --dark: #0f172a;
-            --gray: #64748b;
+            --gray: #475569;
             --light: #f8fafc;
             --border: #e2e8f0;
             --radius: 16px;
@@ -95,7 +95,7 @@
             background: var(--light);
         }
         .field-group input:focus { border-color: var(--green); background: white; }
-        .field-group input::placeholder { color: #94a3b8; }
+        .field-group input::placeholder { color: #64748b; }
 
         /* ── SUBMIT ── */
         .btn-submit {
@@ -169,6 +169,7 @@
 </head>
 <body>
 
+<main>
 <div class="auth-card">
     <a href="/" class="auth-logo">Fit<span>Data</span></a>
 
@@ -210,6 +211,7 @@
 
     <a href="/" class="auth-back">← Volver al inicio</a>
 </div>
+</main>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <% if(alert) { %>

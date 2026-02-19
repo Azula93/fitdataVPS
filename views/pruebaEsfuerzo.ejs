@@ -11,13 +11,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"></noscript>
     <link href="/public/css/tools.css" rel="stylesheet">
-    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/x-icon">
+    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/webp">
     <title>VO₂ Máximo y Prueba de Esfuerzo | FitData</title>
 </head>
 <body>
 
 <!-- ── NAVBAR ── -->
-<nav class="tool-nav">
+<nav class="tool-nav" aria-label="Navegación principal">
     <% if (user) { %>
         <a href="/panelcontrol" class="nav-logo">Fit<span>Data</span></a>
         <ul class="nav-links">
@@ -37,13 +37,15 @@
     <% } %>
 </nav>
 
+<main>
+
 <!-- ── TOOL HEADER ── -->
 <div class="tool-header" id="vo2">
-    <div class="breadcrumb-nav">
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
         <a href="/">Inicio</a>
-        <span class="breadcrumb-sep">›</span>
-        <span>Prueba de Esfuerzo</span>
-    </div>
+        <span class="breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Prueba de Esfuerzo</span>
+    </nav>
     <div class="tool-badge">🫁 Capacidad Aeróbica</div>
     <h1>VO₂ Máximo<br>y Prueba de Esfuerzo</h1>
     <p>El VO₂ máximo es la cantidad máxima de oxígeno que puedes utilizar durante ejercicio intenso. Es el indicador más preciso de tu capacidad cardiovascular y condición física general.</p>
@@ -51,7 +53,7 @@
 
 <!-- ── INSTRUCCIONES ── -->
 <div class="info-section" style="padding-top:48px">
-    <h3>Test de la Banca — ¿Cómo realizarlo?</h3>
+    <h2>Test de la Banca — ¿Cómo realizarlo?</h2>
     <p>El test de la banca es una prueba estandarizada que permite estimar tu VO₂ máximo y METs a partir de tu frecuencia cardiaca de recuperación.</p>
     <div class="video-wrapper">
         <iframe
@@ -166,7 +168,7 @@
 
 <!-- ── HERRAMIENTAS RELACIONADAS ── -->
 <div class="related-section">
-    <h3>Otras herramientas</h3>
+    <h2>Otras herramientas</h2>
     <div class="related-grid">
         <a href="/indicesantr" class="related-card">
             <span class="related-icon">⚖️</span>
@@ -187,6 +189,8 @@
     </div>
 </div>
 
+</main>
+
 <!-- ── FOOTER ── -->
 <footer class="tool-footer">
     <div class="footer-grid">
@@ -195,14 +199,14 @@
             <p>Herramientas científicas de evaluación física para todos.</p>
         </div>
         <div class="footer-col">
-            <h4>Herramientas</h4>
+            <h3>Herramientas</h3>
             <a href="/indicesantr">IMC</a>
             <a href="/icc">ICC</a>
             <a href="/pruebaEsfuerzo">VO₂ Máximo</a>
             <a href="/valoracion">Gasto Energético</a>
         </div>
         <div class="footer-col">
-            <h4>Legal</h4>
+            <h3>Legal</h3>
             <a href="/privacyPolicy">Privacidad</a>
             <a href="/avisoLegal">Aviso legal</a>
             <a href="/politicacookies">Cookies</a>

@@ -11,13 +11,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"></noscript>
     <link href="/public/css/tools.css" rel="stylesheet">
-    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/x-icon">
+    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/webp">
     <title>Gasto Energético y Macronutrientes | FitData</title>
 </head>
 <body>
 
 <!-- ── NAVBAR ── -->
-<nav class="tool-nav">
+<nav class="tool-nav" aria-label="Navegación principal">
     <% if (user) { %>
         <a href="/panelcontrol" class="nav-logo">Fit<span>Data</span></a>
         <ul class="nav-links">
@@ -37,13 +37,15 @@
     <% } %>
 </nav>
 
+<main>
+
 <!-- ── TOOL HEADER ── -->
 <div class="tool-header" id="get">
-    <div class="breadcrumb-nav">
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
         <a href="/">Inicio</a>
-        <span class="breadcrumb-sep">›</span>
-        <span>Valoración Nutricional</span>
-    </div>
+        <span class="breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Valoración Nutricional</span>
+    </nav>
     <div class="tool-badge">🔥 Nutrición</div>
     <h1>Gasto Energético Total<br>y Macronutrientes</h1>
     <p>Calcula cuántas calorías necesitas cada día según tu nivel de actividad física, y descubre la distribución ideal de proteínas, carbohidratos y grasas para tus objetivos.</p>
@@ -179,7 +181,7 @@
 
 <!-- ── HERRAMIENTAS RELACIONADAS ── -->
 <div class="related-section">
-    <h3>Otras herramientas</h3>
+    <h2>Otras herramientas</h2>
     <div class="related-grid">
         <a href="/indicesantr" class="related-card">
             <span class="related-icon">⚖️</span>
@@ -200,6 +202,8 @@
     </div>
 </div>
 
+</main>
+
 <!-- ── FOOTER ── -->
 <footer class="tool-footer">
     <div class="footer-grid">
@@ -208,14 +212,14 @@
             <p>Herramientas científicas de evaluación física para todos.</p>
         </div>
         <div class="footer-col">
-            <h4>Herramientas</h4>
+            <h3>Herramientas</h3>
             <a href="/indicesantr">IMC</a>
             <a href="/icc">ICC</a>
             <a href="/pruebaEsfuerzo">VO₂ Máximo</a>
             <a href="/valoracion">Gasto Energético</a>
         </div>
         <div class="footer-col">
-            <h4>Legal</h4>
+            <h3>Legal</h3>
             <a href="/privacyPolicy">Privacidad</a>
             <a href="/avisoLegal">Aviso legal</a>
             <a href="/politicacookies">Cookies</a>

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"></noscript>
     <link href="/public/css/tools.css" rel="stylesheet">
-    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/x-icon">
+    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/webp">
     <title>Mi Panel | FitData</title>
     <style>
         /* ── HERO ── */
@@ -129,7 +129,7 @@
             word-break: break-word; overflow-wrap: break-word; max-width: 100%;
         }
         .rs-value.has-data { color: var(--green-dark); }
-        .rs-value.no-data { color: #cbd5e1; }
+        .rs-value.no-data { color: #94a3b8; }
         .results-empty {
             margin-top: 1rem; padding: 1rem 1.3rem;
             background: var(--light); border-radius: 10px;
@@ -256,7 +256,7 @@
 <body>
 
 <!-- ── NAVBAR ── -->
-<nav class="tool-nav">
+<nav class="tool-nav" aria-label="Navegación principal">
     <a href="/panelcontrol" class="nav-logo">Fit<span>Data</span></a>
     <ul class="nav-links">
         <li><a href="/indicesantr">Herramientas</a></li>
@@ -265,6 +265,8 @@
     </ul>
     <a href="/logout" class="nav-cta" style="background:#fff1f2;color:#e11d48;border:2px solid #fecdd3;">↩ Salir</a>
 </nav>
+
+<main>
 
 <!-- ── HERO ── -->
 <%
@@ -334,7 +336,7 @@ const hasData = userData && (userData.imc || userData.vo2 || userData.gasto_ener
 
 <!-- ── MIS ÚLTIMOS RESULTADOS ── -->
 <div class="dash-section">
-    <div class="section-heading">📊 Mis últimos resultados</div>
+    <h2 class="section-heading">📊 Mis últimos resultados</h2>
     <div class="results-grid">
         <div class="result-stat">
             <div class="rs-icon">⚖️</div>
@@ -417,7 +419,7 @@ const hasData = userData && (userData.imc || userData.vo2 || userData.gasto_ener
 
 <!-- ── HERRAMIENTAS ── -->
 <div class="dash-section" style="padding-top: 0;">
-    <div class="section-heading">🛠 Herramientas</div>
+    <h2 class="section-heading">🛠 Herramientas</h2>
     <div class="tools-grid">
 
         <a href="/indicesantr" class="tool-card tc-green">
@@ -465,11 +467,13 @@ const hasData = userData && (userData.imc || userData.vo2 || userData.gasto_ener
 
 <!-- ── CUENTA ── -->
 <div class="dash-account">
-    <div class="section-heading">⚙️ Cuenta</div>
+    <h2 class="section-heading">⚙️ Cuenta</h2>
     <a href="/logout" class="btn-logout">
         <span>↩</span> Cerrar sesión
     </a>
 </div>
+
+</main>
 
 <!-- ── FOOTER ── -->
 <footer class="tool-footer">
@@ -479,14 +483,14 @@ const hasData = userData && (userData.imc || userData.vo2 || userData.gasto_ener
             <p>Herramientas científicas de evaluación física para todos.</p>
         </div>
         <div class="footer-col">
-            <h4>Herramientas</h4>
+            <h3>Herramientas</h3>
             <a href="/indicesantr">IMC</a>
             <a href="/icc">ICC</a>
             <a href="/pruebaEsfuerzo">VO₂ Máximo</a>
             <a href="/valoracion">Gasto Energético</a>
         </div>
         <div class="footer-col">
-            <h4>Legal</h4>
+            <h3>Legal</h3>
             <a href="/privacyPolicy">Privacidad</a>
             <a href="/avisoLegal">Aviso legal</a>
             <a href="/politicacookies">Cookies</a>

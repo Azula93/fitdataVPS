@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"></noscript>
     <link href="/public/css/tools.css" rel="stylesheet">
-    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/x-icon">
+    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/webp">
     <title>Mis Datos | FitData</title>
     <style>
         /* ── HERO ── */
@@ -82,7 +82,7 @@
             font-size: 1.5rem; font-weight: 800; color: var(--dark);
             line-height: 1.1; word-break: break-word;
         }
-        .rc-value.no-data { color: #cbd5e1; font-size: 1.2rem; }
+        .rc-value.no-data { color: #94a3b8; font-size: 1.2rem; }
         .rc-badge {
             font-size: .7rem; font-weight: 700;
             padding: .18rem .65rem; border-radius: 50px;
@@ -204,7 +204,7 @@
 <body>
 
 <!-- ── NAVBAR ── -->
-<nav class="tool-nav">
+<nav class="tool-nav" aria-label="Navegación principal">
     <a href="/panelcontrol" class="nav-logo">Fit<span>Data</span></a>
     <ul class="nav-links">
         <li><a href="/indicesantr">Herramientas</a></li>
@@ -258,6 +258,8 @@ if (!isNaN(metsNum)) {
 }
 %>
 
+<main>
+
 <!-- ── HERO ── -->
 <div class="md-hero">
     <div class="md-hero-inner">
@@ -278,7 +280,7 @@ if (!isNaN(metsNum)) {
 
 <!-- ── TARJETAS DE RESULTADOS ── -->
 <div class="md-section">
-    <div class="md-section-title">📊 Tus últimos resultados</div>
+    <h2 class="md-section-title">📊 Tus últimos resultados</h2>
     <div class="results-cards">
 
         <!-- IMC -->
@@ -373,7 +375,7 @@ if (!isNaN(metsNum)) {
 
 <!-- ── QUÉ SIGNIFICAN TUS DATOS ── -->
 <div class="md-section" style="<% if (!tieneData) { %>padding-top:0;<% } %>">
-    <div class="md-section-title">📖 ¿Qué significan tus resultados?</div>
+    <h2 class="md-section-title">📖 ¿Qué significan tus resultados?</h2>
     <div class="info-grid">
 
         <div class="info-card">
@@ -437,6 +439,8 @@ if (!isNaN(metsNum)) {
     </div>
 </div>
 
+</main>
+
 <!-- ── FOOTER ── -->
 <footer class="tool-footer">
     <div class="footer-grid">
@@ -445,14 +449,14 @@ if (!isNaN(metsNum)) {
             <p>Herramientas científicas de evaluación física para todos.</p>
         </div>
         <div class="footer-col">
-            <h4>Herramientas</h4>
+            <h3>Herramientas</h3>
             <a href="/indicesantr">IMC</a>
             <a href="/icc">ICC</a>
             <a href="/pruebaEsfuerzo">VO₂ Máximo</a>
             <a href="/valoracion">Gasto Energético</a>
         </div>
         <div class="footer-col">
-            <h4>Legal</h4>
+            <h3>Legal</h3>
             <a href="/privacyPolicy">Privacidad</a>
             <a href="/avisoLegal">Aviso legal</a>
             <a href="/politicacookies">Cookies</a>

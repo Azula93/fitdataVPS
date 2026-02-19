@@ -1,6 +1,6 @@
 <meta name="csrf-token" content="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
 <% if (!user) { %>
-    <nav class="fixed-top navbar navbar-expand-lg navbar-light bg-light fs-5">
+    <nav class="fixed-top navbar navbar-expand-lg navbar-light bg-light fs-5" aria-label="Navegación principal">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Fit Data</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -10,7 +10,7 @@
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
                 aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Fit Data</h5>
+                    <span class="offcanvas-title fs-5 fw-bold" id="offcanvasNavbarLabel">Fit Data</span>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
@@ -26,10 +26,10 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link " href="/blog" id="navbarDropdown" role="button" aria-expanded="false">
+                            <a class="nav-link " href="/blog" id="navbarDropdownBlog" role="button" aria-expanded="false">
                                 Blog
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownBlog">
                                 <li><a class="dropdown-item" href="/etiquetasNutricionales">Etiquetas Nutricionales</a></li>
                                 <!-- <li><a class="dropdown-item" href="#">Plato Saludable</a></li>  -->
                                 <!-- <li><hr class="dropdown-divider"></li> -->
@@ -39,10 +39,10 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link " href="/productos" id="navbarDropdown" role="button" aria-expanded="false">
+                            <a class="nav-link " href="/productos" id="navbarDropdownProductos" role="button" aria-expanded="false">
                                 Productos
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownProductos">
                                 <li><a class="dropdown-item" href="#">Proximamente</a></li>
                                 <li><a class="dropdown-item" href="#">Proximamente</a></li>
                                 <!-- <li><hr class="dropdown-divider"></li> -->
@@ -62,7 +62,7 @@
 
     <% } else { %>
 
-        <nav class="fixed-top navbar navbar-expand-lg navbar-light bg-light fs-5">
+        <nav class="fixed-top navbar navbar-expand-lg navbar-light bg-light fs-5" aria-label="Navegación principal">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/panelcontrol">Fit Data</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
@@ -73,7 +73,7 @@
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
                     aria-labelledby="offcanvasNavbarLabel">
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Fit Data</h5>
+                        <span class="offcanvas-title fs-5 fw-bold" id="offcanvasNavbarLabel">Fit Data</span>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">

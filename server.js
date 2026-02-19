@@ -26,6 +26,14 @@ app.set('trust proxy', 1);
 app.use(helmet({
     // Permitir dns-prefetch para reducir latencia de conexión a CDNs externos
     dnsPrefetchControl: { allow: true },
+    // HSTS: 1 año, incluir subdominios y preload para ser aceptado por navegadores
+    strictTransportSecurity: {
+        maxAge: 31536000,
+        includeSubDomains: true,
+        preload: true,
+    },
+    // Referrer-Policy: enviar origen en cross-origin (necesario para AdSense)
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
     contentSecurityPolicy: {
         directives: {
             defaultSrc: ["'self'"],
@@ -40,6 +48,10 @@ app.use(helmet({
                 "pagead2.googlesyndication.com", // Google AdSense
                 "partner.googleadservices.com",
                 "tpc.googlesyndication.com",
+                "www.googletagservices.com",     // Google Ad Manager
+                "adservice.google.com",
+                "www.google-analytics.com",
+                "*.googleadservices.com",
             ],
             styleSrc: [
                 "'self'",
@@ -57,6 +69,9 @@ app.use(helmet({
                 "pagead2.googlesyndication.com",
                 "googleads.g.doubleclick.net",
                 "*.google.com",
+                "*.googlesyndication.com",
+                "*.gstatic.com",
+                "adservice.google.com",
             ],
             fontSrc: [
                 "'self'",
@@ -70,10 +85,16 @@ app.use(helmet({
                 "www.youtube-nocookie.com",  // modo privacidad mejorada de YouTube
                 "googleads.g.doubleclick.net",
                 "tpc.googlesyndication.com",
+                "*.googlesyndication.com",
+                "*.safeframe.googlesyndication.com",
             ],
             connectSrc: [
                 "'self'",
                 "ka-f.fontawesome.com",
+                "pagead2.googlesyndication.com",
+                "googleads.g.doubleclick.net",
+                "*.google.com",
+                "*.googlesyndication.com",
             ],
             frameAncestors: ["'none'"],      // protección clickjacking (reemplaza X-Frame-Options)
         },
@@ -87,6 +108,12 @@ app.use(helmet({
     // Strict-Transport-Security (HSTS)
     // X-XSS-Protection: 0 (desactiva el filtro XSS del navegador, que puede ser explotado)
 }));
+
+// Permissions-Policy — restringe APIs del navegador que no se usan
+app.use((req, res, next) => {
+    res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=(), payment=(), usb=()');
+    next();
+});
 
 // Rate limiting — protección contra fuerza bruta y abuso
 // Límite estricto para login y registro: 10 intentos por IP cada 15 minutos
@@ -206,10 +233,10 @@ app.use(cookieParser());
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: 'lax'
     }
 }));

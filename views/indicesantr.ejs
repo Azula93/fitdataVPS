@@ -11,13 +11,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"></noscript>
     <link href="/public/css/tools.css" rel="stylesheet">
-    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/x-icon">
+    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/webp">
     <title>IMC — Índice de Masa Corporal | FitData</title>
 </head>
 <body>
 
 <!-- ── NAVBAR ── -->
-<nav class="tool-nav">
+<nav class="tool-nav" aria-label="Navegación principal">
     <% if (user) { %>
         <a href="/panelcontrol" class="nav-logo">Fit<span>Data</span></a>
         <ul class="nav-links">
@@ -37,13 +37,15 @@
     <% } %>
 </nav>
 
+<main>
+
 <!-- ── TOOL HEADER ── -->
 <div class="tool-header">
-    <div class="breadcrumb-nav">
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
         <a href="/">Inicio</a>
-        <span class="breadcrumb-sep">›</span>
-        <span>IMC</span>
-    </div>
+        <span class="breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">IMC</span>
+    </nav>
     <div class="tool-badge">⚖️ Índice Antropométrico</div>
     <h1>Índice de Masa Corporal</h1>
     <p>El IMC es la relación entre el peso y la estatura. Permite clasificar a las personas en categorías como bajo peso, peso normal, sobrepeso y obesidad. Es un indicador de salud general ampliamente utilizado.</p>
@@ -103,7 +105,7 @@
 
 <!-- ── INFO ── -->
 <div class="info-section">
-    <h3>¿Cómo se interpreta el IMC?</h3>
+    <h2>¿Cómo se interpreta el IMC?</h2>
     <p>El IMC se calcula dividiendo el peso (kg) entre la talla al cuadrado (m²). Los rangos de clasificación de la OMS son:</p>
     <ul style="padding-left:1.2rem; color:var(--gray); font-size:.9rem; line-height:2.2">
         <li><strong>Menor de 18.5</strong> — Bajo peso</li>
@@ -118,7 +120,7 @@
 
 <!-- ── HERRAMIENTAS RELACIONADAS ── -->
 <div class="related-section">
-    <h3>Otras herramientas</h3>
+    <h2>Otras herramientas</h2>
     <div class="related-grid">
         <a href="/icc" class="related-card">
             <span class="related-icon">📏</span>
@@ -139,6 +141,8 @@
     </div>
 </div>
 
+</main>
+
 <!-- ── FOOTER ── -->
 <footer class="tool-footer">
     <div class="footer-grid">
@@ -147,14 +151,14 @@
             <p>Herramientas científicas de evaluación física para todos.</p>
         </div>
         <div class="footer-col">
-            <h4>Herramientas</h4>
+            <h3>Herramientas</h3>
             <a href="/indicesantr">IMC</a>
             <a href="/icc">ICC</a>
             <a href="/pruebaEsfuerzo">VO₂ Máximo</a>
             <a href="/valoracion">Gasto Energético</a>
         </div>
         <div class="footer-col">
-            <h4>Legal</h4>
+            <h3>Legal</h3>
             <a href="/privacyPolicy">Privacidad</a>
             <a href="/avisoLegal">Aviso legal</a>
             <a href="/politicacookies">Cookies</a>
