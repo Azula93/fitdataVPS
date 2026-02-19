@@ -174,7 +174,7 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
         const client = await pool.connect();
         const queryText = 'SELECT * FROM user_data WHERE user_id = $1';
         const result = await client.query(queryText, [userId]);
-        client.release(); // liberar la conexión antes de generar el PDF
+        client.release();
 
         if (result.rows.length === 0) {
             return res.status(404).send('No se encontraron datos del usuario.');
@@ -182,61 +182,297 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
 
         const userData = result.rows[0];
 
-        // Crear el PDF
-        const doc = new PDFDocument();
-        doc.font('./public/font/Poppins-Regular.ttf');
+        // ── Colores del design system ──
+        const GREEN = '#22c55e';
+        const GREEN_DARK = '#16a34a';
+        const GREEN_SOFT = '#dcfce7';
+        const YELLOW = '#f59e0b';
+        const YELLOW_SOFT = '#fef3c7';
+        const RED = '#ef4444';
+        const RED_SOFT = '#fee2e2';
+        const BLUE = '#3b82f6';
+        const BLUE_SOFT = '#dbeafe';
+        const DARK = '#0f172a';
+        const GRAY = '#334155';
+        const GRAY_LIGHT = '#94a3b8';
+        const BORDER = '#e2e8f0';
+        const LIGHT = '#f8fafc';
+
+        // ── Interpretación clínica (misma lógica que misdatos.ejs) ──
+        const imcNum = parseFloat(userData.imc);
+        let imcColor = GRAY_LIGHT, imcBadge = 'Sin datos', imcBadgeBg = LIGHT;
+        if (!isNaN(imcNum)) {
+            if      (imcNum < 18.5) { imcColor = RED;    imcBadge = 'Bajo peso';    imcBadgeBg = RED_SOFT; }
+            else if (imcNum < 25)   { imcColor = GREEN;  imcBadge = 'Peso normal';  imcBadgeBg = GREEN_SOFT; }
+            else if (imcNum < 30)   { imcColor = YELLOW; imcBadge = 'Sobrepeso';    imcBadgeBg = YELLOW_SOFT; }
+            else if (imcNum < 35)   { imcColor = RED;    imcBadge = 'Obesidad I';   imcBadgeBg = RED_SOFT; }
+            else                    { imcColor = RED;    imcBadge = 'Obesidad II+'; imcBadgeBg = RED_SOFT; }
+        }
+
+        const iccNum = parseFloat(userData.icc);
+        let iccColor = GRAY_LIGHT, iccBadge = 'Sin datos', iccBadgeBg = LIGHT;
+        if (!isNaN(iccNum)) {
+            if      (iccNum < 0.80) { iccColor = GREEN;  iccBadge = 'Bajo riesgo';     iccBadgeBg = GREEN_SOFT; }
+            else if (iccNum < 0.90) { iccColor = YELLOW; iccBadge = 'Riesgo moderado'; iccBadgeBg = YELLOW_SOFT; }
+            else                    { iccColor = RED;    iccBadge = 'Riesgo alto';     iccBadgeBg = RED_SOFT; }
+        }
+
+        const vo2Num = parseFloat(userData.vo2);
+        let vo2Color = GRAY_LIGHT, vo2Badge = 'Sin datos', vo2BadgeBg = LIGHT;
+        if (!isNaN(vo2Num)) {
+            if      (vo2Num < 30) { vo2Color = RED;    vo2Badge = 'Bajo';      vo2BadgeBg = RED_SOFT; }
+            else if (vo2Num < 40) { vo2Color = YELLOW; vo2Badge = 'Moderado';  vo2BadgeBg = YELLOW_SOFT; }
+            else if (vo2Num < 50) { vo2Color = GREEN;  vo2Badge = 'Bueno';     vo2BadgeBg = GREEN_SOFT; }
+            else                  { vo2Color = GREEN;  vo2Badge = 'Excelente'; vo2BadgeBg = GREEN_SOFT; }
+        }
+
+        const metsNum = parseFloat(userData.mets);
+        let metsColor = GRAY_LIGHT, metsBadge = 'Sin datos', metsBadgeBg = LIGHT;
+        if (!isNaN(metsNum)) {
+            if      (metsNum < 3) { metsColor = YELLOW; metsBadge = 'Sedentario'; metsBadgeBg = YELLOW_SOFT; }
+            else if (metsNum < 6) { metsColor = GREEN;  metsBadge = 'Moderado';   metsBadgeBg = GREEN_SOFT; }
+            else                  { metsColor = BLUE;   metsBadge = 'Vigoroso';   metsBadgeBg = BLUE_SOFT; }
+        }
+
+        // ── Crear PDF ──
+        const doc = new PDFDocument({ size: 'A4', margins: { top: 40, bottom: 40, left: 50, right: 50 } });
+        const font = './public/font/Poppins-Regular.ttf';
+        doc.font(font);
 
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', `inline; filename="Resultados_${userName}.pdf"`);
-
-        // Pipe transmite el PDF directo a la respuesta y la cierra al terminar
         doc.pipe(res);
 
-        doc.fontSize(25).text(`Resultados ${userName}`, { align: 'center' });
+        const pageW = doc.page.width;
+        const marginL = 50;
+        const marginR = 50;
+        const contentW = pageW - marginL - marginR;
 
-        // Config TABLA
-        const tableTop = 160;
-        const itemHeight = 65;
-        const columnWidth = 150;
-        const startX = 100;
-        const startY = tableTop;
+        // ── Helper: rectángulo redondeado ──
+        function roundedRect(x, y, w, h, r) {
+            doc.moveTo(x + r, y)
+               .lineTo(x + w - r, y)
+               .quadraticCurveTo(x + w, y, x + w, y + r)
+               .lineTo(x + w, y + h - r)
+               .quadraticCurveTo(x + w, y + h, x + w - r, y + h)
+               .lineTo(x + r, y + h)
+               .quadraticCurveTo(x, y + h, x, y + h - r)
+               .lineTo(x, y + r)
+               .quadraticCurveTo(x, y, x + r, y)
+               .closePath();
+        }
 
-        // Encabezados de la tabla
-        doc.fontSize(12)
-            .text('Parametro', startX, startY)
-            .text('Datos del Usuario', startX + columnWidth, startY);
+        // ══════════════════════════════════════════
+        // HEADER — barra verde con marca
+        // ══════════════════════════════════════════
+        doc.rect(0, 0, pageW, 72).fill(DARK);
+        doc.rect(0, 68, pageW, 4).fill(GREEN);
 
-        // Títulos de la tabla vertical
-        doc.fontSize(10);
-        const titles = [
-            'IMC:',
-            'ICC:',
-            'GET:',
-            'Macronutrientes:',
-            'VO2:',
-            'METS:',
-            'Expect Vida:'
-        ];
+        doc.fontSize(22).fillColor('#ffffff')
+           .text('Fit', marginL, 22, { continued: true })
+           .fillColor(GREEN).text('Data', { continued: false });
 
-        // Datos de los resultados
-        const values = [
-            userData.imc || '',
-            userData.icc || 'N/A',
-            userData.gasto_energetico || 'N/A',
-            userData.macro || 'N/A',
-            userData.vo2 || 'N/A',
-            userData.mets || 'N/A',
-            userData.expect_vida || 'N/A'
-        ];
+        doc.fontSize(9).fillColor('#94a3b8')
+           .text('Informe de resultados', pageW - marginR - 150, 30, { width: 150, align: 'right' });
 
-        // Escribir los datos en el PDF
-        titles.forEach((title, index) => {
-            const yPosition = startY + (index + 1) * itemHeight;
-            doc.text(title, startX, yPosition)
-               .text(values[index], startX + columnWidth, yPosition);
-        });
+        // ── Info usuario + fecha ──
+        const now = new Date();
+        const fechaStr = now.toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+        const updatedAt = userData.updated_at
+            ? new Date(userData.updated_at).toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' })
+            : fechaStr;
 
-        doc.end(); // finaliza el PDF y cierra la respuesta automáticamente
+        doc.fontSize(10).fillColor(GRAY)
+           .text(`Usuario: `, marginL, 92, { continued: true })
+           .fillColor(DARK).text(userName);
+        doc.fontSize(9).fillColor(GRAY)
+           .text(`Fecha del informe: ${fechaStr}`, marginL, 108);
+        doc.fontSize(9).fillColor(GRAY)
+           .text(`Ultima actualizacion: ${updatedAt}`, marginL, 121);
+
+        // Linea separadora
+        doc.moveTo(marginL, 140).lineTo(pageW - marginR, 140).strokeColor(BORDER).lineWidth(1).stroke();
+
+        // ══════════════════════════════════════════
+        // SECCIÓN: RESULTADOS
+        // ══════════════════════════════════════════
+        doc.fontSize(13).fillColor(DARK).text('Tus resultados', marginL, 152);
+        doc.fontSize(8).fillColor(GRAY).text('Datos calculados con formulas cientificas validadas', marginL, 168);
+
+        // ── Helper: dibujar tarjeta de métrica ──
+        function drawMetricCard(x, y, w, h, label, value, badge, color, badgeBg, desc) {
+            // Borde + fondo
+            roundedRect(x, y, w, h, 8);
+            doc.fillAndStroke('#ffffff', BORDER);
+
+            // Barra superior de color
+            doc.save();
+            doc.rect(x, y, w, 5).clip();
+            roundedRect(x, y, w, 8, 8);
+            doc.fill(color);
+            doc.restore();
+
+            // Label
+            doc.fontSize(7.5).fillColor(GRAY)
+               .text(label.toUpperCase(), x + 12, y + 14, { width: w - 24 });
+
+            // Valor
+            doc.fontSize(18).fillColor(DARK)
+               .text(value || '—', x + 12, y + 27, { width: w - 24 });
+
+            // Badge
+            const badgeW = doc.widthOfString(badge, { fontSize: 7 }) + 16;
+            roundedRect(x + 12, y + 52, badgeW, 16, 8);
+            doc.fill(badgeBg);
+            doc.fontSize(7).fillColor(color)
+               .text(badge, x + 20, y + 55, { width: badgeW });
+
+            // Descripción
+            if (desc) {
+                doc.fontSize(7).fillColor(GRAY_LIGHT)
+                   .text(desc, x + 12, y + 74, { width: w - 24, lineGap: 1 });
+            }
+        }
+
+        // ── Layout: 2 columnas x 3 filas ──
+        const cardW = (contentW - 16) / 2;
+        const cardH = 100;
+        const gap = 16;
+        let startY = 186;
+
+        // Fila 1: IMC + ICC
+        const imcVal = userData.imc ? String(userData.imc).split(' ')[0] : null;
+        const imcDesc = 'Relacion peso/estatura. Indicador basico de estado nutricional.';
+        drawMetricCard(marginL, startY, cardW, cardH,
+            'IMC — Indice de Masa Corporal', imcVal, imcBadge, imcColor, imcBadgeBg, imcDesc);
+
+        const iccVal = userData.icc ? String(userData.icc).split(' ')[0] : null;
+        const iccDesc = 'Distribucion de grasa corporal y riesgo cardiovascular.';
+        drawMetricCard(marginL + cardW + gap, startY, cardW, cardH,
+            'ICC — Indice Cintura-Cadera', iccVal, iccBadge, iccColor, iccBadgeBg, iccDesc);
+
+        // Fila 2: GET + VO2
+        startY += cardH + gap;
+        const getVal = userData.gasto_energetico || null;
+        const getDesc = 'Calorias diarias segun tu nivel de actividad fisica.';
+        drawMetricCard(marginL, startY, cardW, cardH,
+            'GET — Gasto Energetico Total', getVal, 'Gasto energetico', BLUE, BLUE_SOFT, getDesc);
+
+        const vo2Val = userData.vo2 || null;
+        const vo2Desc = 'Capacidad maxima de oxigeno. Indicador de salud cardiovascular.';
+        drawMetricCard(marginL + cardW + gap, startY, cardW, cardH,
+            'VO2 Maximo', vo2Val, vo2Badge, vo2Color, vo2BadgeBg, vo2Desc);
+
+        // Fila 3: METs + Expect. Vida
+        startY += cardH + gap;
+        const metsVal = userData.mets || null;
+        const metsDesc = 'Intensidad de actividad fisica. 1 MET = gasto en reposo.';
+        drawMetricCard(marginL, startY, cardW, cardH,
+            'METs — Equivalentes Metabolicos', metsVal, metsBadge, metsColor, metsBadgeBg, metsDesc);
+
+        const evVal = userData.expect_vida || null;
+        const evDesc = 'Estimacion basada en tus indicadores de salud actuales.';
+        drawMetricCard(marginL + cardW + gap, startY, cardW, cardH,
+            'Expectativa de Vida', evVal, 'Estimacion', GRAY_LIGHT, LIGHT, evDesc);
+
+        // ══════════════════════════════════════════
+        // SECCIÓN: MACRONUTRIENTES (tarjeta ancha)
+        // ══════════════════════════════════════════
+        startY += cardH + gap;
+
+        if (userData.macro) {
+            doc.fontSize(13).fillColor(DARK).text('Macronutrientes', marginL, startY);
+            doc.fontSize(8).fillColor(GRAY).text('Distribucion diaria recomendada', marginL, startY + 16);
+            startY += 34;
+
+            const macroH = 60;
+            roundedRect(marginL, startY, contentW, macroH, 8);
+            doc.fillAndStroke('#ffffff', BORDER);
+
+            // Barra superior
+            doc.save();
+            doc.rect(marginL, startY, contentW, 5).clip();
+            roundedRect(marginL, startY, contentW, 8, 8);
+            doc.fill(GREEN);
+            doc.restore();
+
+            // Parsear macros (formato: "Carbs X gr\nProts Y gr\nFats Z gr")
+            const macroLines = String(userData.macro).split('\n').filter(l => l.trim());
+            const colW = contentW / Math.max(macroLines.length, 1);
+
+            macroLines.forEach((line, i) => {
+                const xPos = marginL + (colW * i) + 16;
+                doc.fontSize(9).fillColor(DARK)
+                   .text(line.trim(), xPos, startY + 18, { width: colW - 32 });
+            });
+
+            startY += macroH;
+        }
+
+        // ══════════════════════════════════════════
+        // SECCIÓN: RANGOS DE REFERENCIA
+        // ══════════════════════════════════════════
+        startY += gap;
+
+        // Si queda poco espacio, saltar de pagina
+        if (startY > 650) {
+            doc.addPage();
+            startY = 50;
+        }
+
+        doc.fontSize(13).fillColor(DARK).text('Rangos de referencia', marginL, startY);
+        doc.fontSize(8).fillColor(GRAY).text('Para interpretar correctamente tus resultados', marginL, startY + 16);
+        startY += 36;
+
+        // Helper: fila de rango con punto de color
+        function drawRange(x, y, color, text) {
+            doc.circle(x + 4, y + 4, 4).fill(color);
+            doc.fontSize(8).fillColor(GRAY).text(text, x + 14, y, { width: contentW / 2 - 30 });
+        }
+
+        const col1X = marginL;
+        const col2X = marginL + contentW / 2;
+
+        // IMC ranges
+        doc.fontSize(9).fillColor(DARK).text('IMC', col1X, startY);
+        drawRange(col1X, startY + 14, RED, '< 18.5 — Bajo peso');
+        drawRange(col1X, startY + 28, GREEN, '18.5 – 24.9 — Peso normal');
+        drawRange(col1X, startY + 42, YELLOW, '25.0 – 29.9 — Sobrepeso');
+        drawRange(col1X, startY + 56, RED, '30.0 o mas — Obesidad');
+
+        // ICC ranges
+        doc.fontSize(9).fillColor(DARK).text('ICC', col2X, startY);
+        drawRange(col2X, startY + 14, GREEN, '< 0.80 — Bajo riesgo');
+        drawRange(col2X, startY + 28, YELLOW, '0.80 – 0.89 — Riesgo moderado');
+        drawRange(col2X, startY + 42, RED, '0.90 o mas — Riesgo alto');
+
+        startY += 76;
+
+        // VO2 ranges
+        doc.fontSize(9).fillColor(DARK).text('VO2 Maximo (ml/kg/min)', col1X, startY);
+        drawRange(col1X, startY + 14, RED, '< 30 — Capacidad baja');
+        drawRange(col1X, startY + 28, YELLOW, '30 – 39 — Capacidad moderada');
+        drawRange(col1X, startY + 42, GREEN, '40 – 49 — Buena capacidad');
+        drawRange(col1X, startY + 56, GREEN, '50 o mas — Excelente');
+
+        // METs ranges
+        doc.fontSize(9).fillColor(DARK).text('METs', col2X, startY);
+        drawRange(col2X, startY + 14, YELLOW, '1 – 2.9 — Actividad leve');
+        drawRange(col2X, startY + 28, GREEN, '3 – 5.9 — Actividad moderada');
+        drawRange(col2X, startY + 42, BLUE, '6 o mas — Actividad vigorosa');
+
+        // ══════════════════════════════════════════
+        // FOOTER
+        // ══════════════════════════════════════════
+        const footerY = doc.page.height - 60;
+        doc.moveTo(marginL, footerY).lineTo(pageW - marginR, footerY).strokeColor(BORDER).lineWidth(1).stroke();
+
+        doc.fontSize(7).fillColor(GRAY_LIGHT)
+           .text('Este informe es orientativo y no sustituye el criterio de un profesional de la salud.', marginL, footerY + 10, { width: contentW, align: 'center' });
+        doc.fontSize(7).fillColor(GRAY_LIGHT)
+           .text(`FitData — Generado el ${fechaStr}`, marginL, footerY + 22, { width: contentW, align: 'center' });
+
+        doc.end();
     } catch (error) {
         console.error(error);
         if (!res.headersSent) {
