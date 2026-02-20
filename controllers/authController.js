@@ -8,11 +8,71 @@ dotenv.config({ path: './env/.env' });
 
 const pool = require('../database/db');
 
+// Validación de email con regex estándar
+function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 // procedimiento para register
 // este metodo register que aparece aqui es propio de node, no es la ruta que ya definí para el formulario de registro
 exports.register = async (req, res) => {
     try {
-        const { nombreUsuario, email, pass, pass2 } = req.body;
+        const nombreUsuario = (req.body.nombreUsuario || '').trim();
+        const email = (req.body.email || '').trim().toLowerCase();
+        const pass = req.body.pass || '';
+        const pass2 = req.body.pass2 || '';
+
+        // Validar que todos los campos estén presentes
+        if (!nombreUsuario || !email || !pass || !pass2) {
+            return res.render('register', {
+                alert: true,
+                alertTitle: "Error",
+                alertMessage: "Todos los campos son obligatorios.",
+                alertIcon: "error",
+                showConfirmButton: true,
+                timer: false,
+                ruta: 'register'
+            });
+        }
+
+        // Validar longitud del nombre de usuario (2-50 caracteres)
+        if (nombreUsuario.length < 2 || nombreUsuario.length > 50) {
+            return res.render('register', {
+                alert: true,
+                alertTitle: "Error",
+                alertMessage: "El nombre de usuario debe tener entre 2 y 50 caracteres.",
+                alertIcon: "error",
+                showConfirmButton: true,
+                timer: false,
+                ruta: 'register'
+            });
+        }
+
+        // Validar formato de email
+        if (!isValidEmail(email) || email.length > 100) {
+            return res.render('register', {
+                alert: true,
+                alertTitle: "Error",
+                alertMessage: "Ingresa un email válido.",
+                alertIcon: "error",
+                showConfirmButton: true,
+                timer: false,
+                ruta: 'register'
+            });
+        }
+
+        // Validar requisitos de contraseña (mínimo 8 caracteres)
+        if (pass.length < 8) {
+            return res.render('register', {
+                alert: true,
+                alertTitle: "Error",
+                alertMessage: "La contraseña debe tener al menos 8 caracteres.",
+                alertIcon: "error",
+                showConfirmButton: true,
+                timer: false,
+                ruta: 'register'
+            });
+        }
 
         // Verificar si las contraseñas coinciden
         if (pass !== pass2) {
@@ -69,9 +129,10 @@ exports.register = async (req, res) => {
 // Procedimiento para el login
 exports.login = async (req, res) => {
     try {
-        const { email, pass } = req.body;
+        const email = (req.body.email || '').trim().toLowerCase();
+        const pass = req.body.pass || '';
 
-        if (!email || !pass) {
+        if (!email || !pass || email.length > 100) {
             return res.render('login', {
                 alert: true,
                 alertTitle: "Advertencia",

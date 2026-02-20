@@ -221,6 +221,9 @@ app.use('/public', express.static(path.join(__dirname, 'public'), {
 app.get('/ads.txt', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'ads.txt'));
 });
+app.get('/favicon.ico', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'assets', 'favicons', 'logoFD.webp'));
+});
 
 // Procesar datos enviados desde forms
 app.use(express.json());
@@ -262,28 +265,53 @@ function validateCsrf(req, res, next) {
 // Llamar al router, donde est�n todas las rutas
 app.use('/', require('./routes/router'));
 
+// Sanitizar campo de salud: debe ser string, máx 255 chars, o null
+function sanitizeHealthField(value) {
+    if (value === undefined || value === null || value === '') return null;
+    const str = String(value).trim();
+    if (str.length > 255) return null;
+    return str;
+}
+
 // Guardar datos en la DB
 app.post('/guardar-datos', authController.isAuthenticated, validateCsrf, async (req, res) => {
     try {
-        const userId = req.user.id; // Obt�n el ID del usuario autenticado
-        const { imc, icc, gasto_energetico, macro, vo2, mets, expect_vida } = req.body;
+        const userId = req.user.id;
+
+        // Sanitizar todos los campos — máx 255 chars, sin valores vacíos
+        const imc = sanitizeHealthField(req.body.imc);
+        const icc = sanitizeHealthField(req.body.icc);
+        const gasto_energetico = sanitizeHealthField(req.body.gasto_energetico);
+        const macro = sanitizeHealthField(req.body.macro);
+        const vo2 = sanitizeHealthField(req.body.vo2);
+        const mets = sanitizeHealthField(req.body.mets);
+        const expect_vida = sanitizeHealthField(req.body.expect_vida);
+
+        // Verificar que al menos un campo tenga valor
+        if (!imc && !icc && !gasto_energetico && !macro && !vo2 && !mets && !expect_vida) {
+            return res.status(400).send('No se enviaron datos válidos.');
+        }
 
         const query = `
-            INSERT INTO user_data (user_id, imc, icc, gasto_energetico, macro, vo2, mets, expect_vida)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-            ON CONFLICT (user_id) DO UPDATE SET 
+            INSERT INTO user_data (user_id, imc, icc, gasto_energetico, macro, vo2, mets, expect_vida, updated_at)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW())
+            ON CONFLICT (user_id) DO UPDATE SET
                 imc = COALESCE(EXCLUDED.imc, user_data.imc),
                 icc = COALESCE(EXCLUDED.icc, user_data.icc),
                 gasto_energetico = COALESCE(EXCLUDED.gasto_energetico, user_data.gasto_energetico),
                 macro = COALESCE(EXCLUDED.macro, user_data.macro),
                 vo2 = COALESCE(EXCLUDED.vo2, user_data.vo2),
                 mets = COALESCE(EXCLUDED.mets, user_data.mets),
-                expect_vida = COALESCE(EXCLUDED.expect_vida, user_data.expect_vida);
+                expect_vida = COALESCE(EXCLUDED.expect_vida, user_data.expect_vida),
+                updated_at = NOW();
         `;
 
         const client = await pool.connect();
-        await client.query(query, [userId, imc, icc, gasto_energetico, macro, vo2, mets, expect_vida]);
-        client.release();
+        try {
+            await client.query(query, [userId, imc, icc, gasto_energetico, macro, vo2, mets, expect_vida]);
+        } finally {
+            client.release();
+        }
 
         res.status(200).send('Datos guardados exitosamente');
     } catch (err) {

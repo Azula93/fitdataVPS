@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.btn-eliminar').forEach(button => {
         button.addEventListener('click', function(event) {
             event.preventDefault();
-            const userId = this.getAttribute('data-id');
 
             Swal.fire({
                 title: '¿Estás seguro?',
@@ -26,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             'El dato ha sido eliminado.',
                             'success'
                         );
-                        // Actualiza la UI para reflejar la eliminación
-                        document.getElementById(`data-row-${userId}`).remove();
+                        // Recargar la página para reflejar la eliminación
+                        setTimeout(() => { window.location.reload(); }, 1200);
                     })
                     .catch(error => {
                         console.error('Error:', error);
