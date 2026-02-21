@@ -21,7 +21,7 @@
         <ul class="nav-links">
             <li><a href="/indicesantr">Herramientas</a></li>
             <li><a href="/blog">Blog</a></li>
-            <li><a href="/cursos">Cursos</a></li>
+            <li class="nav-dropdown"><a href="/cursos">Cursos</a><ul class="nav-dropdown-menu"><li><a href="/anatomia">Anatomía</a></li></ul></li>
             <li><a href="/misdatos">Mis datos</a></li>
         </ul>
         <a href="/panelcontrol" class="nav-cta">Mi panel →</a>
@@ -30,12 +30,14 @@
         <ul class="nav-links">
             <li><a href="/#herramientas">Herramientas</a></li>
             <li><a href="/blog">Blog</a></li>
-            <li><a href="/cursos">Cursos</a></li>
+            <li class="nav-dropdown"><a href="/cursos">Cursos</a><ul class="nav-dropdown-menu"><li><a href="/anatomia">Anatomía</a></li></ul></li>
             <li><a href="/login">Iniciar sesión</a></li>
         </ul>
         <a href="/register" class="nav-cta">Empieza gratis →</a>
     <% } %>
+    <button class="nav-hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
 </nav>
+<script>document.querySelector('.nav-hamburger').addEventListener('click',function(){this.parentElement.querySelector('.nav-links').classList.toggle('open')})</script>
 
 <main>
 

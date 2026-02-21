@@ -51,6 +51,54 @@ nav.tool-nav {
 }
 .nav-cta:hover { background: var(--green-dark); transform: translateY(-1px); }
 
+/* ── NAV DROPDOWN (hover) ── */
+.nav-dropdown { position: relative; }
+.nav-dropdown > a::after { content: ' ▾'; font-size: .7em; }
+.nav-dropdown-menu {
+    display: none; position: absolute; top: 100%; left: 0;
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 8px; box-shadow: var(--shadow);
+    min-width: 160px; padding: .4rem 0; z-index: 200;
+    list-style: none;
+}
+.nav-dropdown-menu a {
+    display: block; padding: .5rem 1rem;
+    font-size: .85rem; color: var(--gray);
+    text-decoration: none; white-space: nowrap;
+}
+.nav-dropdown-menu a:hover { background: var(--green-soft); color: var(--green-dark); }
+@media (min-width: 769px) {
+    .nav-dropdown:hover > .nav-dropdown-menu { display: block; }
+}
+
+/* ── HAMBURGER (mobile) ── */
+.nav-hamburger {
+    display: none; background: none; border: none; cursor: pointer;
+    flex-direction: column; gap: 5px; padding: 4px;
+}
+.nav-hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--dark); border-radius: 2px;
+    transition: transform .3s, opacity .3s;
+}
+@media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .nav-hamburger { display: flex; }
+    .nav-links.open {
+        display: flex; flex-direction: column;
+        position: absolute; top: 68px; left: 0; right: 0;
+        background: var(--white); border-bottom: 1px solid var(--border);
+        box-shadow: var(--shadow); padding: 1rem 5%; gap: 0;
+    }
+    .nav-links.open > li { padding: .6rem 0; }
+    .nav-dropdown-menu {
+        position: static; box-shadow: none;
+        border: none; padding-left: 1rem;
+    }
+    .nav-links.open .nav-dropdown-menu { display: block; }
+}
+
 /* ── TOOL HEADER ── */
 .tool-header {
     padding: 100px 5% 48px;
