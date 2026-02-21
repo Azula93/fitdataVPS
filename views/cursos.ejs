@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+    <meta name="google-adsense-account" content="ca-pub-9371741460887435">
+    <meta name="description" content="Cursos FitData — Formación en anatomía, biomecánica y entrenamiento deportivo con videos y contenido basado en evidencia científica.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9371741460887435" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"></noscript>
+    <link href="/public/css/tools.css" rel="stylesheet">
+    <link rel="icon" href="/public/assets/favicons/logoFD.webp" type="image/webp">
+    <title>Cursos — Formación en Salud y Deporte | FitData</title>
+    <style>
+        /* ── CURSOS HEADER ── */
+        .blog-header {
+            padding: 100px 5% 48px;
+            background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
+            border-bottom: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .blog-header h1 {
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 800; color: var(--dark);
+            margin-bottom: .8rem; line-height: 1.2;
+        }
+        .blog-header p {
+            font-size: 1rem; color: var(--gray);
+            max-width: 520px; margin: 0 auto; line-height: 1.7;
+        }
+
+        /* ── CURSOS GRID ── */
+        .blog-section {
+            max-width: 1100px; margin: 0 auto;
+            padding: 56px 5%;
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* ── CURSO CARD ── */
+        .blog-card {
+            background: white; border-radius: var(--radius);
+            border: 2px solid #e2e8f0; overflow: hidden;
+            text-decoration: none; color: inherit;
+            transition: all .25s; display: flex; flex-direction: column;
+        }
+        .blog-card:hover {
+            border-color: var(--green);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+        .blog-card-img {
+            width: 100%; height: 200px;
+            object-fit: cover; display: block;
+        }
+        .blog-card-body {
+            padding: 1.5rem; flex: 1;
+            display: flex; flex-direction: column; gap: .8rem;
+        }
+        .blog-card-tag {
+            display: inline-flex; align-items: center;
+            background: var(--green-soft); color: var(--green-dark);
+            font-size: .72rem; font-weight: 700;
+            padding: .2rem .7rem; border-radius: 50px;
+            text-transform: uppercase; letter-spacing: .05em;
+            width: fit-content;
+        }
+        .blog-card-title {
+            font-size: 1rem; font-weight: 700;
+            color: var(--dark); line-height: 1.4;
+        }
+        .blog-card-desc {
+            font-size: .88rem; color: var(--gray);
+            line-height: 1.6; flex: 1;
+        }
+        .blog-card-cta {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--green-dark); font-size: .85rem; font-weight: 600;
+            margin-top: .4rem;
+        }
+        .blog-card:hover .blog-card-cta { gap: 10px; }
+    </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="tool-nav" aria-label="Navegación principal">
+    <% if (user) { %>
+        <a href="/panelcontrol" class="nav-logo">Fit<span>Data</span></a>
+        <ul class="nav-links">
+            <li><a href="/indicesantr">Herramientas</a></li>
+            <li><a href="/cursos">Cursos</a></li>
+            <li><a href="/misdatos">Mis datos</a></li>
+        </ul>
+        <a href="/panelcontrol" class="nav-cta">Mi panel →</a>
+    <% } else { %>
+        <a href="/" class="nav-logo">Fit<span>Data</span></a>
+        <ul class="nav-links">
+            <li><a href="/#herramientas">Herramientas</a></li>
+            <li><a href="/cursos">Cursos</a></li>
+            <li><a href="/login">Iniciar sesión</a></li>
+        </ul>
+        <a href="/register" class="nav-cta">Empieza gratis →</a>
+    <% } %>
+</nav>
+
+<main>
+
+<!-- ── CURSOS HEADER ── -->
+<div class="blog-header">
+    <nav class="breadcrumb-nav" style="justify-content:center" aria-label="Breadcrumb">
+        <a href="/">Inicio</a>
+        <span class="breadcrumb-sep" aria-hidden="true">›</span>
+        <span aria-current="page">Cursos</span>
+    </nav>
+    <div class="tool-badge">🎓 Formación</div>
+    <h1>Cursos FitData</h1>
+    <p>Formación en ciencias del deporte y la salud con contenido en video, basado en evidencia científica y orientado a tu desarrollo profesional y personal.</p>
+</div>
+
+<!-- ── ANUNCIO ── -->
+<div class="ad-section">
+    <div class="ad-label">Publicidad</div>
+    <ins class="adsbygoogle" style="display:block"
+         data-ad-client="ca-pub-9371741460887435"
+         data-ad-slot="auto" data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<!-- ── CURSOS DISPONIBLES ── -->
+<div class="blog-section">
+    <div class="blog-grid">
+
+        <a href="/anatomia" class="blog-card">
+            <img src="/public/assets/img (22).webp"
+                 class="blog-card-img"
+                 alt="Curso de Anatomía Humana"
+                 loading="lazy">
+            <div class="blog-card-body">
+                <span class="blog-card-tag">🫀 Anatomía</span>
+                <div class="blog-card-title">Curso de Anatomía Humana</div>
+                <div class="blog-card-desc">Aprende sobre los sistemas del cuerpo humano: muscular, óseo, cardiovascular y más. Contenido en video con explicaciones detalladas.</div>
+                <span class="blog-card-cta">Ver curso →</span>
+            </div>
+        </a>
+
+    </div>
+</div>
+
+<!-- ── HERRAMIENTAS RELACIONADAS ── -->
+<div class="related-section">
+    <h2>Complementa con nuestras herramientas</h2>
+    <div class="related-grid">
+        <a href="/indicesantr" class="related-card">
+            <span class="related-icon">⚖️</span>
+            <div><div class="related-name">IMC</div><div class="related-desc">Índice de Masa Corporal</div></div>
+        </a>
+        <a href="/valoracion" class="related-card">
+            <span class="related-icon">🔥</span>
+            <div><div class="related-name">Gasto Energético</div><div class="related-desc">Calorías diarias</div></div>
+        </a>
+        <a href="/pruebaEsfuerzo" class="related-card">
+            <span class="related-icon">🫁</span>
+            <div><div class="related-name">VO₂ Máximo</div><div class="related-desc">Capacidad aeróbica</div></div>
+        </a>
+        <a href="/blog" class="related-card">
+            <span class="related-icon">📝</span>
+            <div><div class="related-name">Blog</div><div class="related-desc">Artículos de nutrición y deporte</div></div>
+        </a>
+    </div>
+</div>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer class="tool-footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="/" class="nav-logo">Fit<span>Data</span></a>
+            <p>Herramientas científicas de evaluación física para todos.</p>
+        </div>
+        <div class="footer-col">
+            <h3>Herramientas</h3>
+            <a href="/indicesantr">IMC</a>
+            <a href="/icc">ICC</a>
+            <a href="/pruebaEsfuerzo">VO₂ Máximo</a>
+            <a href="/valoracion">Gasto Energético</a>
+        </div>
+        <div class="footer-col">
+            <h3>Legal</h3>
+            <a href="/privacyPolicy">Privacidad</a>
+            <a href="/avisoLegal">Aviso legal</a>
+            <a href="/politicacookies">Cookies</a>
+            <a href="/contact">Contacto</a>
+        </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 FitData. Todos los derechos reservados.</div>
+</footer>
+
+</body>
+</html>

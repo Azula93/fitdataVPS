@@ -97,6 +97,14 @@ router.get('/blog', authController.optionalAuth, (req, res) => {
     res.render('blog', { user: req.user })
 })
 
+router.get('/cursos', authController.optionalAuth, (req, res) => {
+    res.render('cursos', { user: req.user })
+})
+
+router.get('/anatomia', authController.optionalAuth, (req, res) => {
+    res.render('anatomia', { user: req.user })
+})
+
 router.get('/formularios', authController.isAuthenticated, (req, res) => {
     res.render('formularios', { user: req.user })
 })
