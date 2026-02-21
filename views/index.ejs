@@ -384,7 +384,7 @@
     <% } %>
     <button class="nav-hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
 </nav>
-<script>document.querySelector('.nav-hamburger').addEventListener('click',function(){this.parentElement.querySelector('.nav-links').classList.toggle('open')})</script>
+<script nonce="<%= cspNonce %>">document.querySelector('.nav-hamburger').addEventListener('click',function(){this.parentElement.querySelector('.nav-links').classList.toggle('open')})</script>
 
 <!-- ── MAIN CONTENT ── -->
 <main>
@@ -452,7 +452,7 @@
          data-ad-slot="auto"
          data-ad-format="horizontal"
          data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    <script nonce="<%= cspNonce %>">(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
 <!-- ── HERRAMIENTAS ── -->
@@ -586,7 +586,7 @@
              data-ad-slot="auto"
              data-ad-format="horizontal"
              data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        <script nonce="<%= cspNonce %>">(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 </div>
 
@@ -675,7 +675,7 @@
     </div>
 </footer>
 
-<script>
+<script nonce="<%= cspNonce %>">
 document.getElementById('btn-calc-imc').addEventListener('click', calcularIMC);
 function calcularIMC() {
     const peso   = parseFloat(document.getElementById('demo-peso').value);

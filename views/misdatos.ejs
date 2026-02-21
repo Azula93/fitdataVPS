@@ -216,7 +216,7 @@
     <a href="/panelcontrol" class="nav-cta">Mi panel →</a>
     <button class="nav-hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
 </nav>
-<script>document.querySelector('.nav-hamburger').addEventListener('click',function(){this.parentElement.querySelector('.nav-links').classList.toggle('open')})</script>
+<script nonce="<%= cspNonce %>">document.querySelector('.nav-hamburger').addEventListener('click',function(){this.parentElement.querySelector('.nav-links').classList.toggle('open')})</script>
 
 <%
 /* ── Lógica de interpretación ── */

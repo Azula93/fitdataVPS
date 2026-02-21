@@ -264,10 +264,13 @@
         <li class="nav-dropdown"><a href="/cursos">Cursos</a><ul class="nav-dropdown-menu"><li><a href="/anatomia">Anatomía</a></li></ul></li>
         <li><a href="/misdatos">Mis datos</a></li>
     </ul>
-    <a href="/logout" class="nav-cta" style="background:#fff1f2;color:#e11d48;border:2px solid #fecdd3;">↩ Salir</a>
+    <form action="/logout" method="POST" style="display:inline;margin:0;">
+        <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+        <button type="submit" class="nav-cta" style="background:#fff1f2;color:#e11d48;border:2px solid #fecdd3;cursor:pointer;font-family:inherit;font-size:inherit;">↩ Salir</button>
+    </form>
     <button class="nav-hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
 </nav>
-<script>document.querySelector('.nav-hamburger').addEventListener('click',function(){this.parentElement.querySelector('.nav-links').classList.toggle('open')})</script>
+<script nonce="<%= cspNonce %>">document.querySelector('.nav-hamburger').addEventListener('click',function(){this.parentElement.querySelector('.nav-links').classList.toggle('open')})</script>
 
 <main>
 
@@ -471,9 +474,12 @@ const hasData = userData && (userData.imc || userData.vo2 || userData.gasto_ener
 <!-- ── CUENTA ── -->
 <div class="dash-account">
     <h2 class="section-heading">⚙️ Cuenta</h2>
-    <a href="/logout" class="btn-logout">
-        <span>↩</span> Cerrar sesión
-    </a>
+    <form action="/logout" method="POST" style="display:inline;margin:0;">
+        <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+        <button type="submit" class="btn-logout" style="cursor:pointer;font-family:inherit;">
+            <span>↩</span> Cerrar sesión
+        </button>
+    </form>
 </div>
 
 </main>

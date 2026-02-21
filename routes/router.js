@@ -165,14 +165,15 @@ router.get('/misdatos', authController.isAuthenticated, async (req, res) => {
     const query = 'SELECT * FROM user_data WHERE user_id = $1';
     try {
         const client = await pool.connect();
-        const result = await client.query(query, [userId]);
-
-        res.render('misdatos', {
-            datos: result.rows[0] || {}, 
-            user: req.user
-        });
-
-        client.release();
+        try {
+            const result = await client.query(query, [userId]);
+            res.render('misdatos', {
+                datos: result.rows[0] || {},
+                user: req.user
+            });
+        } finally {
+            client.release();
+        }
     } catch (err) {
         console.error('Error al recuperar los datos:', err);
         res.status(500).send('Error al recuperar los datos');
@@ -264,8 +265,10 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
         const font = './public/font/Poppins-Regular.ttf';
         doc.font(font);
 
+        // Sanitizar nombre para evitar HTTP header injection
+        const safeName = userName.replace(/[^a-zA-Z0-9áéíóúñÁÉÍÓÚÑ _-]/g, '').substring(0, 50);
         res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', `inline; filename="Resultados_${userName}.pdf"`);
+        res.setHeader('Content-Disposition', `inline; filename="Resultados_${safeName}.pdf"`);
         doc.pipe(res);
 
         const pageW = doc.page.width;
@@ -553,7 +556,7 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
 // router para los metodos del controller 
 router.post('/register', validateCsrf, authController.register);
 router.post('/login', validateCsrf, authController.login);
-router.get('/logout', authController.logout);
+router.post('/logout', validateCsrf, authController.logout);
 
 
 module.exports = router;

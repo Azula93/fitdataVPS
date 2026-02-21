@@ -22,6 +22,12 @@ app.use(compression());
 // Confiar en el proxy inverso (nginx) — necesario para req.secure, cookies Secure y rate-limit
 app.set('trust proxy', 1);
 
+// Generar nonce CSP único por petición
+app.use((req, res, next) => {
+    res.locals.cspNonce = crypto.randomBytes(16).toString('base64');
+    next();
+});
+
 // Headers de seguridad
 app.use(helmet({
     // Permitir dns-prefetch para reducir latencia de conexión a CDNs externos
@@ -39,7 +45,7 @@ app.use(helmet({
             defaultSrc: ["'self'"],
             scriptSrc: [
                 "'self'",
-                "'unsafe-inline'",          // necesario para los bloques <script> inline en EJS
+                (req, res) => `'nonce-${res.locals.cspNonce}'`, // nonce dinámico por petición
                 "cdn.jsdelivr.net",          // Bootstrap, SweetAlert2, Popper
                 "kit.fontawesome.com",       // FontAwesome
                 "ka-f.fontawesome.com",      // FontAwesome (recursos del kit)
@@ -182,23 +188,6 @@ app.use((req, res, next) => {
         }
     });
     next();
-});
-
-// Manejo de errores global
-app.use((err, req, res, next) => {
-    console.error('Error global:', err);
-    if (!res.headersSent) {
-        res.status(500).json({
-            alert: true,
-            alertTitle: "Error",
-            alertMessage: "Error en el servidor. Por favor, intente nuevamente.",
-            alertIcon: "error",
-            showConfirmButton: true,
-            timer: false,
-            ruta: 'login',
-            debug: process.env.NODE_ENV === 'development' ? err.message : undefined
-        });
-    }
 });
 
 // Motor de plantillas
@@ -359,10 +348,20 @@ app.delete('/eliminar-dato', authController.isAuthenticated, validateCsrf, async
 
 // Enviar datos del formulario de contacto
 app.post('/submit', validateCsrf, async (req, res) => {
-    const { name, email, message } = req.body;
-  
+    const name = (req.body.name || '').trim();
+    const email = (req.body.email || '').trim().toLowerCase();
+    const message = (req.body.message || '').trim();
+
     if (!name || !email || !message) {
         return res.status(400).send({ success: false, message: 'Todos los campos son obligatorios.' });
+    }
+
+    if (name.length > 100 || email.length > 100 || message.length > 2000) {
+        return res.status(400).send({ success: false, message: 'Uno o más campos exceden la longitud permitida.' });
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        return res.status(400).send({ success: false, message: 'Email no válido.' });
     }
   
     const sql = 'INSERT INTO messages (name, email, message) VALUES ($1, $2, $3)';
@@ -378,6 +377,23 @@ app.post('/submit', validateCsrf, async (req, res) => {
     }
 });
   
-// Conexi�n al puerto
+// Manejo de errores global (DEBE ir después de todas las rutas)
+app.use((err, req, res, next) => {
+    console.error('Error global:', err);
+    if (!res.headersSent) {
+        res.status(500).json({
+            alert: true,
+            alertTitle: "Error",
+            alertMessage: "Error en el servidor. Por favor, intente nuevamente.",
+            alertIcon: "error",
+            showConfirmButton: true,
+            timer: false,
+            ruta: 'login',
+            debug: process.env.NODE_ENV === 'development' ? err.message : undefined
+        });
+    }
+});
+
+// Conexión al puerto
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
