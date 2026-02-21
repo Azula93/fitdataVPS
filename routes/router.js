@@ -424,7 +424,7 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
 
         // La sección de rangos necesita ~220px (titulo + 2 bloques de rangos)
         // El footer necesita ~50px, así que el límite seguro es page.height - 60 - 10 = ~770
-        const maxContentY = doc.page.height - 70;
+        const maxContentY = doc.page.height - 90;
         const rangesHeight = 36 + 76 + 76; // titulo + IMC/ICC + VO2/METs
 
         if (startY + rangesHeight > maxContentY) {
@@ -476,13 +476,13 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
         // ══════════════════════════════════════════
         // FOOTER (en la última página, después del contenido)
         // ══════════════════════════════════════════
-        const footerY = doc.page.height - 60;
+        const footerY = doc.page.height - 75;
         doc.moveTo(marginL, footerY).lineTo(pageW - marginR, footerY).strokeColor(BORDER).lineWidth(1).stroke();
 
         doc.fontSize(7).fillColor(GRAY_LIGHT)
-           .text('Este informe es orientativo y no sustituye el criterio de un profesional de la salud.', marginL, footerY + 10, { width: contentW, align: 'center', lineBreak: false });
+           .text('Este informe es orientativo y no sustituye el criterio de un profesional de la salud.', marginL, footerY + 8, { width: contentW, align: 'center', lineBreak: false });
         doc.fontSize(7).fillColor(GRAY_LIGHT)
-           .text(`FitData — Generado el ${fechaStr}`, marginL, footerY + 22, { width: contentW, align: 'center', lineBreak: false });
+           .text(`FitData — Generado el ${fechaStr}`, marginL, footerY + 20, { width: contentW, align: 'center', lineBreak: false });
 
         doc.end();
     } catch (error) {
