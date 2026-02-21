@@ -221,6 +221,12 @@ app.use('/public', express.static(path.join(__dirname, 'public'), {
 app.get('/ads.txt', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'ads.txt'));
 });
+app.get('/robots.txt', (req, res) => {
+    res.sendFile(path.join(__dirname, 'robots.txt'));
+});
+app.get('/sitemap.xml', (req, res) => {
+    res.sendFile(path.join(__dirname, 'sitemap.xml'));
+});
 app.get('/favicon.ico', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'assets', 'favicons', 'logoFD.webp'));
 });

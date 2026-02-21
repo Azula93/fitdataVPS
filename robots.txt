@@ -1,0 +1,11 @@
+# robots.txt — fitdata.online
+
+User-agent: *
+Allow: /
+Disallow: /panelcontrol
+Disallow: /misdatos
+Disallow: /formularios
+Disallow: /generar-pdf
+
+# Sitemap
+Sitemap: https://www.fitdata.online/sitemap.xml

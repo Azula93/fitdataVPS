@@ -63,15 +63,34 @@
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.fitdata.online/avisolegal</loc>
+  <loc>https://www.fitdata.online/indicesantr</loc>
+  <lastmod>2025-01-04T12:42:48+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.fitdata.online/icc</loc>
+  <lastmod>2025-01-04T12:42:48+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.fitdata.online/productos</loc>
   <lastmod>2025-01-04T12:42:48+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://www.fitdata.online/politica-de-cookies/</loc>
+  <loc>https://www.fitdata.online/etiquetasNutricionales</loc>
   <lastmod>2025-01-04T12:42:48+00:00</lastmod>
   <priority>0.64</priority>
 </url>
-
+<url>
+  <loc>https://www.fitdata.online/evolMarcas</loc>
+  <lastmod>2025-01-04T12:42:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.fitdata.online/clasAlimentos</loc>
+  <lastmod>2025-01-04T12:42:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
 
 </urlset>
