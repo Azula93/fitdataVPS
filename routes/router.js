@@ -322,23 +322,23 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
 
             // Label
             doc.fontSize(7.5).fillColor(GRAY)
-               .text(label.toUpperCase(), x + 12, y + 14, { width: w - 24 });
+               .text(label.toUpperCase(), x + 12, y + 14, { width: w - 24, lineBreak: false });
 
             // Valor
             doc.fontSize(18).fillColor(DARK)
-               .text(value || '—', x + 12, y + 27, { width: w - 24 });
+               .text(value || '—', x + 12, y + 27, { width: w - 24, lineBreak: false });
 
             // Badge
             const badgeW = doc.widthOfString(badge, { fontSize: 7 }) + 16;
             roundedRect(x + 12, y + 52, badgeW, 16, 8);
             doc.fill(badgeBg);
             doc.fontSize(7).fillColor(color)
-               .text(badge, x + 20, y + 55, { width: badgeW });
+               .text(badge, x + 20, y + 55, { width: badgeW, lineBreak: false });
 
             // Descripción
             if (desc) {
                 doc.fontSize(7).fillColor(GRAY_LIGHT)
-                   .text(desc, x + 12, y + 74, { width: w - 24, lineGap: 1 });
+                   .text(desc, x + 12, y + 74, { width: w - 24, lineGap: 1, lineBreak: false });
             }
         }
 
@@ -389,8 +389,8 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
         startY += cardH + gap;
 
         if (userData.macro) {
-            doc.fontSize(13).fillColor(DARK).text('Macronutrientes', marginL, startY);
-            doc.fontSize(8).fillColor(GRAY).text('Distribucion diaria recomendada', marginL, startY + 16);
+            doc.fontSize(13).fillColor(DARK).text('Macronutrientes', marginL, startY, { lineBreak: false });
+            doc.fontSize(8).fillColor(GRAY).text('Distribucion diaria recomendada', marginL, startY + 16, { lineBreak: false });
             startY += 34;
 
             const macroH = 60;
@@ -411,7 +411,7 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
             macroLines.forEach((line, i) => {
                 const xPos = marginL + (colW * i) + 16;
                 doc.fontSize(9).fillColor(DARK)
-                   .text(line.trim(), xPos, startY + 18, { width: colW - 32 });
+                   .text(line.trim(), xPos, startY + 18, { width: colW - 32, lineBreak: false });
             });
 
             startY += macroH;
@@ -432,28 +432,28 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
             startY = 50;
         }
 
-        doc.fontSize(13).fillColor(DARK).text('Rangos de referencia', marginL, startY);
-        doc.fontSize(8).fillColor(GRAY).text('Para interpretar correctamente tus resultados', marginL, startY + 16);
+        doc.fontSize(13).fillColor(DARK).text('Rangos de referencia', marginL, startY, { lineBreak: false });
+        doc.fontSize(8).fillColor(GRAY).text('Para interpretar correctamente tus resultados', marginL, startY + 16, { lineBreak: false });
         startY += 36;
 
         // Helper: fila de rango con punto de color
         function drawRange(x, y, color, text) {
             doc.circle(x + 4, y + 4, 4).fill(color);
-            doc.fontSize(8).fillColor(GRAY).text(text, x + 14, y, { width: contentW / 2 - 30 });
+            doc.fontSize(8).fillColor(GRAY).text(text, x + 14, y, { width: contentW / 2 - 30, lineBreak: false });
         }
 
         const col1X = marginL;
         const col2X = marginL + contentW / 2;
 
         // IMC ranges
-        doc.fontSize(9).fillColor(DARK).text('IMC', col1X, startY);
+        doc.fontSize(9).fillColor(DARK).text('IMC', col1X, startY, { lineBreak: false });
         drawRange(col1X, startY + 14, RED, '< 18.5 — Bajo peso');
         drawRange(col1X, startY + 28, GREEN, '18.5 – 24.9 — Peso normal');
         drawRange(col1X, startY + 42, YELLOW, '25.0 – 29.9 — Sobrepeso');
         drawRange(col1X, startY + 56, RED, '30.0 o mas — Obesidad');
 
         // ICC ranges
-        doc.fontSize(9).fillColor(DARK).text('ICC', col2X, startY);
+        doc.fontSize(9).fillColor(DARK).text('ICC', col2X, startY, { lineBreak: false });
         drawRange(col2X, startY + 14, GREEN, '< 0.80 — Bajo riesgo');
         drawRange(col2X, startY + 28, YELLOW, '0.80 – 0.89 — Riesgo moderado');
         drawRange(col2X, startY + 42, RED, '0.90 o mas — Riesgo alto');
@@ -461,14 +461,14 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
         startY += 76;
 
         // VO2 ranges
-        doc.fontSize(9).fillColor(DARK).text('VO2 Maximo (ml/kg/min)', col1X, startY);
+        doc.fontSize(9).fillColor(DARK).text('VO2 Maximo (ml/kg/min)', col1X, startY, { lineBreak: false });
         drawRange(col1X, startY + 14, RED, '< 30 — Capacidad baja');
         drawRange(col1X, startY + 28, YELLOW, '30 – 39 — Capacidad moderada');
         drawRange(col1X, startY + 42, GREEN, '40 – 49 — Buena capacidad');
         drawRange(col1X, startY + 56, GREEN, '50 o mas — Excelente');
 
         // METs ranges
-        doc.fontSize(9).fillColor(DARK).text('METs', col2X, startY);
+        doc.fontSize(9).fillColor(DARK).text('METs', col2X, startY, { lineBreak: false });
         drawRange(col2X, startY + 14, YELLOW, '1 – 2.9 — Actividad leve');
         drawRange(col2X, startY + 28, GREEN, '3 – 5.9 — Actividad moderada');
         drawRange(col2X, startY + 42, BLUE, '6 o mas — Actividad vigorosa');
@@ -480,9 +480,9 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
         doc.moveTo(marginL, footerY).lineTo(pageW - marginR, footerY).strokeColor(BORDER).lineWidth(1).stroke();
 
         doc.fontSize(7).fillColor(GRAY_LIGHT)
-           .text('Este informe es orientativo y no sustituye el criterio de un profesional de la salud.', marginL, footerY + 10, { width: contentW, align: 'center' });
+           .text('Este informe es orientativo y no sustituye el criterio de un profesional de la salud.', marginL, footerY + 10, { width: contentW, align: 'center', lineBreak: false });
         doc.fontSize(7).fillColor(GRAY_LIGHT)
-           .text(`FitData — Generado el ${fechaStr}`, marginL, footerY + 22, { width: contentW, align: 'center' });
+           .text(`FitData — Generado el ${fechaStr}`, marginL, footerY + 22, { width: contentW, align: 'center', lineBreak: false });
 
         doc.end();
     } catch (error) {
