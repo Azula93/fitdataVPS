@@ -1,4 +1,12 @@
 <meta name="csrf-token" content="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+<style>
+@media (min-width: 992px) {
+    .nav-item.dropdown:hover > .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+}
+</style>
 <% if (!user) { %>
     <nav class="fixed-top navbar navbar-expand-lg navbar-light bg-light fs-5" aria-label="Navegación principal">
         <div class="container-fluid">
