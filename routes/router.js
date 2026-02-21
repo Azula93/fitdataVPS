@@ -422,8 +422,12 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
         // ══════════════════════════════════════════
         startY += gap;
 
-        // Si queda poco espacio, saltar de pagina
-        if (startY > 650) {
+        // La sección de rangos necesita ~220px (titulo + 2 bloques de rangos)
+        // El footer necesita ~50px, así que el límite seguro es page.height - 60 - 10 = ~770
+        const maxContentY = doc.page.height - 70;
+        const rangesHeight = 36 + 76 + 76; // titulo + IMC/ICC + VO2/METs
+
+        if (startY + rangesHeight > maxContentY) {
             doc.addPage();
             startY = 50;
         }
@@ -470,7 +474,7 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
         drawRange(col2X, startY + 42, BLUE, '6 o mas — Actividad vigorosa');
 
         // ══════════════════════════════════════════
-        // FOOTER
+        // FOOTER (en la última página, después del contenido)
         // ══════════════════════════════════════════
         const footerY = doc.page.height - 60;
         doc.moveTo(marginL, footerY).lineTo(pageW - marginR, footerY).strokeColor(BORDER).lineWidth(1).stroke();
