@@ -105,7 +105,7 @@ function filtrarYLimpiarTextoImc(texto) {
   const textoSinHTML = texto.replace(/<\/?[^>]+(>|$)/g, "");
 
   // Expresión regular para extraer palabras permitidas y números
-  const regex = /(\bBAJO PESO\b|\bPESO NORMAL\b|\bSOBREPESO\b|\bOBESIDAD GRADO I\b|\bOBESIDAD GRADO II\b|\bOBESIDAD GRADO III\b|\d+)(?:\.|\s+)?/gi;
+  const regex = /(\bBAJO PESO\b|\bPESO NORMAL\b|\bSOBREPESO\b|\bOBESIDAD GRADO I\b|\bOBESIDAD GRADO II\b|\bOBESIDAD GRADO III\b|\d+(?:\.\d+)?)\s*/gi;
 
   
 
@@ -125,7 +125,7 @@ function filtrarYLimpiarTextoIcc(texto) {
   const textoSinHTML = texto.replace(/<\/?[^>]+(>|$)/g, "");
 
   // Expresión regular para extraer palabras permitidas y números
-  const regex = /(\bSIN RIESGO CARDIOVASCULAR\b|\bCON RIESGO CARDIOVASCULAR\b|\d+)(?:\.|\s+)?/gi;
+  const regex = /(\bSIN RIESGO CARDIOVASCULAR\b|\bCON RIESGO CARDIOVASCULAR\b|\d+(?:\.\d+)?)\s*/gi;
 
 
   // Extraer solo los elementos que coinciden con la expresión regular

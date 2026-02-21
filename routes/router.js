@@ -214,7 +214,17 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
         const LIGHT = '#f8fafc';
 
         // ── Interpretación clínica (misma lógica que misdatos.ejs) ──
-        const imcNum = parseFloat(userData.imc);
+        // Helper: extraer valor numérico (maneja formato roto "25. 96" y correcto "25.96")
+        function extractNumericValue(raw) {
+            if (!raw) return null;
+            const str = String(raw);
+            const brokenMatch = str.match(/(\d+)\.\s+(\d+)/);
+            if (brokenMatch) return `${brokenMatch[1]}.${brokenMatch[2]}`;
+            const normalMatch = str.match(/\d+\.\d+|\d+/);
+            return normalMatch ? normalMatch[0] : null;
+        }
+
+        const imcNum = parseFloat(extractNumericValue(userData.imc));
         let imcColor = GRAY_LIGHT, imcBadge = 'Sin datos', imcBadgeBg = LIGHT;
         if (!isNaN(imcNum)) {
             if      (imcNum < 18.5) { imcColor = RED;    imcBadge = 'Bajo peso';    imcBadgeBg = RED_SOFT; }
@@ -224,7 +234,7 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
             else                    { imcColor = RED;    imcBadge = 'Obesidad II+'; imcBadgeBg = RED_SOFT; }
         }
 
-        const iccNum = parseFloat(userData.icc);
+        const iccNum = parseFloat(extractNumericValue(userData.icc));
         let iccColor = GRAY_LIGHT, iccBadge = 'Sin datos', iccBadgeBg = LIGHT;
         if (!isNaN(iccNum)) {
             if      (iccNum < 0.80) { iccColor = GREEN;  iccBadge = 'Bajo riesgo';     iccBadgeBg = GREEN_SOFT; }
@@ -356,12 +366,12 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
         let startY = 186;
 
         // Fila 1: IMC + ICC
-        const imcVal = userData.imc ? String(userData.imc).split(' ')[0] : null;
+        const imcVal = extractNumericValue(userData.imc);
         const imcDesc = 'Relacion peso/estatura. Indicador basico de estado nutricional.';
         drawMetricCard(marginL, startY, cardW, cardH,
             'IMC — Indice de Masa Corporal', imcVal, imcBadge, imcColor, imcBadgeBg, imcDesc);
 
-        const iccVal = userData.icc ? String(userData.icc).split(' ')[0] : null;
+        const iccVal = extractNumericValue(userData.icc);
         const iccDesc = 'Distribucion de grasa corporal y riesgo cardiovascular.';
         drawMetricCard(marginL + cardW + gap, startY, cardW, cardH,
             'ICC — Indice Cintura-Cadera', iccVal, iccBadge, iccColor, iccBadgeBg, iccDesc);
@@ -400,7 +410,22 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
             doc.fontSize(8).fillColor(GRAY).text('Distribucion diaria recomendada', marginL, startY + 16, { lineBreak: false });
             startY += 34;
 
-            const macroH = 60;
+            // Parsear macros: formato "Carbohidratos 300 gr Proteínas 120 gr Grasas 80 gr"
+            const macroStr = String(userData.macro);
+            const macroRegex = /(Carbohidratos|Prote[ií]nas|Grasas)\s+(\d+)\s*gr/gi;
+            const macros = [];
+            let m;
+            while ((m = macroRegex.exec(macroStr)) !== null) {
+                macros.push({ name: m[1], value: m[2] });
+            }
+
+            // Si no se pudo parsear, mostrar como líneas separadas por \n o como texto único
+            if (macros.length === 0) {
+                const macroLines = macroStr.split('\n').filter(l => l.trim());
+                macros.push(...macroLines.map(l => ({ name: '', value: l.trim() })));
+            }
+
+            const macroH = 80;
             roundedRect(marginL, startY, contentW, macroH, 8);
             doc.fillAndStroke('#ffffff', BORDER);
 
@@ -411,15 +436,40 @@ router.get('/generar-pdf', authController.isAuthenticated, async (req, res) => {
             doc.fill(GREEN);
             doc.restore();
 
-            // Parsear macros (formato: "Carbs X gr\nProts Y gr\nFats Z gr")
-            const macroLines = String(userData.macro).split('\n').filter(l => l.trim());
-            const colW = contentW / Math.max(macroLines.length, 1);
+            if (macros.length > 0 && macros[0].name) {
+                // Diseño en 3 columnas con label + valor
+                const colW = contentW / macros.length;
+                const macroColors = { carbohidratos: BLUE, proteinas: GREEN_DARK, proteínas: GREEN_DARK, grasas: YELLOW };
 
-            macroLines.forEach((line, i) => {
-                const xPos = marginL + (colW * i) + 16;
-                doc.fontSize(9).fillColor(DARK)
-                   .text(line.trim(), xPos, startY + 18, { width: colW - 32, lineBreak: false });
-            });
+                macros.forEach((macro, i) => {
+                    const xPos = marginL + (colW * i);
+                    const color = macroColors[macro.name.toLowerCase()] || DARK;
+
+                    // Separador vertical entre columnas
+                    if (i > 0) {
+                        doc.moveTo(xPos, startY + 12).lineTo(xPos, startY + macroH - 12)
+                           .strokeColor(BORDER).lineWidth(1).stroke();
+                    }
+
+                    // Label
+                    doc.fontSize(8).fillColor(GRAY)
+                       .text(macro.name.toUpperCase(), xPos + 16, startY + 16, { width: colW - 32, align: 'center', lineBreak: false });
+
+                    // Valor grande
+                    doc.fontSize(20).fillColor(color)
+                       .text(macro.value, xPos + 16, startY + 32, { width: colW - 32, align: 'center', lineBreak: false });
+
+                    // Unidad
+                    doc.fontSize(9).fillColor(GRAY_LIGHT)
+                       .text('gramos', xPos + 16, startY + 56, { width: colW - 32, align: 'center', lineBreak: false });
+                });
+            } else {
+                // Fallback: mostrar cada línea
+                macros.forEach((macro, i) => {
+                    doc.fontSize(9).fillColor(DARK)
+                       .text(macro.value, marginL + 16, startY + 16 + (i * 16), { width: contentW - 32, lineBreak: false });
+                });
+            }
 
             startY += macroH;
         }
