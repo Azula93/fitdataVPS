@@ -3,6 +3,7 @@ const bcryptjs = require('bcryptjs');
 const dotenv = require('dotenv');
 const { promisify } = require('util');
 const { encrypt } = require('../helpers/handleBcrypt');
+const crypto = require('crypto');
 
 dotenv.config({ path: './env/.env' });
 
@@ -11,6 +12,11 @@ const pool = require('../database/db');
 // Validación de email con regex estándar
 function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// Validación de nombre de usuario: solo letras (incluye acentos), números, espacios y guiones
+function isValidUsername(name) {
+    return /^[\p{L}\d\s\-]+$/u.test(name);
 }
 
 // procedimiento para register
@@ -48,6 +54,19 @@ exports.register = async (req, res) => {
             });
         }
 
+        // Validar caracteres permitidos en nombre de usuario
+        if (!isValidUsername(nombreUsuario)) {
+            return res.render('register', {
+                alert: true,
+                alertTitle: "Error",
+                alertMessage: "El nombre de usuario solo puede contener letras, números, espacios y guiones.",
+                alertIcon: "error",
+                showConfirmButton: true,
+                timer: false,
+                ruta: 'register'
+            });
+        }
+
         // Validar formato de email
         if (!isValidEmail(email) || email.length > 100) {
             return res.render('register', {
@@ -61,12 +80,12 @@ exports.register = async (req, res) => {
             });
         }
 
-        // Validar requisitos de contraseña (mínimo 8 caracteres)
-        if (pass.length < 8) {
+        // Validar requisitos de contraseña (mínimo 8, máximo 72 caracteres — límite de bcrypt)
+        if (pass.length < 8 || pass.length > 72) {
             return res.render('register', {
                 alert: true,
                 alertTitle: "Error",
-                alertMessage: "La contraseña debe tener al menos 8 caracteres.",
+                alertMessage: "La contraseña debe tener entre 8 y 72 caracteres.",
                 alertIcon: "error",
                 showConfirmButton: true,
                 timer: false,
@@ -107,11 +126,15 @@ exports.register = async (req, res) => {
                 ruta: 'login'
             });
         } catch (error) {
-            console.log(error);
+            console.error('Error en registro:', error.code);
+            // Error 23505 = violación de constraint UNIQUE (email duplicado)
+            const mensaje = error.code === '23505'
+                ? "El email ingresado ya está registrado."
+                : "No se pudo completar el registro. Inténtalo de nuevo.";
             return res.render('register', {
                 alert: true,
                 alertTitle: "Error",
-                alertMessage: "Ingresa todos tus datos para registrarte",
+                alertMessage: mensaje,
                 alertIcon: "error",
                 showConfirmButton: true,
                 timer: false,
@@ -121,7 +144,7 @@ exports.register = async (req, res) => {
             client.release();
         }
     } catch (error) {
-        console.log(error);
+        console.error('Error en registro:', error.message);
         res.status(500).send('Error en el servidor.');
     }
 }
@@ -176,6 +199,9 @@ exports.login = async (req, res) => {
 
                     res.cookie('jwt', token, cookiesOptions);
 
+                    // Rotar token CSRF después de login exitoso
+                    req.session.csrfToken = crypto.randomBytes(32).toString('hex');
+
                     res.render('login', {
                         alert: true,
                         alertTitle: "Conexión Exitosa",
@@ -188,14 +214,14 @@ exports.login = async (req, res) => {
                     });
                 }
             } catch (error) {
-                console.log(error);
+                console.error('Error en login:', error.message);
                 res.status(500).send('Error en el servidor.');
             } finally {
                 client.release();
             }
         }
     } catch (error) {
-        console.log(error);
+        console.error('Error en login:', error.message);
         res.status(500).send('Error en el servidor.');
     }
 }

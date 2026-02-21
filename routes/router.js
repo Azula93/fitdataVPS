@@ -1,12 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const crypto = require('crypto');
 const authController = require('../controllers/authController');
 const pool = require('../database/db');
 const PDFDocument = require('pdfkit');
 
 function validateCsrf(req, res, next) {
     const token = req.body._csrf || req.headers['x-csrf-token'];
-    if (!token || token !== req.session.csrfToken) {
+    if (!token || !req.session.csrfToken) {
+        return res.status(403).send('Token CSRF inválido.');
+    }
+    // Comparación en tiempo constante para evitar timing attacks
+    const tokenBuf = Buffer.from(String(token));
+    const csrfBuf = Buffer.from(String(req.session.csrfToken));
+    if (tokenBuf.length !== csrfBuf.length || !crypto.timingSafeEqual(tokenBuf, csrfBuf)) {
         return res.status(403).send('Token CSRF inválido.');
     }
     next();

@@ -262,7 +262,13 @@ app.use((req, res, next) => {
 // Validar token CSRF en todas las peticiones que modifican datos
 function validateCsrf(req, res, next) {
     const token = req.body._csrf || req.headers['x-csrf-token'];
-    if (!token || token !== req.session.csrfToken) {
+    if (!token || !req.session.csrfToken) {
+        return res.status(403).json({ error: 'Token CSRF inválido.' });
+    }
+    // Comparación en tiempo constante para evitar timing attacks
+    const tokenBuf = Buffer.from(String(token));
+    const csrfBuf = Buffer.from(String(req.session.csrfToken));
+    if (tokenBuf.length !== csrfBuf.length || !crypto.timingSafeEqual(tokenBuf, csrfBuf)) {
         return res.status(403).json({ error: 'Token CSRF inválido.' });
     }
     next();
